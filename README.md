@@ -23,7 +23,7 @@ If a code block contains cypher, a button is added which redirects the user to a
 
 ```
 neo4j-desktop://graphapps/neo4j-browser?arg=edit&cmd={cypher}
-``
+```
 
 eg:
 ```
