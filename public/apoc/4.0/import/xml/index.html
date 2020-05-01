@@ -1,0 +1,1772 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>5.6.&nbsp;Load XML - Chapter&nbsp;5.&nbsp;Import</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to import data from XML files."></meta>
+      <link rel="prev" href="../xls/" title="5.5.&nbsp;Loading Excel (XLS)"></link>
+      <link rel="next" href="../html/" title="5.7.&nbsp;Load HTML"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../xls/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Loading Excel (XLS)</a></span><span class="nav-current">
+               <p class="nav-title hidden">5.6.&nbsp;Load XML</p></span><span class="nav-next"><a accesskey="n" href="../html/">Load HTML<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="load-xml">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#load-xml"></a>5.6.&nbsp;Load XML
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to import data from XML files.</p>
+         </div>
+         <p>Many existing enterprise applications, endpoints, and files use XML as data exchange format.
+            The Load XML procedures allow us to process these files.
+         </p>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#load-xml-available-procedures" title="5.6.1.&nbsp;Procedure and Function Overview">Section&nbsp;5.6.1, &#8220;Procedure and Function Overview&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#load-xml-available-procedures-apoc.load.xml" title="5.6.1.1.&nbsp;apoc.load.xml">Section&nbsp;5.6.1.1, &#8220;<code class="literal">apoc.load.xml</code>&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-available-procedures-apoc.xml.parse" title="5.6.1.2.&nbsp;apoc.xml.parse">Section&nbsp;5.6.1.2, &#8220;<code class="literal">apoc.xml.parse</code>&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-available-procedures-apoc.import.xml" title="5.6.1.3.&nbsp;apoc.import.xml">Section&nbsp;5.6.1.3, &#8220;<code class="literal">apoc.import.xml</code>&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+               <li class="listitem"><a class="xref" href="#load-xml-file-import" title="5.6.2.&nbsp;Importing from a file">Section&nbsp;5.6.2, &#8220;Importing from a file&#8221;</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#load-xml-examples" title="5.6.3.&nbsp;Examples">Section&nbsp;5.6.3, &#8220;Examples&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#load-xml-examples-local-file" title="5.6.3.1.&nbsp;Import from local file">Section&nbsp;5.6.3.1, &#8220;Import from local file&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-examples-simple-xml-format" title="5.6.3.2.&nbsp;Import from GitHub">Section&nbsp;5.6.3.2, &#8220;Import from GitHub&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-examples-xpath" title="5.6.3.3.&nbsp;xPath expressions">Section&nbsp;5.6.3.3, &#8220;xPath expressions&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-examples-extracting-datastructures" title="5.6.3.4.&nbsp;Extracting data structures">Section&nbsp;5.6.3.4, &#8220;Extracting data structures&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-xml-examples-import-xml-directly" title="5.6.3.5.&nbsp;Import XML directly">Section&nbsp;5.6.3.5, &#8220;Import XML directly&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="load-xml-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-xml-available-procedures"></a>5.6.1.&nbsp;Procedure and Function Overview
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedures and functions:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e9956">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.xml</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.xml(url :: STRING?, path = / :: STRING?, config = {} :: MAP?, simple = false :: BOOLEAN?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.load.xml('http://example.com/test.xml', 'xPath',config, false) YIELD value as doc CREATE (p:Person) SET p.name = doc.name
+                                 load from XML URL (e.g. web-api) to import XML as single nested map with attributes and _type, _text and _childrenx fields.
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>function</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.xml.parse</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.xml.parse(data :: STRING?, path = / :: STRING?, config = {} :: MAP?, simple = false :: BOOLEAN?) :: (MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>RETURN apoc.xml.parse(&lt;xml string&gt;, &lt;xPath string&gt;, config, false) AS value</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.import.xml</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.import.xml(url :: STRING?, config = {} :: MAP?) :: (node :: NODE?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.import.xml(file,config) - imports graph from provided file</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <section class="section" id="load-xml-available-procedures-apoc.load.xml">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-available-procedures-apoc.load.xml"></a>5.6.1.1.&nbsp;<code class="literal">apoc.load.xml</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This procedure takes a file or HTTP URL and parses the XML into a map data structure.</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e10024">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.load.xml(url :: STRING?, path = / :: STRING?, config = {} :: MAP?, simple = false :: BOOLEAN?) :: (value :: MAP?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>The map is created using the following rules:</p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">in simple mode, each type of children has its own entry in the parent map.</li>
+                     <li class="listitem">the element-type as key is prefixed with <code class="literal">_</code> to prevent collisions with attributes.
+                     </li>
+                     <li class="listitem">if there is a single element, the entry will just have that element as value, not a collection.</li>
+                     <li class="listitem">if there is more than one element, there will be a list of values.</li>
+                     <li class="listitem">each child will still have its <code class="literal">_type</code> field to discern them.
+                     </li>
+                  </ul>
+               </div>
+               <p>This procedure supports the following config parameters:</p>
+               <div class="table" id="d0e10063">
+                  <table class="table" summary="Config" border="1">
+                     <caption class="table-title">Table&nbsp;5.13.&nbsp;Config</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>failOnError</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>boolean</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>true</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>fail if error encountered while parsing XML</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>headers</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Map</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>HTTP headers to be used when querying XML document</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-xml-available-procedures-apoc.xml.parse">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-available-procedures-apoc.xml.parse"></a>5.6.1.2.&nbsp;<code class="literal">apoc.xml.parse</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>If our dataset contains nodes with XML as property values, they can be parsed into maps with the <code class="literal">apoc.xml.parse</code> function.
+               </p>
+               <div class="informaltable">
+                  <div class="table" id="d0e10117">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.xml.parse(data :: STRING?, path = / :: STRING?, config = {} :: MAP?, simple = false :: BOOLEAN?) :: (MAP?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>This function supports the following config parameter:</p>
+               <div class="table" id="d0e10132">
+                  <table class="table" summary="Config" border="1">
+                     <caption class="table-title">Table&nbsp;5.14.&nbsp;Config</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>failOnError</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>boolean</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>true</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>fail if error encountered while parsing XML</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">The following parses an XML string into a Cypher map.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH '&lt;?xml version="1.0"?&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;img src="pix/logo-tl.gif"&gt;&lt;/img&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;' AS xmlString
+RETURN apoc.xml.parse(xmlString) AS value</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e10172">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.15.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "table", _children: [{_type: "tr", _children: [{_type: "td", _children: [{_type: "img", src: "pix/logo-tl.gif"}]}]}]}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-xml-available-procedures-apoc.import.xml">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-available-procedures-apoc.import.xml"></a>5.6.1.3.&nbsp;<code class="literal">apoc.import.xml</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>If we don&#8217;t want to do any transformation of the XML before creating a graph structure, we can create a 1:1 mapping of XML
+                  into the graph using the <code class="literal">apoc.import.xml</code> procedure.
+               </p>
+               <div class="informaltable">
+                  <div class="table" id="d0e10195">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.import.xml(url :: STRING?, config = {} :: MAP?) :: (node :: NODE?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>This procedure will return a node representing the XML document containing nodes and relationships underneath mapping to the
+                  XML structure.
+               </p>
+               <p>The following mapping rules are applied:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e10212">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">xml</th>
+                              <th style="text-align: left; vertical-align: top; ">label</th>
+                              <th style="text-align: left; vertical-align: top; ">properties</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>document</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>XmlDocument</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>_xmlVersion, _xmlEncoding</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>processing instruction</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>XmlProcessingInstruction</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>_piData, _piTarget</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>Element/Tag</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>XmlTag</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>_name</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>Attribute</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>n/a</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>property in the XmlTag node</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>Text</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>XmlWord</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>for each word a separate node is created</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>The nodes for the XML document are connected:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e10278">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">relationship type</th>
+                              <th style="text-align: left; vertical-align: top; ">description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>:IS_CHILD_OF</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>pointing to a nested xml element</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>:FIRST_CHILD_OF</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>pointing to the first child</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>:NEXT_SIBLING</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>pointing to the next xml element on the same nesting level</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>:NEXT</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>produces a linear chain through the full document</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>:NEXT_WORD</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>only produced if config map has <code class="literal">createNextWordRelationships:true</code>. Connects words in XML to a text flow.
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>This procedure supports the following config parameters:</p>
+               <div class="table" id="d0e10329">
+                  <table class="table" summary="Config" border="1">
+                     <caption class="table-title">Table&nbsp;5.16.&nbsp;Config</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">config option</th>
+                           <th style="text-align: left; vertical-align: top; ">default value</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>connectCharacters</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>false</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>if <code class="literal">true</code> the xml text elements are child nodes of their tags, interconnected by relationships of type <code class="literal">relType</code> (see below)
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>filterLeadingWhitespace</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>false</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>if <code class="literal">true</code> leading whitespace is skipped for each line
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>delimiter</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">\s</code> (regex whitespace)
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>if given, split text elements with the delimiter into separate nodes</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>label</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>XmlCharacter</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>label to use for text element representation</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>relType</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">NE</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>relationship type to be used for connecting the text elements into one linked list</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>charactersForTag</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>map of tagname &#8594; string. For the given tag names an additional text element is added containing the value as <code class="literal">text</code> property. Useful e.g. for <code class="literal">&lt;lb/&gt;</code> tags in TEI-XML to be represented as <code class="literal">&lt;lb&gt; &lt;/lb&gt;</code>.
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+         <section class="section" id="load-xml-file-import">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-xml-file-import"></a>5.6.2.&nbsp;Importing from a file
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>By default importing from the file system is disabled.
+               We can enable it by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.enabled=true</code></pre><p>
+               
+            </p>
+            <p>If we try to use any of the import procedures without having first set this property, we&#8217;ll get the following error message:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e10444">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Import from files not enabled, please set apoc.import.file.enabled=true
+                                 in your apoc.conf
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>Import files are read from the <code class="literal">import</code> directory, which is defined by the <code class="literal">dbms.directories.import</code> property.
+               This means that any file path that we provide is relative to this directory.
+               If we try to read from an absolute path, such as <code class="literal">/tmp/filename</code>, we&#8217;ll get an error message similar to the following one:
+            </p>
+            <div class="informaltable">
+               <div class="table" id="d0e10463">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Can&#8217;t read url or key file:/path/to/neo4j/import/tmp/filename
+                                 as json: /path/to/neo4j//import/tmp/filename (No such file or directory)
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>We can enable reading files from anywhere on the file system by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.use_neo4j_config=false</code></pre><p>
+               
+            </p>
+            <div class="admonitionblock warning">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-warning" title="warning"></i></td>
+                        <td class="content">
+                           <p>Neo4j will now be able to read from anywhere on the file system, so be sure that this is your intention before setting this
+                              property.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="load-xml-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-xml-examples"></a>5.6.3.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The examples in this section are based on the Microsoft <a class="link" href="https://msdn.microsoft.com/en-us/library/ms762271%28v=vs.85%29.aspx" target="_top">book.xml</a> file.
+            </p>
+            <p><span class="formalpara-title">book.xml.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+   &lt;book id="bk101"&gt;
+      &lt;author&gt;Gambardella, Matthew&lt;/author&gt;
+      &lt;title&gt;XML Developer's Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;44.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-10-01&lt;/publish_date&gt;
+      &lt;description&gt;An in-depth look at creating applications
+      with XML.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk102"&gt;
+      &lt;author&gt;Ralls, Kim&lt;/author&gt;
+      &lt;title&gt;Midnight Rain&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-16&lt;/publish_date&gt;
+      &lt;description&gt;A former architect battles corporate zombies,
+...</code></pre><p>
+               
+            </p>
+            <p>This file can be downloaded from <a class="link" href="https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml" target="_top">GitHub</a>.
+            </p>
+            <section class="section" id="load-xml-examples-local-file">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-examples-local-file"></a>5.6.3.1.&nbsp;Import from local file
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">books.xml</code> file described below contains the first two books from the Microsoft Books XML file.
+                  We&#8217;ll use the smaller file in this section to simplify our examples.
+               </p>
+               <p><span class="formalpara-title">books.xml.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+   &lt;book id="bk101"&gt;
+      &lt;author&gt;Gambardella, Matthew&lt;/author&gt;
+      &lt;author&gt;Arciniegas, Fabio&lt;/author&gt;
+      &lt;title&gt;XML Developer's Guide&lt;/title&gt;
+      &lt;genre&gt;Computer&lt;/genre&gt;
+      &lt;price&gt;44.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-10-01&lt;/publish_date&gt;
+      &lt;description&gt;An in-depth look at creating applications
+      with XML.&lt;/description&gt;
+   &lt;/book&gt;
+   &lt;book id="bk102"&gt;
+      &lt;author&gt;Ralls, Kim&lt;/author&gt;
+      &lt;title&gt;Midnight Rain&lt;/title&gt;
+      &lt;genre&gt;Fantasy&lt;/genre&gt;
+      &lt;price&gt;5.95&lt;/price&gt;
+      &lt;publish_date&gt;2000-12-16&lt;/publish_date&gt;
+      &lt;description&gt;A former architect battles corporate zombies,
+      an evil sorceress, and her own childhood to become queen
+      of the world.&lt;/description&gt;
+   &lt;/book&gt;
+&lt;/catalog&gt;</code></pre><p>
+                  
+               </p>
+               <p>We&#8217;ll place this file into the <code class="literal">import</code> directory of our Neo4j instance.
+                  Let&#8217;s now write a query using the <code class="literal">apoc.load.xml</code> procedure to explore this file.
+               </p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">books.xml</code> and returns the content as Cypher data structures.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.xml("file:///books.xml")
+YIELD value
+RETURN value</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e10543">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.17.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "catalog", _children: [{_type: "book", _children: [{_type: "author", _text: "Gambardella, Matthew"}, {_type: "author",
+                                 _text: "Arciniegas, Fabio"}, {_type: "title", _text: "XML Developer&#8217;s Guide"}, {_type: "genre", _text: "Computer"}, {_type:
+                                 "price", _text: "44.95"}, {_type: "publish_date", _text: "2000-10-01"}, {_type: "description", _text: "An in-depth look at
+                                 creating applications with XML."}], id: "bk101"}, {_type: "book", _children: [{_type: "author", _text: "Ralls, Kim"}, {_type:
+                                 "title", _text: "Midnight Rain"}, {_type: "genre", _text: "Fantasy"}, {_type: "price", _text: "5.95"}, {_type: "publish_date",
+                                 _text: "2000-12-16"}, {_type: "description", _text: "A former architect battles corporate zombies, an evil sorceress, and
+                                 her own childhood to become queen of the world."}], id: "bk102"}]}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We get back a map representing the XML structure.
+                  Every time an XML element is nested inside another one, it is accessible via the <code class="literal">.children</code> property.
+                  We can write the following query to get a better understanding of what our file contains.
+               </p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">book.xml</code> and parses the results to pull out the title, description, genre, and authors.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.xml("file:///books.xml")
+YIELD value
+UNWIND value._children AS book
+RETURN book.id AS bookId,
+       [item in book._children WHERE item._type = "title"][0] AS title,
+       [item in book._children WHERE item._type = "description"][0] AS description,
+       [item in book._children WHERE item._type = "author"] AS authors,
+       [item in book._children WHERE item._type = "genre"][0] AS genre;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e10573">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.18.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">bookId</th>
+                           <th style="text-align: left; vertical-align: top; ">title</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                           <th style="text-align: left; vertical-align: top; ">authors</th>
+                           <th style="text-align: left; vertical-align: top; ">genre</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk101"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "XML Developer&#8217;s Guide"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "An in-depth look at creating applications with XML."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Gambardella, Matthew"}, {_type: "author", _text: "Arciniegas, Fabio"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Computer"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk102"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Midnight Rain"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "A former architect battles corporate zombies, an evil sorceress, and her own childhood to become
+                                 queen of the world."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Ralls, Kim"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Fantasy"}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Let&#8217;s now create a graph of books and their metadata, authors, and genres.</p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">book.xml</code> and parses the results to pull out the title, description, genre, and authors.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.xml("file:///books.xml")
+YIELD value
+UNWIND value._children AS book
+
+WITH book.id AS bookId,
+     [item in book._children WHERE item._type = "title"][0] AS title,
+     [item in book._children WHERE item._type = "description"][0] AS description,
+     [item in book._children WHERE item._type = "author"] AS authors,
+     [item in book._children WHERE item._type = "genre"][0] AS genre
+
+MERGE (b:Book {id: bookId})
+SET b.title = title._text, b.description = description._text
+
+MERGE (g:Genre {name: genre._text})
+MERGE (b)-[:HAS_GENRE]-&gt;(g)
+
+WITH b, authors
+UNWIND authors AS author
+MERGE (a:Author {name:author._text})
+MERGE (a)-[:WROTE]-&gt;(b);</code></pre><p>
+                  
+               </p>
+               <p>The Neo4j Browser visualization below shows the imported graph:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc.load.xml.local.books.svg" alt="apoc.load.xml.local.books"></img></div>
+               </div>
+            </section>
+            <section class="section" id="load-xml-examples-simple-xml-format">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-examples-simple-xml-format"></a>5.6.3.2.&nbsp;Import from GitHub
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can also process XML files from HTTP or HTTPS URIs.
+                  Let&#8217;s start by processing the <code class="literal">books.xml</code> file hosted on GitHub.
+               </p>
+               <p>This time we&#8217;ll pass in <code class="literal">true</code> as the 4th argument of the procedure.
+                  This means that the XML will be parsed in simple mode.
+               </p>
+               <p><span class="formalpara-title">The following query loads the books.xml file from GitHub using simple mode.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml" AS uri
+CALL apoc.load.xml(uri, '', {}, true)
+YIELD value
+RETURN value;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e10670">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.19.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "catalog", _catalog: [{_type: "book", _book: [{_type: "author", _text: "Gambardella, Matthew"}, {_type: "author",
+                                 _text: "Arciniegas, Fabio"}, {_type: "title", _text: "XML Developer&#8217;s Guide"}, {_type: "genre", _text: "Computer"}, {_type:
+                                 "price", _text: "44.95"}, {_type: "publish_date", _text: "2000-10-01"}, {_type: "description", _text: "An in-depth look at
+                                 creating applications with XML."}], id: "bk101"}, {_type: "book", _book: [{_type: "author", _text: "Ralls, Kim"}, {_type:
+                                 "title", _text: "Midnight Rain"}, {_type: "genre", _text: "Fantasy"}, {_type: "price", _text: "5.95"}, {_type: "publish_date",
+                                 _text: "2000-12-16"}, {_type: "description", _text: "A former architect battles corporate zombies, an evil sorceress, and
+                                 her own childhood to become queen of the world."}], id: "bk102"}, {_type: "book", _book: [{_type: "author", _text: "Corets,
+                                 Eva"}, {_type: "title", _text: "Maeve Ascendant"}, {_type: "genre", _text: "Fantasy"}, {_type: "price", _text: "5.95"}, {_type:
+                                 "publish_date", _text: "2000-11-17"}, {_type: "description", _text: "After the collapse of a nanotechnology society in England,
+                                 the young survivors lay the foundation for a new society."}], id: "bk103"}, {_type: "book", _book: [{_type: "author", _text:
+                                 "Corets, Eva"}, {_type: "title", _text: "Oberon&#8217;s Legacy"}, {_type: "genre", _text: "Fantasy"}, {_type: "price", _text: "5.95"},
+                                 {_type: "publish_date", _text: "2001-03-10"}, {_type: "description", _text: "In post-apocalypse England, the mysterious agent
+                                 known only as Oberon helps to create a new life for the inhabitants of London. Sequel to Maeve Ascendant."}], id: "bk104"},
+                                 {_type: "book", _book: [{_type: "author", _text: "Corets, Eva"}, {_type: "title", _text: "The Sundered Grail"}, {_type: "genre",
+                                 _text: "Fantasy"}, {_type: "price", _text: "5.95"}, {_type: "publish_date", _text: "2001-09-10"}, {_type: "description", _text:
+                                 "The two daughters of Maeve, half-sisters, battle one another for control of England. Sequel to Oberon&#8217;s Legacy."}], id: "bk105"},
+                                 {_type: "book", _book: [{_type: "author", _text: "Randall, Cynthia"}, {_type: "title", _text: "Lover Birds"}, {_type: "genre",
+                                 _text: "Romance"}, {_type: "price", _text: "4.95"}, {_type: "publish_date", _text: "2000-09-02"}, {_type: "description", _text:
+                                 "When Carla meets Paul at an ornithology conference, tempers fly as feathers get ruffled."}], id: "bk106"}, {_type: "book",
+                                 _book: [{_type: "author", _text: "Thurman, Paula"}, {_type: "title", _text: "Splish Splash"}, {_type: "genre", _text: "Romance"},
+                                 {_type: "price", _text: "4.95"}, {_type: "publish_date", _text: "2000-11-02"}, {_type: "description", _text: "A deep sea diver
+                                 finds true love twenty thousand leagues beneath the sea."}], id: "bk107"}, {_type: "book", _book: [{_type: "author", _text:
+                                 "Knorr, Stefan"}, {_type: "title", _text: "Creepy Crawlies"}, {_type: "genre", _text: "Horror"}, {_type: "price", _text: "4.95"},
+                                 {_type: "publish_date", _text: "2000-12-06"}, {_type: "description", _text: "An anthology of horror stories about roaches,
+                                 centipedes, scorpions  and other insects."}], id: "bk108"}, {_type: "book", _book: [{_type: "author", _text: "Kress, Peter"},
+                                 {_type: "title", _text: "Paradox Lost"}, {_type: "genre", _text: "Science Fiction"}, {_type: "price", _text: "6.95"}, {_type:
+                                 "publish_date", _text: "2000-11-02"}, {_type: "description", _text: "After an inadvertant trip through a Heisenberg Uncertainty
+                                 Device, James Salway discovers the problems of being quantum."}], id: "bk109"}, {_type: "book", _book: [{_type: "author",
+                                 _text: "O&#8217;Brien, Tim"}, {_type: "title", _text: "Microsoft .NET: The Programming Bible"}, {_type: "genre", _text: "Computer"},
+                                 {_type: "price", _text: "36.95"}, {_type: "publish_date", _text: "2000-12-09"}, {_type: "description", _text: "Microsoft&#8217;s
+                                 .NET initiative is explored in detail in this deep programmer&#8217;s reference."}], id: "bk110"}, {_type: "book", _book: [{_type:
+                                 "author", _text: "O&#8217;Brien, Tim"}, {_type: "title", _text: "MSXML3: A Comprehensive Guide"}, {_type: "genre", _text: "Computer"},
+                                 {_type: "price", _text: "36.95"}, {_type: "publish_date", _text: "2000-12-01"}, {_type: "description", _text: "The Microsoft
+                                 MSXML3 parser is covered in detail, with attention to XML DOM interfaces, XSLT processing, SAX and more."}], id: "bk111"},
+                                 {_type: "book", _book: [{_type: "author", _text: "Galos, Mike"}, {_type: "title", _text: "Visual Studio 7: A Comprehensive
+                                 Guide"}, {_type: "genre", _text: "Computer"}, {_type: "price", _text: "49.95"}, {_type: "publish_date", _text: "2001-04-16"},
+                                 {_type: "description", _text: "Microsoft Visual Studio 7 is explored in depth, looking at how Visual Basic, Visual C+, C#,
+                                 and ASP are integrated into a comprehensive development environment."}], id: "bk112"}]}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We again get back back a map representing the XML structure, but the structure is different than when we don&#8217;t use simple
+                  mode.
+                  This time nested XML elements are accessible via a property of the element name prefixed with an <code class="literal">_</code>.
+               </p>
+               <p>We can write the following query to get a better understanding of what our file contains.</p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">book.xml</code> and parses the results to pull out the title, description, genre, and authors.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml" AS uri
+CALL apoc.load.xml(uri, '', {}, true)
+YIELD value
+UNWIND value._catalog AS catalog
+RETURN catalog.id AS bookId,
+       [item in catalog._book WHERE item._type = "title"][0] AS title,
+       [item in catalog._book WHERE item._type = "description"][0] AS description,
+       [item in catalog._book WHERE item._type = "author"] AS authors,
+       [item in catalog._book WHERE item._type = "genre"][0] AS genre;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e10702">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.20.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">bookId</th>
+                           <th style="text-align: left; vertical-align: top; ">title</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                           <th style="text-align: left; vertical-align: top; ">authors</th>
+                           <th style="text-align: left; vertical-align: top; ">genre</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk101"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "XML Developer&#8217;s Guide"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "An in-depth look at creating applications with XML."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Gambardella, Matthew"}, {_type: "author", _text: "Arciniegas, Fabio"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Computer"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk102"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Midnight Rain"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "A former architect battles corporate zombies, an evil sorceress, and her own childhood to become
+                                 queen of the world."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Ralls, Kim"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Fantasy"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk103"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Maeve Ascendant"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "After the collapse of a nanotechnology society in England, the young survivors lay the foundation
+                                 for a new society."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Corets, Eva"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Fantasy"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk104"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Oberon&#8217;s Legacy"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "In post-apocalypse England, the mysterious agent known only as Oberon helps to create a new
+                                 life for the inhabitants of London. Sequel to Maeve Ascendant."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Corets, Eva"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Fantasy"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk105"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "The Sundered Grail"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "The two daughters of Maeve, half-sisters, battle one another for control of England. Sequel
+                                 to Oberon&#8217;s Legacy."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Corets, Eva"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Fantasy"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk106"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Lover Birds"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "When Carla meets Paul at an ornithology conference, tempers fly as feathers get ruffled."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Randall, Cynthia"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Romance"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk107"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Splish Splash"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "A deep sea diver finds true love twenty thousand leagues beneath the sea."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Thurman, Paula"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Romance"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk108"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Creepy Crawlies"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "An anthology of horror stories about roaches, centipedes, scorpions  and other insects."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Knorr, Stefan"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Horror"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk109"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Paradox Lost"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "After an inadvertant trip through a Heisenberg Uncertainty Device, James Salway discovers the
+                                 problems of being quantum."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Kress, Peter"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Science Fiction"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk110"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Microsoft .NET: The Programming Bible"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "Microsoft&#8217;s .NET initiative is explored in detail in this deep programmer&#8217;s reference."}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "O&#8217;Brien, Tim"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Computer"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk111"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "MSXML3: A Comprehensive Guide"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "The Microsoft MSXML3 parser is covered in detail, with attention to XML DOM interfaces, XSLT
+                                 processing, SAX and more."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "O&#8217;Brien, Tim"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Computer"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk112"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "title", _text: "Visual Studio 7: A Comprehensive Guide"}</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "description", _text: "Microsoft Visual Studio 7 is explored in depth, looking at how Visual Basic, Visual C+, C#,
+                                 and ASP are integrated into a comprehensive development environment."}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[{_type: "author", _text: "Galos, Mike"}]</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{_type: "genre", _text: "Computer"}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Rather than just returning that data, we can create a graph of books and their metadata, authors, and genres.</p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">book.xml</code> and parses the results to pull out the title, description, genre, and authors.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml" AS uri
+CALL apoc.load.xml(uri, '', {}, true)
+YIELD value
+UNWIND value._catalog AS catalog
+WITH catalog.id AS bookId,
+       [item in catalog._book WHERE item._type = "title"][0] AS title,
+       [item in catalog._book WHERE item._type = "description"][0] AS description,
+       [item in catalog._book WHERE item._type = "author"] AS authors,
+       [item in catalog._book WHERE item._type = "genre"][0] AS genre
+
+MERGE (b:Book {id: bookId})
+SET b.title = title._text, b.description = description._text
+
+MERGE (g:Genre {name: genre._text})
+MERGE (b)-[:HAS_GENRE]-&gt;(g)
+
+WITH b, authors
+UNWIND authors AS author
+MERGE (a:Author {name:author._text})
+MERGE (a)-[:WROTE]-&gt;(b);</code></pre><p>
+                  
+               </p>
+               <p>The Neo4j Browser visualization below shows the imported graph:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc.load.xml.all.books.svg" alt="apoc.load.xml.all.books"></img></div>
+               </div>
+            </section>
+            <section class="section" id="load-xml-examples-xpath">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-examples-xpath"></a>5.6.3.3.&nbsp;xPath expressions
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can also provide an xPath expression to select nodes from an XML document.
+                  If we only want to return books that have the <code class="literal">Computer</code> genre, we could write the following query:
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.xml(
+  "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml",
+  '/catalog/book[genre=\"Computer\"]'
+)
+YIELD value as book
+WITH book.id as id, [attr IN book._children WHERE attr._type IN ['title','price'] | attr._text] as pairs
+RETURN id, pairs[0] as title, pairs[1] as price;</code></pre><div class="table" id="d0e10948">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.21.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">id</th>
+                           <th style="text-align: left; vertical-align: top; ">title</th>
+                           <th style="text-align: left; vertical-align: top; ">price</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk101"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"XML Developer&#8217;s Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"44.95"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk110"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Microsoft .NET: The Programming Bible"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"36.95"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk111"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"MSXML3: A Comprehensive Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"36.95"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk112"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Visual Studio 7: A Comprehensive Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"49.95"</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>In this case we return only <code class="literal">id</code>, <code class="literal">title</code> and <code class="literal">prize</code> but we can return any other elements
+               </p>
+               <p>We can also return just a single specific element.
+                  For example, the following query returns the <code class="literal">author</code> of the book with <code class="literal">id = bg102</code></p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.xml(
+  'https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml',
+  '/catalog/book[@id="bk102"]/author'
+)
+YIELD value as result
+WITH result._text as author
+RETURN author;</code></pre><div class="table" id="d0e11024">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.22.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">author</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Ralls, Kim"</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-xml-examples-extracting-datastructures">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-examples-extracting-datastructures"></a>5.6.3.4.&nbsp;Extracting data structures
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can turn values into a map using the <code class="literal">apoc.map.fromPairs</code> function.
+               </p><pre class="programlisting highlight"><code data-lang="cypher">call apoc.load.xml("https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml")
+yield value as catalog
+UNWIND catalog._children as book
+WITH book.id as id, [attr IN book._children WHERE attr._type IN ['author','title'] | [attr._type, attr._text]] as pairs
+WITH id, apoc.map.fromPairs(pairs) AS value
+RETURN id, value</code></pre><div class="table" id="d0e11048">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.23.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">id</th>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk101"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "XML Developer&#8217;s Guide", author: "Arciniegas, Fabio"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk102"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Midnight Rain", author: "Ralls, Kim"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk103"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Maeve Ascendant", author: "Corets, Eva"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk104"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Oberon&#8217;s Legacy", author: "Corets, Eva"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk105"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "The Sundered Grail", author: "Corets, Eva"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk106"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Lover Birds", author: "Randall, Cynthia"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk107"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Splish Splash", author: "Thurman, Paula"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk108"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Creepy Crawlies", author: "Knorr, Stefan"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk109"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Paradox Lost", author: "Kress, Peter"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk110"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Microsoft .NET: The Programming Bible", author: "O&#8217;Brien, Tim"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk111"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "MSXML3: A Comprehensive Guide", author: "O&#8217;Brien, Tim"}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk112"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{title: "Visual Studio 7: A Comprehensive Guide", author: "Galos, Mike"}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>And now we can cleanly access the attributes from the map.</p><pre class="programlisting highlight"><code data-lang="cypher">call apoc.load.xml("https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml")
+yield value as catalog
+UNWIND catalog._children as book
+WITH book.id as id, [attr IN book._children WHERE attr._type IN ['author','title'] | [attr._type, attr._text]] as pairs
+WITH id, apoc.map.fromPairs(pairs) AS value
+RETURN id, value.title, value.author</code></pre><div class="table" id="d0e11149">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.24.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">id</th>
+                           <th style="text-align: left; vertical-align: top; ">value.title</th>
+                           <th style="text-align: left; vertical-align: top; ">value.author</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk101"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"XML Developer&#8217;s Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Arciniegas, Fabio"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk102"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Midnight Rain"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Ralls, Kim"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk103"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Maeve Ascendant"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Corets, Eva"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk104"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Oberon&#8217;s Legacy"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Corets, Eva"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk105"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"The Sundered Grail"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Corets, Eva"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk106"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Lover Birds"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Randall, Cynthia"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk107"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Splish Splash"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Thurman, Paula"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk108"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Creepy Crawlies"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Knorr, Stefan"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk109"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Paradox Lost"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Kress, Peter"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk110"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Microsoft .NET: The Programming Bible"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"O&#8217;Brien, Tim"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk111"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"MSXML3: A Comprehensive Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"O&#8217;Brien, Tim"</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"bk112"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Visual Studio 7: A Comprehensive Guide"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Galos, Mike"</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-xml-examples-import-xml-directly">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-xml-examples-import-xml-directly"></a>5.6.3.5.&nbsp;Import XML directly
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can write the following query to create a graph structure of the Microsoft books XML file.</p>
+               <p><span class="formalpara-title">The following creates a graph structure based on the contents of <code class="literal">books.xml</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.import.xml(
+  "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml",
+  {relType:'NEXT_WORD', label:'XmlWord'}
+)
+YIELD node
+RETURN node;</code></pre><p>
+                  
+               </p>
+               <div class="informaltable">
+                  <div class="table" id="d0e11300">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">node</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>(:XmlDocument {_xmlVersion: "1.0", _xmlEncoding: "UTF-8", url: "https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/4.0/src/test/resources/xml/books.xml"})</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>The Neo4j Browser visualization below shows the imported graph:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc.import.xml.svg" width="800" alt="apoc.import.xml"></img></div>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

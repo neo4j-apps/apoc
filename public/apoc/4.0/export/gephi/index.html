@@ -1,0 +1,287 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>6.5.&nbsp;Export to Gephi - Chapter&nbsp;6.&nbsp;Export</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes a procedure that can be used to export data into the Gephi visualization tool."></meta>
+      <link rel="prev" href="../json/" title="6.2.&nbsp;Export to JSON"></link>
+      <link rel="next" href="../graphml/" title="6.4.&nbsp;Export to GraphML"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../json/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Export to JSON</a></span><span class="nav-current">
+               <p class="nav-title hidden">6.5.&nbsp;Export to Gephi</p></span><span class="nav-next"><a accesskey="n" href="../graphml/">Export to GraphML<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="gephi">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#gephi"></a>6.5.&nbsp;Export to Gephi
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes a procedure that can be used to export data into the Gephi visualization tool.</p>
+         </div>
+         <p>Gephi has a <a class="link" href="https://marketplace.gephi.org/plugin/graph-streaming/" target="_top">streaming plugin</a>, that can provide and accept <a class="link" href="https://github.com/gephi/gephi/wiki/GraphStreaming#Gephi_as_Master" target="_top">JSON-graph-data</a> in a streaming fashion.
+            The export to Gephi procedure sends data to this end point.
+         </p>
+         <div class="informalfigure">
+            <div class="mediaobject">
+               <table style="border: 0; width: 100%; cellpadding: 0; cellspacing: 0;">
+                  <tr>
+                     <td><img src="../../images/apoc-gephi.gif" width="100%" alt="apoc gephi"></img></td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="link" href="#export-gephi-install-plugin" title="6.5.1.&nbsp;Installing the plugin">Installing the plugin</a></li>
+               <li class="listitem"><a class="link" href="#export-gephi-available-procedures" title="6.5.2.&nbsp;Available Procedure">Available Procedures</a></li>
+               <li class="listitem"><a class="link" href="#export-gephi-format" title="6.5.3.&nbsp;Export Format">Export Format</a></li>
+               <li class="listitem"><a class="link" href="#export-gephi-examples" title="6.5.4.&nbsp;Examples">Examples</a></li>
+            </ul>
+         </div>
+         <section class="section" id="export-gephi-install-plugin">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-gephi-install-plugin"></a>6.5.1.&nbsp;Installing the plugin
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Make sure to install the plugin first and activate it for your workspace (there is a new "Streaming"-tab besides "Layout"),
+               right-click "Master"&#8594;"start" to start the server.
+            </p>
+            <p>You can provide your workspace name (you might want to rename it before you start thes streaming), otherwise it defaults to
+               <code class="literal">workspace0</code></p>
+            <p>The default Gephi-URL is <a class="link" href="http://localhost:8080" target="_top">http://localhost:8080</a>, resulting in <code class="literal"><a class="link" href="http://localhost:8080/workspace0?operation=updateGraph" target="_top">http://localhost:8080/workspace0?operation=updateGraph</a></code></p>
+            <p>It can also be configured by adding the following to <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.gephi.url=url</code></pre><p>
+               
+            </p>
+            <p>or</p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.gephi.&lt;key&gt;.url=url</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="export-gephi-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-gephi-available-procedures"></a>6.5.2.&nbsp;Available Procedure
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedure:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e17722">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.gephi.add</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.gephi.add(urlOrKey :: STRING?, workspace :: STRING?, data :: ANY?, weightproperty = null :: STRING?, exportproperties
+                                    = [] :: LIST? OF STRING?) :: (file :: STRING?, source :: STRING?, format :: STRING?, nodes :: INTEGER?, relationships :: INTEGER?,
+                                    properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?,
+                                    data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.gephi.add(url-or-key, workspace, data, weightproperty, ['exportproperty']) | streams passed in data to Gephi</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="export-gephi-format">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-gephi-format"></a>6.5.3.&nbsp;Export Format
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>All nodes and relationships of the passed in data are converted into individual Gephi-Streaming JSON fragements, separated
+               by \r\n. <code class="literal">\r\n</code>.
+            </p>
+            <p><span class="formalpara-title">Example of exported JSON.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="javascript">{"an":{"123":{"TYPE":"Person:Actor","label":"Tom Hanks",                           x:333,y:222,r:0.1,g:0.3,b:0.5}}}\r\n
+{"an":{"345":{"TYPE":"Movie","label":"Forrest Gump",                               x:234,y:122,r:0.2,g:0.2,b:0.7}}}\r\n
+{"ae":{"3344":{"TYPE":"ACTED_IN","label":"Tom Hanks",source:"123",target:"345","directed":true,"weight":1.0,r:0.1,g:0.3,b:0.5}}}</code></pre><p>
+               
+            </p>
+            <div class="admonitionblock note">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-note" title="note"></i></td>
+                        <td class="content">
+                           <p>Gephi doesn&#8217;t render the graph data unless you also provide x,y coordinates in the payload, so the procedures send random
+                              ones within a 1000x1000 grid.
+                           </p>
+                           <p>Colors are generated per label combination and relationship-type, both of which are also transferred as <code class="literal">TYPE</code> property.
+                           </p>
+                           <p>Weight properties are stored as a number (integer,float) or a string.
+                              If the weight property is invalid or null, a default value of 1.0 will be used.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="export-gephi-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-gephi-examples"></a>6.5.4.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>You can export your graph as an unweighted network.</p>
+            <p><span class="formalpara-title">The following exports <code class="literal">ACTED_IN</code> paths.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">match path = (:Person)-[:ACTED_IN]-&gt;(:Movie)
+WITH path LIMIT 1000
+with collect(path) as paths
+call apoc.gephi.add(null,'workspace0', paths) yield nodes, relationships, time
+return nodes, relationships, time</code></pre><p>
+               
+            </p>
+            <p>You can export your graph as a weighted network, by specifying the property of a relationship, that holds the weight value.</p>
+            <p><span class="formalpara-title">The following exports <code class="literal">ACTED_IN</code> paths where the <code class="literal">weightproperty</code> property exists on the relationship type.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">match path = (:Person)-[r:ACTED_IN]-&gt;(:Movie) where exists r.weightproperty
+WITH path LIMIT 1000
+with collect(path) as paths
+call apoc.gephi.add(null,'workspace0', paths, 'weightproperty') yield nodes, relationships, time
+return nodes, relationships, time</code></pre><p>
+               
+            </p>
+            <p>You can also export with your graph other properties of your nodes and/or relationship by adding an optional array with the
+               property names you want to export.
+            </p>
+            <p><span class="formalpara-title">The following exports <code class="literal">ACTED_IN</code> paths, but only includes the <code class="literal">birthYear</code> and <code class="literal">role</code> properties.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">match path = (:Person)-[r:ACTED_IN]-&gt;(:Movie) where exists r.weightproperty
+WITH path LIMIT 1000
+with collect(path) as paths
+call apoc.gephi.add(null,'workspace0', paths, 'weightproperty',['birthYear', 'role']) yield nodes, relationships, time
+return nodes, relationships, time</code></pre><p>
+               
+            </p>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

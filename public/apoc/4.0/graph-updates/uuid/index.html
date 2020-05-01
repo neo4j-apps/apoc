@@ -1,0 +1,484 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>8.2.&nbsp;UUIDs - Chapter&nbsp;8.&nbsp;Graph Updates</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to add UUID properties to nodes."></meta>
+      <link rel="prev" href="../data-deletion/" title="8.9.&nbsp;Deleting Data"></link>
+      <link rel="next" href="../ttl/" title="8.7.&nbsp;Time To Live (TTL) - Expire Nodes"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../data-deletion/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Deleting Data</a></span><span class="nav-current">
+               <p class="nav-title hidden">8.2.&nbsp;UUIDs</p></span><span class="nav-next"><a accesskey="n" href="../ttl/">Time To Live (TTL) - Expire Nodes<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="auto-uuid">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#auto-uuid"></a>8.2.&nbsp;UUIDs
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to add UUID properties to nodes.</p>
+         </div>
+         <p>The library supports manual and automation generation of UUIDs, which can be stored as properties on nodes.
+            This section includes:
+         </p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="xref" href="#manual-uuids" title="8.2.1.&nbsp;Manual UUIDs">Section&nbsp;8.2.1, &#8220;Manual UUIDs&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#automatic-uuids" title="8.2.2.&nbsp;Automatic UUIDs">Section&nbsp;8.2.2, &#8220;Automatic UUIDs&#8221;</a></li>
+            </ul>
+         </div>
+         <section class="section" id="manual-uuids">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#manual-uuids"></a>8.2.1.&nbsp;Manual UUIDs
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="table" id="d0e20807">
+               <table class="table" summary="Functions" border="1">
+                  <caption class="table-title">Table&nbsp;8.6.&nbsp;Functions</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.create.uuid()</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a UUID string</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p><span class="formalpara-title">The following generates a UUID.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.create.uuid() AS uuid;</code></pre><p>
+               
+            </p>
+            <div class="table" id="d0e20830">
+               <table class="table" summary="Results" border="1">
+                  <caption class="table-title">Table&nbsp;8.7.&nbsp;Results</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">uuid</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>"1051af4f-b81d-4a76-8605-ecfb8ef703d5"</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p><span class="formalpara-title">The following creates a <code class="literal">Person</code> node, using a UUID as the merging key:&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">MERGE (p:Person {id: apoc.create.uuid()})
+SET p.firstName = "Michael", p.surname = "Hunger"
+RETURN p</code></pre><p>
+               
+            </p>
+            <div class="table" id="d0e20855">
+               <table class="table" summary="Results" border="1">
+                  <caption class="table-title">Table&nbsp;8.8.&nbsp;Results</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">p</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>{"firstName":"Michael","surname":"Hunger","id":"5530953d-b85e-4939-b37f-a79d54b770a3"}</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="automatic-uuids">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#automatic-uuids"></a>8.2.2.&nbsp;Automatic UUIDs
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>There are also procedures that handle automatic adding of UUID properties, via the UUID Handler Lifecycle.
+               The UUID handler is a transaction event handler that automatically adds the UUID property to a provided label and for the
+               provided property name.
+               Please check the following documentation to an in-depth description.
+            </p>
+            <p>Enable <code class="literal">apoc.uuid.enabled=true</code> in <code class="literal">$NEO4J_HOME/config/apoc.conf</code> first.
+            </p>
+            <div class="informaltable">
+               <div class="table" id="d0e20882">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal"><span class="strong"><strong>procedure</strong></span></code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><span class="strong"><strong>description</strong></span></p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">CALL apoc.uuid.install(label, {addToExistingNodes: true/false, uuidProperty: 'uuid'}) yield label, installed, properties,
+                                    batchComputationResult</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>it will add the uuid transaction handler
+                                 for the provided <code class="literal">label</code> and <code class="literal">uuidProperty</code>, in case the UUID handler is already present it will be replaced by the new one
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">CALL apoc.uuid.remove(label) yield label, installed, properties</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>remove previously added uuid handler and returns uuid information. All the existing uuid properties are left as-is</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">CALL apoc.uuid.removeAll() yield label, installed, properties</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>removes all previously added uuid handlers and returns uuids information. All the existing uuid properties are left as-is</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">CALL apoc.uuid.list() yield label, installed, properties</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>provides a list of all the uuid handlers installed with the related configuration</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <section class="section" id="_config_3">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#_config_3"></a>8.2.2.1.&nbsp;Config
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <div class="table" id="d0e20938">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><span class="strong"><strong>config</strong></span></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><span class="strong"><strong>type</strong></span></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><span class="strong"><strong>description</strong></span></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>addToExistingNodes</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>Boolean (default: true)</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>when installed, for the label provided, adds the UUID to the nodes already existing in your graph</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>uuidProperty</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>String (default: uuid)</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>the name of the UUID field</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </section>
+            <section class="section" id="_uuid_examples">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#_uuid_examples"></a>8.2.2.2.&nbsp;UUID Examples
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>First create a Constraint for the Label and the Property, if you try to add a <code class="literal">uuid</code> an error occured.
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CREATE CONSTRAINT ON (person:Person)
+ASSERT person.uuid IS UNIQUE</code></pre><p>Add the <code class="literal">uuid</code>:
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.uuid.install('Person')
+YIELD label, installed, properties
+RETURN label, installed, properties</code></pre><p>The result is:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e20996">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                           <col class="col_4"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">label</th>
+                              <th style="text-align: left; vertical-align: top; ">installed</th>
+                              <th style="text-align: left; vertical-align: top; ">properties</th>
+                              <th style="text-align: left; vertical-align: top; ">batchComputationResult</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>"Person"</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>true</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>{uuidProperty &#8594; "uuid", addToExistingNodes &#8594; true}</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>{wasTerminated &#8594; false, count &#8594; 10, batches &#8594; 1, successes &#8594; 1, failedOps &#8594; 0, timeTaken &#8594; 0, operationErrors &#8594; {}, failedBatches
+                                    &#8594; 0}
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>The result is Node Person that has 2 properties:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc.uuid.result.png" width="800" alt="apoc.uuid.result"></img></div>
+               </div>
+               <p>Get all the uuid installed, call the procedure as:</p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.uuid.list()
+YIELD label, installed, properties
+RETURN label, installed, properties</code></pre><p>The result is:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e21041">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">label</th>
+                              <th style="text-align: left; vertical-align: top; ">installed</th>
+                              <th style="text-align: left; vertical-align: top; ">properties</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>"Person"</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>true</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>{uuidProperty &#8594; "uuid", addToExistingNodes &#8594; true}</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>Remove the uuid installed call the procedure as:</p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.uuid.remove('Person')
+YIELD label, installed, properties
+RETURN label, installed, properties</code></pre><p>The result is:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e21071">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">label</th>
+                              <th style="text-align: left; vertical-align: top; ">installed</th>
+                              <th style="text-align: left; vertical-align: top; ">properties</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>"Person"</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>false</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>{uuidProperty &#8594; "uuid", addToExistingNodes &#8594; true}</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>You can also remove all the uuid installed call the procedure as:</p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.uuid.removeAll()
+YIELD label, installed, properties
+RETURN label, installed, properties</code></pre><p>The result is:</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e21101">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">label</th>
+                              <th style="text-align: left; vertical-align: top; ">installed</th>
+                              <th style="text-align: left; vertical-align: top; ">properties</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>"Person"</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>false</p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>{uuidProperty &#8594; "uuid", addToExistingNodes &#8594; true}</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

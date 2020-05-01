@@ -1,0 +1,1479 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>6.4.&nbsp;Export to GraphML - Chapter&nbsp;6.&nbsp;Export</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to export data in GraphML format."></meta>
+      <link rel="prev" href="../gephi/" title="6.5.&nbsp;Export to Gephi"></link>
+      <link rel="next" href="../../database-integration/" title="Chapter&nbsp;7.&nbsp;Database Integration"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../gephi/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Export to Gephi</a></span><span class="nav-current">
+               <p class="nav-title hidden">6.4.&nbsp;Export to GraphML</p></span><span class="nav-next"><a accesskey="n" href="../../database-integration/">Database Integration<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="graphml-export">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#graphml-export"></a>6.4.&nbsp;Export to GraphML
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to export data in GraphML format.</p>
+         </div>
+         <p>The export GraphML procedures export data into a format that&#8217;s used by other tools like Gephi and CytoScape to read graph
+            data.
+         </p>
+         <p>All <code class="literal">Point</code> or <code class="literal">Temporal</code> data types are exported formatted as a String
+         </p>
+         <p>e.g:</p>
+         <div class="informaltable">
+            <div class="table" id="d0e16536">
+               <table class="informaltable" border="1">
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">Point 3d</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>{"crs":"wgs-84-3d","latitude":56.7,"longitude":12.78,"height":100.0}</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">Point 2d</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>{"crs":"wgs-84-3d","latitude":56.7,"longitude":12.78,"height":null}</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">Date</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>2018-10-10</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">LocalDateTime</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>2018-10-10T00:00</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="link" href="#export-graphml-available-procedures" title="6.4.1.&nbsp;Available Procedures">Available Procedures</a></li>
+               <li class="listitem"><a class="link" href="#export-graphml-config" title="6.4.2.&nbsp;Configuration parameters">Configuration parameters</a></li>
+               <li class="listitem"><a class="link" href="#export-graphml-file-export" title="6.4.3.&nbsp;Exporting to a file">Exporting to a file</a></li>
+               <li class="listitem"><a class="link" href="#export-graphml-stream-export" title="6.4.4.&nbsp;Exporting a stream">Exporting a stream</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="link" href="#export-graphml-examples" title="6.4.5.&nbsp;Examples">Examples</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="link" href="#export-graphml-whole-database" title="6.4.5.1.&nbsp;Export whole database to GraphML">Export whole database</a></li>
+                        <li class="listitem"><a class="link" href="#export-graphml-nodes-relationships" title="6.4.5.2.&nbsp;Export specified nodes and relationships to GraphML">Export specified nodes and relationships</a></li>
+                        <li class="listitem"><a class="link" href="#export-graphml-graph" title="6.4.5.3.&nbsp;Export virtual graph to GraphML">Export virtual graph</a></li>
+                        <li class="listitem"><a class="link" href="#export-graphml-cypher-query" title="6.4.5.4.&nbsp;Export results of Cypher query to GraphML">Export results of Cypher query</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="export-graphml-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-graphml-available-procedures"></a>6.4.1.&nbsp;Available Procedures
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedures:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e16618">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.all</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.all(file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format :: STRING?, nodes
+                                    :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?,
+                                    batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.graphml.all(file,config) - exports whole database as graphml to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.data</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.data(nodes :: LIST? OF NODE?, rels :: LIST? OF RELATIONSHIP?, file :: STRING?, config :: MAP?) :: (file
+                                    :: STRING?, source :: STRING?, format :: STRING?, nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time
+                                    :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.graphml.data(nodes,rels,file,config) - exports given nodes and relationships as graphml to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.graph(graph :: MAP?, file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format ::
+                                    STRING?, nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize
+                                    :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.graphml.graph(graph,file,config) - exports given graph object as graphml to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.query</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.graphml.query(query :: STRING?, file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format
+                                    :: STRING?, nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize
+                                    :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.graphml.query(query,file,config) - exports nodes and relationships from the cypher statement as graphml to the
+                                 provided file
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>The labels exported are ordered alphabetically.
+               The output of <code class="literal">labels()</code> function is not sorted, use it in combination with <code class="literal">apoc.coll.sort()</code>.
+            </p>
+         </section>
+         <section class="section" id="export-graphml-config">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-graphml-config"></a>6.4.2.&nbsp;Configuration parameters
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The procedures support the following config parameters:</p>
+            <div class="table" id="d0e16708">
+               <table class="table" summary="configuration options" border="1">
+                  <caption class="table-title">Table&nbsp;6.41.&nbsp;configuration options</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">param</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>format</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>gephi</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>In export to Graphml script define the export format. Possible value is: "gephi"</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>caption</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">&nbsp;</td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>It&#8217;s an array of string (i.e. ['name','title']) that define an ordered set of properties eligible as value for the <code class="literal">Label</code> value, if no match is found the there is a fallback to the node label, if the node label is missing the then the ID is used
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>useTypes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Write the attribute type information to the graphml output</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>batchSize</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>20000</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>define the batch size</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>delim</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>","</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>define the delimiter character (export csv)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>arrayDelim</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>";"</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>define the delimiter character for arrays (used in the bulk import)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>useTypes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>add type on file header (export csv and graphml export)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>storeNodeIds</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>set nodes' ids (import/export graphml)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>readLabels</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>read nodes' labels (import/export graphml)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>defaultRelationshipType</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>"RELATED"</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>set relationship type (import/export graphml)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>separateFiles</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>export results in separated file by type (nodes, relationships..)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>stream</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>stream the xml directly to the client into the <code class="literal">data</code> field
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="export-graphml-file-export">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-graphml-file-export"></a>6.4.3.&nbsp;Exporting to a file
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>By default exporting to the file system is disabled.
+               We can enable it by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.export.file.enabled=true</code></pre><p>
+               
+            </p>
+            <p>If we try to use any of the export procedures without having first set this property, we&#8217;ll get the following error message:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e16866">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Export to files not enabled, please set apoc.export.file.enabled=true
+                                 in your neo4j.conf
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>Export files are written to the <code class="literal">import</code> directory, which is defined by the <code class="literal">dbms.directories.import</code> property.
+               This means that any file path that we provide is relative to this directory.
+               If we try to write to an absolute path, such as <code class="literal">/tmp/filename</code>, we&#8217;ll get an error message similar to the following one:
+            </p>
+            <div class="informaltable">
+               <div class="table" id="d0e16885">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.io.FileNotFoundException: /path/to/neo4j/import/tmp/fileName (No such file or
+                                 directory)
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>We can enable writing to anywhere on the file system by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.use_neo4j_config=false</code></pre><p>
+               
+            </p>
+            <div class="admonitionblock warning">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-warning" title="warning"></i></td>
+                        <td class="content">
+                           <p>Neo4j will now be able to write anywhere on the file system, so be sure that this is your intention before setting this property.</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="export-graphml-stream-export">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-graphml-stream-export"></a>6.4.4.&nbsp;Exporting a stream
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>If we don&#8217;t want to export to a file, we can stream results back in the <code class="literal">data</code> column instead by passing a file name of <code class="literal">null</code> and providing the <code class="literal">stream:true</code> config.
+            </p>
+         </section>
+         <section class="section" id="export-graphml-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-graphml-examples"></a>6.4.5.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>This section includes examples showing how to use the export to Cypher procedures.
+               These examples are based on a movies dataset, which can be imported by running the following Cypher query:
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})
+CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})
+CREATE (Carrie:Person {name:'Carrie-Anne Moss', born:1967})
+CREATE (Laurence:Person {name:'Laurence Fishburne', born:1961})
+CREATE (Hugo:Person {name:'Hugo Weaving', born:1960})
+CREATE (LillyW:Person {name:'Lilly Wachowski', born:1967})
+CREATE (LanaW:Person {name:'Lana Wachowski', born:1965})
+CREATE (JoelS:Person {name:'Joel Silver', born:1952})
+CREATE
+(Keanu)-[:ACTED_IN {roles:['Neo']}]-&gt;(TheMatrix),
+(Carrie)-[:ACTED_IN {roles:['Trinity']}]-&gt;(TheMatrix),
+(Laurence)-[:ACTED_IN {roles:['Morpheus']}]-&gt;(TheMatrix),
+(Hugo)-[:ACTED_IN {roles:['Agent Smith']}]-&gt;(TheMatrix),
+(LillyW)-[:DIRECTED]-&gt;(TheMatrix),
+(LanaW)-[:DIRECTED]-&gt;(TheMatrix),
+(JoelS)-[:PRODUCED]-&gt;(TheMatrix);</code></pre><p>The Neo4j Browser visualization below shows the imported graph:</p>
+            <div class="figure" id="d0e16932">
+               <div class="figure-title">Figure&nbsp;6.4.&nbsp;Movies Graph Visualization</div>
+               <div class="figure-contents">
+                  <div class="mediaobject"><img src="../../images/play-movies.png" alt="play movies"></img></div>
+               </div>
+            </div>
+            <section class="section" id="export-graphml-whole-database">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-graphml-whole-database"></a>6.4.5.1.&nbsp;Export whole database to GraphML
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.graphml.all</code> procedure exports the whole database to a GraphML file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports the whole database to the file <code class="literal">movies.graphml</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.graphml.all("movies.graphml", {})</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e16959">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.42.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies.graphml"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"database: nodes(8), rels(7)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"graphml"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>8</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>21</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>4</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>-1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">movies.graphml.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"&gt;
+&lt;key id="born" for="node" attr.name="born"/&gt;
+&lt;key id="name" for="node" attr.name="name"/&gt;
+&lt;key id="tagline" for="node" attr.name="tagline"/&gt;
+&lt;key id="label" for="node" attr.name="label"/&gt;
+&lt;key id="title" for="node" attr.name="title"/&gt;
+&lt;key id="released" for="node" attr.name="released"/&gt;
+&lt;key id="roles" for="edge" attr.name="roles"/&gt;
+&lt;key id="label" for="edge" attr.name="label"/&gt;
+&lt;graph id="G" edgedefault="directed"&gt;
+&lt;node id="n188" labels=":Movie"&gt;&lt;data key="labels"&gt;:Movie&lt;/data&gt;&lt;data key="title"&gt;The Matrix&lt;/data&gt;&lt;data key="tagline"&gt;Welcome to the Real World&lt;/data&gt;&lt;data key="released"&gt;1999&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n189" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1964&lt;/data&gt;&lt;data key="name"&gt;Keanu Reeves&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n190" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1967&lt;/data&gt;&lt;data key="name"&gt;Carrie-Anne Moss&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n191" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1961&lt;/data&gt;&lt;data key="name"&gt;Laurence Fishburne&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n192" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1960&lt;/data&gt;&lt;data key="name"&gt;Hugo Weaving&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n193" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1967&lt;/data&gt;&lt;data key="name"&gt;Lilly Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n194" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1965&lt;/data&gt;&lt;data key="name"&gt;Lana Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n195" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1952&lt;/data&gt;&lt;data key="name"&gt;Joel Silver&lt;/data&gt;&lt;/node&gt;
+&lt;edge id="e267" source="n189" target="n188" label="ACTED_IN"&gt;&lt;data key="label"&gt;ACTED_IN&lt;/data&gt;&lt;data key="roles"&gt;["Neo"]&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e268" source="n190" target="n188" label="ACTED_IN"&gt;&lt;data key="label"&gt;ACTED_IN&lt;/data&gt;&lt;data key="roles"&gt;["Trinity"]&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e269" source="n191" target="n188" label="ACTED_IN"&gt;&lt;data key="label"&gt;ACTED_IN&lt;/data&gt;&lt;data key="roles"&gt;["Morpheus"]&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e270" source="n192" target="n188" label="ACTED_IN"&gt;&lt;data key="label"&gt;ACTED_IN&lt;/data&gt;&lt;data key="roles"&gt;["Agent Smith"]&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e271" source="n193" target="n188" label="DIRECTED"&gt;&lt;data key="label"&gt;DIRECTED&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e272" source="n194" target="n188" label="DIRECTED"&gt;&lt;data key="label"&gt;DIRECTED&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e273" source="n195" target="n188" label="PRODUCED"&gt;&lt;data key="label"&gt;PRODUCED&lt;/data&gt;&lt;/edge&gt;
+&lt;/graph&gt;
+&lt;/graphml&gt;</code></pre><p>
+                  
+               </p>
+               <p><span class="formalpara-title">The following query returns a stream of the whole database in the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.graphml.all(null, {stream:true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17058">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.43.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>8</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>21</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="xml">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;
+ &lt;graphml xmlns="\"http://graphml.graphdrawing.org/xmlns\""
+          xmlns:xsi="\"http://www.w3.org/2001/XMLSchema-instance\""
+          xsi:schemaLocation="\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\""&gt;
+   &lt;key id="\"born\"" for="\"node\"" attr.name="\"born\""/&gt;
+   &lt;key id="\"name\"" for="\"node\"" attr.name="\"name\""/&gt;
+   &lt;key id="\"tagline\"" for="\"node\"" attr.name="\"tagline\""/&gt;
+   &lt;key id="\"label\"" for="\"node\"" attr.name="\"label\""/&gt;
+   &lt;key id="\"title\"" for="\"node\"" attr.name="\"title\""/&gt;
+   &lt;key id="\"released\"" for="\"node\"" attr.name="\"released\""/&gt;
+   &lt;key id="\"roles\"" for="\"edge\"" attr.name="\"roles\""/&gt;
+   &lt;key id="\"label\"" for="\"edge\"" attr.name="\"label\""/&gt;
+   &lt;graph id="\"G\"" edgedefault="\"directed\""&gt;
+     &lt;node id="\"n188\"" labels="\":Movie\""&gt;
+       &lt;data key="\"labels\""&gt;:Movie&lt;/data&gt;
+       &lt;data key="\"title\""&gt;The Matrix&lt;/data&gt;
+       &lt;data key="\"tagline\""&gt;Welcome to the Real World&lt;/data&gt;
+       &lt;data key="\"released\""&gt;1999&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n189\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1964&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Keanu Reeves&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n190\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1967&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Carrie-Anne Moss&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n191\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1961&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Laurence Fishburne&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n192\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1960&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Hugo Weaving&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n193\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1967&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lilly Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n194\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1965&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lana Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n195\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1952&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Joel Silver&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;edge id="\"e267\"" source="\"n189\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Neo\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e268\"" source="\"n190\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Trinity\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e269\"" source="\"n191\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Morpheus\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e270\"" source="\"n192\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Agent Smith\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e271\"" source="\"n193\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e272\"" source="\"n194\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e273\"" source="\"n195\"" target="\"n188\"" label="\"PRODUCED\""&gt;
+       &lt;data key="\"label\""&gt;PRODUCED&lt;/data&gt;
+     &lt;/edge&gt;
+   &lt;/graph&gt;
+ &lt;/graphml&gt;
+  "</code></pre></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-graphml-nodes-relationships">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-graphml-nodes-relationships"></a>6.4.5.2.&nbsp;Export specified nodes and relationships to GraphML
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.graphml.data</code> procedure exports the specified nodes and relationships to a CSV file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports all nodes with the <code class="literal">:Person</code> label with a <code class="literal">name</code> property that starts with <code class="literal">L</code> to the file <code class="literal">movies-l.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (person:Person)
+WHERE person.name STARTS WITH "L"
+WITH collect(person) AS people
+CALL apoc.export.graphml.data(people, [], "movies-l.graphml", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17123">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.44.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-l.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"data: nodes(3), rels(0)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>6</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">movies-l.graphml.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"&gt;
+&lt;key id="born" for="node" attr.name="born"/&gt;
+&lt;key id="name" for="node" attr.name="name"/&gt;
+&lt;key id="label" for="node" attr.name="label"/&gt;
+&lt;graph id="G" edgedefault="directed"&gt;
+&lt;node id="n191" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1961&lt;/data&gt;&lt;data key="name"&gt;Laurence Fishburne&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n193" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1967&lt;/data&gt;&lt;data key="name"&gt;Lilly Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n194" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1965&lt;/data&gt;&lt;data key="name"&gt;Lana Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;/graph&gt;
+&lt;/graphml&gt;</code></pre><p>
+                  
+               </p>
+               <p><span class="formalpara-title">The following query returns a stream of all <code class="literal">ACTED_IN</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship in the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (person:Person)-[actedIn:ACTED_IN]-&gt;(movie:Movie)
+WITH collect(DISTINCT person) AS people, collect(DISTINCT movie) AS movies, collect(actedIn) AS actedInRels
+CALL apoc.export.graphml.data(people + movies, actedInRels, null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17231">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.45.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>4</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="xml">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;
+ &lt;graphml xmlns="\"http://graphml.graphdrawing.org/xmlns\""
+          xmlns:xsi="\"http://www.w3.org/2001/XMLSchema-instance\""
+ xsi:schemaLocation="\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\""&gt;
+   &lt;key id="\"born\"" for="\"node\"" attr.name="\"born\""/&gt;
+   &lt;key id="\"name\"" for="\"node\"" attr.name="\"name\""/&gt;
+   &lt;key id="\"tagline\"" for="\"node\"" attr.name="\"tagline\""/&gt;
+   &lt;key id="\"label\"" for="\"node\"" attr.name="\"label\""/&gt;
+   &lt;key id="\"title\"" for="\"node\"" attr.name="\"title\""/&gt;
+   &lt;key id="\"released\"" for="\"node\"" attr.name="\"released\""/&gt;
+   &lt;key id="\"roles\"" for="\"edge\"" attr.name="\"roles\""/&gt;
+   &lt;key id="\"label\"" for="\"edge\"" attr.name="\"label\""/&gt;
+   &lt;graph id="\"G\"" edgedefault="\"directed\""&gt;
+     &lt;node id="\"n188\"" labels="\":Movie\""&gt;
+       &lt;data key="\"labels\""&gt;:Movie&lt;/data&gt;
+       &lt;data key="\"title\""&gt;The Matrix&lt;/data&gt;
+       &lt;data key="\"tagline\""&gt;Welcome to the Real World&lt;/data&gt;
+       &lt;data key="\"released\""&gt;1999&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n189\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1964&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Keanu Reeves&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n190\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1967&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Carrie-Anne Moss&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n191\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1961&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Laurence Fishburne&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n192\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1960&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Hugo Weaving&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n193\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1967&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lilly Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n194\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1965&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lana Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n195\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1952&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Joel Silver&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;edge id="\"e267\"" source="\"n189\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Neo\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e268\"" source="\"n190\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Trinity\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e269\"" source="\"n191\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Morpheus\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e270\"" source="\"n192\"" target="\"n188\"" label="\"ACTED_IN\""&gt;
+       &lt;data key="\"label\""&gt;ACTED_IN&lt;/data&gt;
+       &lt;data key="\"roles\""&gt;[\"Agent Smith\"]&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e271\"" source="\"n193\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e272\"" source="\"n194\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e273\"" source="\"n195\"" target="\"n188\"" label="\"PRODUCED\""&gt;
+       &lt;data key="\"label\""&gt;PRODUCED&lt;/data&gt;
+     &lt;/edge&gt;
+   &lt;/graph&gt;
+ &lt;/graphml&gt;"</code></pre></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-graphml-graph">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-graphml-graph"></a>6.4.5.3.&nbsp;Export virtual graph to GraphML
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.graphml.graph</code> procedure exports a <a class="link" href="../../virtual/virtual-graph/" title="15.3.&nbsp;Virtual Graph">virtual graph</a> to a CSV file or as a stream.
+               </p>
+               <p>The examples in this section are based on a virtual graph that contains all <code class="literal">PRODUCED</code> relationships and the nodes either side of that relationship.
+                  The query below creates a virtual graph and stores it in memory with the name <code class="literal">producers.cached</code> using <a class="link" href="../../misc/static-values/" title="20.3.&nbsp;Static Value Storage">Static Value Storage</a>.
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH path = (:Person)-[produced:PRODUCED]-&gt;(:Movie)
+WITH collect(path) AS paths
+CALL apoc.graph.fromPaths(paths, "producers", {})
+YIELD graph AS g
+CALL apoc.static.set("producers.cached", g)
+YIELD value
+RETURN value, g</code></pre><div class="table" id="d0e17293">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.46.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                           <th style="text-align: left; vertical-align: top; ">g</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "producers", relationships: <span id=":PRODUCED"></span>, nodes: [(:Person {name: "Joel Silver", born: 1952}), (:Movie {tagline: "Welcome to the Real World", title: "The Matrix",
+                                 released: 1999})], properties: {}}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">The following query exports the virtual graph from static value storage to the file <code class="literal">movies-producers.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.graphml.graph(apoc.static.get("producers.cached"), "movies-producers.graphml", {});</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17325">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.47.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-producers.graphml"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"graph: nodes(2), rels(1)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">movies-producers.graphml.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"&gt;
+&lt;key id="born" for="node" attr.name="born"/&gt;
+&lt;key id="name" for="node" attr.name="name"/&gt;
+&lt;key id="tagline" for="node" attr.name="tagline"/&gt;
+&lt;key id="label" for="node" attr.name="label"/&gt;
+&lt;key id="title" for="node" attr.name="title"/&gt;
+&lt;key id="released" for="node" attr.name="released"/&gt;
+&lt;key id="label" for="edge" attr.name="label"/&gt;
+&lt;graph id="G" edgedefault="directed"&gt;
+&lt;node id="n195" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1952&lt;/data&gt;&lt;data key="name"&gt;Joel Silver&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n188" labels=":Movie"&gt;&lt;data key="labels"&gt;:Movie&lt;/data&gt;&lt;data key="title"&gt;The Matrix&lt;/data&gt;&lt;data key="tagline"&gt;Welcome to the Real World&lt;/data&gt;&lt;data key="released"&gt;1999&lt;/data&gt;&lt;/node&gt;
+&lt;edge id="e273" source="n195" target="n188" label="PRODUCED"&gt;&lt;data key="label"&gt;PRODUCED&lt;/data&gt;&lt;/edge&gt;
+&lt;/graph&gt;
+&lt;/graphml&gt;</code></pre><p>
+                  
+               </p>
+               <p><span class="formalpara-title">The following query returns a streams of the virtual graph from static value storage to the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.graphml.graph(apoc.static.get("producers.cached"), null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17424">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.48.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="xml">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;
+ &lt;graphml
+   xmlns="\"
+   http://graphml.graphdrawing.org/xmlns\""="http://graphml.graphdrawing.org/xmlns\"""
+   xmlns:xsi="\"
+   http://www.w3.org/2001/XMLSchema-instance\""="http://www.w3.org/2001/XMLSchema-instance\"""
+   xsi:schemaLocation="\"
+   http://graphml.graphdrawing.org/xmlns="http://graphml.graphdrawing.org/xmlns"
+   http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\""="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\"""&gt;
+   &lt;key id="\" born\""="born\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" name\""="name\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" tagline\""="tagline\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" label\""="label\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" title\""="title\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" released\""="released\""" for="\" node\""="node\""" attr.name="\"/&gt;
+   &lt;key id="\" label\""="label\""" for="\" edge\""="edge\""" attr.name="\"/&gt;
+   &lt;graph id="\" G\""="G\""" edgedefault="\" directed\""="directed\"""&gt;
+     &lt;node id="\" n195\""="n195\""" labels="\" :Person\""=":Person\"""&gt;
+       &lt;data key="\" labels\""="labels\"""&gt;:Person&lt;/data&gt;
+       &lt;data key="\" born\""="born\"""&gt;1952&lt;/data&gt;
+       &lt;data key="\" name\""="name\"""&gt;Joel Silver&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\" n188\""="n188\""" labels="\" :Movie\""=":Movie\"""&gt;
+       &lt;data key="\" labels\""="labels\"""&gt;:Movie&lt;/data&gt;
+       &lt;data key="\" title\""="title\"""&gt;The Matrix&lt;/data&gt;
+       &lt;data key="\" tagline\""="tagline\"""&gt;Welcome to the Real World&lt;/data&gt;
+       &lt;data key="\" released\""="released\"""&gt;1999&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;edge id="\" e273\""="e273\""" source="\" n195\""="n195\""" target="\" n188\""="n188\""" label="\" PRODUCED\""="PRODUCED\"""&gt;
+       &lt;data key="\" label\""="label\"""&gt;PRODUCED&lt;/data&gt;
+     &lt;/edge&gt;
+   &lt;/graph&gt;
+ &lt;/graphml&gt;
+  "</code></pre></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-graphml-cypher-query">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-graphml-cypher-query"></a>6.4.5.4.&nbsp;Export results of Cypher query to GraphML
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.csv.query</code> procedure exports the results of a Cypher query to a CSV file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports all <code class="literal">DIRECTED</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship to the file <code class="literal">movies-directed.graphml</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "MATCH path = (person:Person)-[directed:DIRECTED]-&gt;(movie)
+      RETURN person, directed, movie" AS query
+CALL apoc.export.graphml.query(query, "movies-directed.graphml", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17489">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.49.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-directed.graphml"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"statement: nodes(3), rels(2)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"graphml"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>-1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies-directed.csv</code> are shown below:
+               </p>
+               <p><span class="formalpara-title">movies-directed.graphml.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"&gt;
+&lt;key id="born" for="node" attr.name="born"/&gt;
+&lt;key id="name" for="node" attr.name="name"/&gt;
+&lt;key id="tagline" for="node" attr.name="tagline"/&gt;
+&lt;key id="label" for="node" attr.name="label"/&gt;
+&lt;key id="title" for="node" attr.name="title"/&gt;
+&lt;key id="released" for="node" attr.name="released"/&gt;
+&lt;key id="label" for="edge" attr.name="label"/&gt;
+&lt;graph id="G" edgedefault="directed"&gt;
+&lt;node id="n188" labels=":Movie"&gt;&lt;data key="labels"&gt;:Movie&lt;/data&gt;&lt;data key="title"&gt;The Matrix&lt;/data&gt;&lt;data key="tagline"&gt;Welcome to the Real World&lt;/data&gt;&lt;data key="released"&gt;1999&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n193" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1967&lt;/data&gt;&lt;data key="name"&gt;Lilly Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;node id="n194" labels=":Person"&gt;&lt;data key="labels"&gt;:Person&lt;/data&gt;&lt;data key="born"&gt;1965&lt;/data&gt;&lt;data key="name"&gt;Lana Wachowski&lt;/data&gt;&lt;/node&gt;
+&lt;edge id="e271" source="n193" target="n188" label="DIRECTED"&gt;&lt;data key="label"&gt;DIRECTED&lt;/data&gt;&lt;/edge&gt;
+&lt;edge id="e272" source="n194" target="n188" label="DIRECTED"&gt;&lt;data key="label"&gt;DIRECTED&lt;/data&gt;&lt;/edge&gt;
+&lt;/graph&gt;
+&lt;/graphml&gt;</code></pre><p>
+                  
+               </p>
+               <p><span class="formalpara-title">The following query returns a stream of all <code class="literal">DIRECTED</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "MATCH path = (person:Person)-[directed:DIRECTED]-&gt;(movie)
+      RETURN person, directed, movie" AS query
+CALL apoc.export.graphml.query(query, null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e17599">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.50.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="xml">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;
+ &lt;graphml xmlns="\"http://graphml.graphdrawing.org/xmlns\""
+          xmlns:xsi="\"http://www.w3.org/2001/XMLSchema-instance\""
+          xsi:schemaLocation="\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\""&gt;
+   &lt;key id="\"born\"" for="\"node\"" attr.name="\"born\""/&gt;
+   &lt;key id="\"name\"" for="\"node\"" attr.name="\"name\""/&gt;
+   &lt;key id="\"tagline\"" for="\"node\"" attr.name="\"tagline\""/&gt;
+   &lt;key id="\"label\"" for="\"node\"" attr.name="\"label\""/&gt;
+   &lt;key id="\"title\"" for="\"node\"" attr.name="\"title\""/&gt;
+   &lt;key id="\"released\"" for="\"node\"" attr.name="\"released\""/&gt;
+   &lt;key id="\"label\"" for="\"edge\"" attr.name="\"label\""/&gt;
+   &lt;graph id="\"G\"" edgedefault="\"directed\""&gt;
+     &lt;node id="\"n188\"" labels="\":Movie\""&gt;
+       &lt;data key="\"labels\""&gt;:Movie&lt;/data&gt;
+       &lt;data key="\"title\""&gt;The Matrix&lt;/data&gt;
+       &lt;data key="\"tagline\""&gt;Welcome to the Real World&lt;/data&gt;
+       &lt;data key="\"released\""&gt;1999&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n193\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1967&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lilly Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;node id="\"n194\"" labels="\":Person\""&gt;
+       &lt;data key="\"labels\""&gt;:Person&lt;/data&gt;
+       &lt;data key="\"born\""&gt;1965&lt;/data&gt;
+       &lt;data key="\"name\""&gt;Lana Wachowski&lt;/data&gt;
+     &lt;/node&gt;
+     &lt;edge id="\"e271\"" source="\"n193\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+     &lt;edge id="\"e272\"" source="\"n194\"" target="\"n188\"" label="\"DIRECTED\""&gt;
+       &lt;data key="\"label\""&gt;DIRECTED&lt;/data&gt;
+     &lt;/edge&gt;
+   &lt;/graph&gt;
+ &lt;/graphml&gt;
+  "</code></pre></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

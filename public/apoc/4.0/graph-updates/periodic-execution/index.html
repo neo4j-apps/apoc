@@ -1,0 +1,371 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>8.3.&nbsp;Periodic Execution - Chapter&nbsp;8.&nbsp;Graph Updates</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to batch transactions when executing large write operations."></meta>
+      <link rel="prev" href="../ttl/" title="8.7.&nbsp;Time To Live (TTL) - Expire Nodes"></link>
+      <link rel="next" href="../graph-refactoring/" title="8.5.&nbsp;Graph Refactorings"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../ttl/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Time To Live (TTL) - Expire Nodes</a></span><span class="nav-current">
+               <p class="nav-title hidden">8.3.&nbsp;Periodic Execution</p></span><span class="nav-next"><a accesskey="n" href="../graph-refactoring/">Graph Refactorings<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="periodic-execution">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#periodic-execution"></a>8.3.&nbsp;Periodic Execution
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to batch transactions when executing large write operations.</p>
+         </div>
+         <p>Cypher is great for querying graphs and importing and updating graph structures.
+            While during imports you can use <code class="literal">PERIODIC COMMIT</code> to control transaction sizes in memory, but for other graph refactorings it&#8217;s not that easy to commit transactions regularly
+            to free memory for new update state.
+         </p>
+         <div class="informaltable">
+            <div class="table" id="d0e21136">
+               <table class="informaltable" border="1">
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">CALL apoc.periodic.commit(statement, params)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>repeats an batch update statement until it returns 0, this procedure is blocking</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">CALL apoc.periodic.rock_n_roll(statementIteration, statementAction, batchSize) YIELD batches, total</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>iterate over first statement and apply action statement with given transaction batch size. Returns to numeric values holding
+                              the number of batches and the number of total processed rows. E.g.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="xref" href="#commit-batching" title="8.3.1.&nbsp;apoc.periodic.iterate">Section&nbsp;8.3.1, &#8220;apoc.periodic.iterate&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#periodic-commit" title="8.3.2.&nbsp;apoc.periodic.commit">Section&nbsp;8.3.2, &#8220;apoc.periodic.commit&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#periodic-rock-n-roll" title="8.3.3.&nbsp;apoc.periodic.rock_n_roll">Section&nbsp;8.3.3, &#8220;apoc.periodic.rock_n_roll&#8221;</a></li>
+            </ul>
+         </div>
+         <section class="section" id="commit-batching">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#commit-batching"></a>8.3.1.&nbsp;apoc.periodic.iterate
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>With <code class="literal">apoc.periodic.iterate</code> you provide 2 statements, the <span class="strong"><strong>first</strong></span> outer statement is providing a stream of values to be processed.
+               The <span class="strong"><strong>second</strong></span>, inner statement processes <span class="strong"><strong>one</strong></span> element at a time or with <code class="literal">iterateList:true</code> the whole batch at a time.
+            </p>
+            <p>The results of the outer statement are passed into the inner statement as parameters, they are automatically made available
+               with their names.
+            </p>
+            <div class="table" id="d0e21191">
+               <table class="table" summary="configuration options" border="1">
+                  <caption class="table-title">Table&nbsp;8.9.&nbsp;configuration options</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">param</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>batchSize</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>1000</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>that many inner statements are run within a single tx params: {_count, _batch}</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>parallel</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>run inner statement in parallel, note that statements might deadlock</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>retries</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>0</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>if the inner statement fails with an error, sleep 100ms and retry until retries-count is reached, param {_retry}</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>iterateList</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the inner statement is only executed once but the whole batchSize list is passed in as parameter {_batch}</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>params</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>{}</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>externally passed in map of params</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>concurrency</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>50</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>How many concurrent tasks are generate when using <code class="literal">parallel:true</code></p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>failedParams</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>-1</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>If set to a non-negative value, for each failed batch up to <code class="literal">failedParams</code> parameter sets are returned in in <code class="literal">yield failedParams</code>.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="admonitionblock note">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-note" title="note"></i></td>
+                        <td class="content">
+                           <p>We plan to make <code class="literal">iterateList:true</code> the default in upcoming releases, due to the automatic UNWINDing and providing of nested results as variables,
+                              most queries should continue work.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>So if you were to add an <code class="literal">:Actor</code> label to several million <code class="literal">:Person</code> nodes, you would run:
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.periodic.iterate(
+  "MATCH (p:Person) WHERE (p)-[:ACTED_IN]-&gt;() RETURN p",
+  "SET p:Actor",
+  {batchSize:10000, parallel:true})</code></pre><p>Which would take 10k people from the stream and update them in a single transaction, executing the <span class="strong"><strong>second</strong></span> statement for each person.
+            </p>
+            <p>Those executions can happen in parallel as updating node-labels or properties doesn&#8217;t conflict.</p>
+            <p>If you do more complex operations like updating or removing relationships, either <span class="strong"><strong>don&#8217;t use parallel</strong></span> OR make sure that you batch the work in a way that each subgraph of data is updated in one operation, e.g. by transferring
+               the root objects.
+               If you attempt complex operations, try to use e.g. <code class="literal">retries:3</code> to retry failed operations.
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.periodic.iterate(
+  "MATCH (o:Order) WHERE o.date &gt; '2016-10-13' RETURN o",
+  "MATCH (o)-[:HAS_ITEM]-&gt;(i) WITH o, sum(i.value) as value SET o.value = value",
+  {batchSize:100, parallel:true})</code></pre><p><span class="formalpara-title">iterating over the whole batch (more efficient).&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.periodic.iterate(
+  "MATCH (o:Order) WHERE o.date &gt; '2016-10-13' RETURN o",
+  "MATCH (o)-[:HAS_ITEM]-&gt;(i) WITH o, sum(i.value) as value SET o.value = value",
+  {batchSize:100, iterateList:true, parallel:true})</code></pre><p>
+               
+            </p>
+            <p>The stream of other data can also come from another source, like a different database, CSV or JSON file.</p>
+         </section>
+         <section class="section" id="periodic-commit">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#periodic-commit"></a>8.3.2.&nbsp;apoc.periodic.commit
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Especially for graph processing it is useful to run a query repeatedly in separate transactions until it doesn&#8217;t process and
+               generates any results anymore.
+               So you can iterate in batches over elements that don&#8217;t fulfill a condition and update them so that they do afterwards.
+            </p>
+            <div class="admonitionblock note">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-note" title="note"></i></td>
+                        <td class="content">
+                           <p>as a safety net your statement used inside <code class="literal">apoc.periodic.commit</code> <span class="strong"><strong>must</strong></span> contain a <code class="literal">LIMIT</code> clause.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>The query is executed repeatedly in separate transactions until it returns 0.</p><pre class="programlisting highlight"><code data-lang="cypher">call apoc.periodic.commit(
+  "match (user:User) WHERE exists( user.city )
+   with user limit {limit}
+   MERGE (city:City {name:user.city})
+   MERGE (user)-[:LIVES_IN]-&gt;(city)
+   REMOVE user.city
+   RETURN count(*)",
+  {limit:10000})</code></pre><div class="table" id="d0e21349">
+               <table class="table" summary="Results" border="1">
+                  <caption class="table-title">Table&nbsp;8.10.&nbsp;Results</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">Updates</th>
+                        <th style="text-align: left; vertical-align: top; ">Executions</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>2000000</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>200</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="periodic-rock-n-roll">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#periodic-rock-n-roll"></a>8.3.3.&nbsp;apoc.periodic.rock_n_roll
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p><span class="formalpara-title">copies over the <code class="literal">name</code> property of each person to <code class="literal">lastname</code>.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.periodic.rock_n_roll('match (p:Person) return id(p) as id_p', 'MATCH (p) where id(p)={id_p} SET p.lastname =p.name', 20000)</code></pre><p>
+               
+            </p>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

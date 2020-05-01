@@ -1,0 +1,1405 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>5.2.&nbsp;Load JSON - Chapter&nbsp;5.&nbsp;Import</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to import JSON data from web APIs or files."></meta>
+      <link rel="prev" href="../web-apis/" title="5.1.&nbsp;Loading Data from Web-APIs"></link>
+      <link rel="next" href="../load-csv/" title="5.3.&nbsp;Load CSV"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../web-apis/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Loading Data from Web-APIs</a></span><span class="nav-current">
+               <p class="nav-title hidden">5.2.&nbsp;Load JSON</p></span><span class="nav-next"><a accesskey="n" href="../load-csv/">Load CSV<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="load-json">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#load-json"></a>5.2.&nbsp;Load JSON
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to import JSON data from web APIs or files.</p>
+         </div>
+         <p>Web APIs are a huge opportunity to access and integrate data from any sources with your graph.
+            Most of them provide the data is JSON format.
+         </p>
+         <p>The Load JSON procedures retrieve data from URLs or maps and turn it into map value(s) for Cypher to consume.
+            Cypher has support for deconstructing nested documents with dot syntax, slices, <code class="literal">UNWIND</code> etc. so it is easy to turn nested data into graphs.
+         </p>
+         <p>Sources with multiple JSON objects (JSONL,JSON Lines) in a stream, like the <a class="link" href="https://dev.twitter.com/streaming/overview/processing" target="_top">streaming Twitter format</a> or the Yelp Kaggle dataset, are also supported,
+         </p>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#load-json-available-procedures" title="5.2.1.&nbsp;Procedure Overview">Section&nbsp;5.2.1, &#8220;Procedure Overview&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#load-json-available-procedures-apoc.load.json" title="5.2.1.1.&nbsp;apoc.load.json">Section&nbsp;5.2.1.1, &#8220;<code class="literal">apoc.load.json</code>&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-available-procedures-apoc.load.jsonParams" title="5.2.1.2.&nbsp;apoc.load.jsonParams">Section&nbsp;5.2.1.2, &#8220;<code class="literal">apoc.load.jsonParams</code>&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-available-procedures-apoc.load.jsonArray" title="5.2.1.3.&nbsp;apoc.load.jsonArray">Section&nbsp;5.2.1.3, &#8220;<code class="literal">apoc.load.jsonArray</code>&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-available-procedures-apoc.import.json" title="5.2.1.4.&nbsp;apoc.import.json">Section&nbsp;5.2.1.4, &#8220;<code class="literal">apoc.import.json</code>&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+               <li class="listitem"><a class="xref" href="#load-json-file-import" title="5.2.2.&nbsp;Importing from a file">Section&nbsp;5.2.2, &#8220;Importing from a file&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#load-json-json-path" title="5.2.3.&nbsp;JSON-Path">Section&nbsp;5.2.3, &#8220;JSON-Path&#8221;</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#load-json-examples" title="5.2.4.&nbsp;Examples">Section&nbsp;5.2.4, &#8220;Examples&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#load-json-examples-local" title="5.2.4.1.&nbsp;Import from local file">Section&nbsp;5.2.4.1, &#8220;Import from local file&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-examples-stackoverflow" title="5.2.4.2.&nbsp;Import from StackOverflow API">Section&nbsp;5.2.4.2, &#8220;Import from StackOverflow API&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-path-examples-stackoverflow" title="5.2.4.3.&nbsp;Use JSON Path and Import from StackOverflow API">Section&nbsp;5.2.4.3, &#8220;Use JSON Path and Import from StackOverflow API&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-examples-twitter" title="5.2.4.4.&nbsp;Import from Twitter API (with additional parameters)">Section&nbsp;5.2.4.4, &#8220;Import from Twitter API (with additional parameters)&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-examples-import-json" title="5.2.4.5.&nbsp;Import JSON file created by Export JSON procedures">Section&nbsp;5.2.4.5, &#8220;Import JSON file created by Export JSON procedures&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#load-json-examples-post-json" title="5.2.4.6.&nbsp;POST a query to the neo4j.com search API">Section&nbsp;5.2.4.6, &#8220;POST a query to the neo4j.com search API&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="load-json-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-json-available-procedures"></a>5.2.1.&nbsp;Procedure Overview
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedures:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e7775">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.json</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.json(url :: STRING?, path =  :: STRING?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.load.json('url',path, config) YIELD value -  import JSON as stream of values if the JSON was an array or a single value
+                                 if it was a map
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.jsonParams</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.jsonParams(urlOrKey :: STRING?, headers :: MAP?, payload :: STRING?, path =  :: STRING?, config = {} :: MAP?) ::
+                                    (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.load.jsonParams('url',{header:value},payload, config) YIELD value - load from JSON URL (e.g. web-api) while sending headers
+                                 / payload to import JSON as stream of values if the JSON was an array or a single value if it was a map
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.jsonArray</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.load.jsonArray(url :: STRING?, path =  :: STRING?) :: (value :: ANY?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.load.jsonArray('url') YIELD value - load array from JSON URL (e.g. web-api) to import JSON as stream of values</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.import.json</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.import.json(file :: STRING?, config = {} :: MAP?) :: (file :: STRING?, source :: STRING?, format :: STRING?, nodes ::
+                                    INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches
+                                    :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.import.json(file,config) - imports the json list to the provided file</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <section class="section" id="load-json-available-procedures-apoc.load.json">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-available-procedures-apoc.load.json"></a>5.2.1.1.&nbsp;<code class="literal">apoc.load.json</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This procedure takes a file or HTTP URL and parses the JSON into a map data structure.</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e7858">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.load.json(url :: STRING?, path =  :: STRING?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>It supports the following config parameter:</p>
+               <div class="table" id="d0e7873">
+                  <table class="table" summary="Config" border="1">
+                     <caption class="table-title">Table&nbsp;5.1.&nbsp;Config</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>failOnError</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>boolean</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>true</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>fail if error encountered while parsing JSON</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-json-available-procedures-apoc.load.jsonParams">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-available-procedures-apoc.load.jsonParams"></a>5.2.1.2.&nbsp;<code class="literal">apoc.load.jsonParams</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This procedure takes a file or HTTP URL and parses the JSON into a map data structure.
+                  It is a more configurable version of <a class="link" href="#load-json-available-procedures-apoc.load.json" title="5.2.1.1.&nbsp;apoc.load.json">apoc.load.json</a> that enables processing of endpoints that require HTTP headers or JSON payloads.
+               </p>
+               <div class="informaltable">
+                  <div class="table" id="d0e7914">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.load.jsonParams(urlOrKey :: STRING?, headers :: MAP?, payload :: STRING?, path =  :: STRING?, config = {} :: MAP?) ::
+                                       (value :: MAP?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>It supports the following config parameter:</p>
+               <div class="table" id="d0e7929">
+                  <table class="table" summary="Config" border="1">
+                     <caption class="table-title">Table&nbsp;5.2.&nbsp;Config</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>failOnError</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>boolean</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>true</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>fail if error encountered while parsing JSON</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-json-available-procedures-apoc.load.jsonArray">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-available-procedures-apoc.load.jsonArray"></a>5.2.1.3.&nbsp;<code class="literal">apoc.load.jsonArray</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This procedure takes a file or HTTP URL containing a JSON array, and parses it into a stream of maps.</p>
+               <div class="informaltable">
+                  <div class="table" id="d0e7967">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.load.jsonArray(url :: STRING?, path =  :: STRING?) :: (value :: ANY?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </section>
+            <section class="section" id="load-json-available-procedures-apoc.import.json">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-available-procedures-apoc.import.json"></a>5.2.1.4.&nbsp;<code class="literal">apoc.import.json</code></h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This procedure can be used to import JSON files created by the <a class="link" href="../../export/json/" title="6.2.&nbsp;Export to JSON">Export JSON</a> procedures.
+               </p>
+               <div class="informaltable">
+                  <div class="table" id="d0e7989">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">signature</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">apoc.import.json(file :: STRING?, config = {} :: MAP?) :: (file :: STRING?, source :: STRING?, format :: STRING?, nodes ::
+                                       INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches
+                                       :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p>It supports the following config parameters:</p>
+               <div class="table" id="d0e8004">
+                  <table class="table" summary="Config parameters" border="1">
+                     <caption class="table-title">Table&nbsp;5.3.&nbsp;Config parameters</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>unwindBatchSize</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Long</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">5000</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the batch size of the unwind</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>txBatchSize</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Long</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">5000</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the batch size of the transacttion</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>importIdName</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>String</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">neo4jImportId</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the name of the "id" field into the used for the import it refers to the "id" field into the root object of the json.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>nodePropertyMappings</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Map</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">{}</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>The mapping label/property name/property type for Custom Neo4j types (point date).</p>
+                              <p>i.e. <code class="literal">{ User: { born: 'Point', dateOfBirth: 'Datetime' } }</code></p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>relPropertyMappings</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Map</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">{}</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>The mapping rel type/property name/property type for Custom Neo4j types (point date).</p>
+                              <p>i.e. <code class="literal">{ KNOWS: { since: 'Datetime' } }</code></p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><code class="literal">nodePropertyMappings</code> and <code class="literal">relPropertyMappings</code> support the following Neo4j types:
+               </p>
+               <p><code class="literal">Point</code>, <code class="literal">Localdate</code>, <code class="literal">Localtime</code>, <code class="literal">Localdatetime</code>, <code class="literal">Duration</code>, <code class="literal">offsettime</code>, and <code class="literal">Zoneddatetime</code>.
+               </p>
+            </section>
+         </section>
+         <section class="section" id="load-json-file-import">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-json-file-import"></a>5.2.2.&nbsp;Importing from a file
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>By default importing from the file system is disabled.
+               We can enable it by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.enabled=true</code></pre><p>
+               
+            </p>
+            <p>If we try to use any of the import procedures without having first set this property, we&#8217;ll get the following error message:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e8148">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Import from files not enabled, please set apoc.import.file.enabled=true
+                                 in your apoc.conf
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>Import files are read from the <code class="literal">import</code> directory, which is defined by the <code class="literal">dbms.directories.import</code> property.
+               This means that any file path that we provide is relative to this directory.
+               If we try to read from an absolute path, such as <code class="literal">/tmp/filename</code>, we&#8217;ll get an error message similar to the following one:
+            </p>
+            <div class="informaltable">
+               <div class="table" id="d0e8167">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Can&#8217;t read url or key file:/path/to/neo4j/import/tmp/filename
+                                 as json: /path/to/neo4j//import/tmp/filename (No such file or directory)
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>We can enable reading files from anywhere on the file system by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.use_neo4j_config=false</code></pre><p>
+               
+            </p>
+            <div class="admonitionblock warning">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-warning" title="warning"></i></td>
+                        <td class="content">
+                           <p>Neo4j will now be able to read from anywhere on the file system, so be sure that this is your intention before setting this
+                              property.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="load-json-json-path">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-json-json-path"></a>5.2.3.&nbsp;JSON-Path
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Using JSON paths gives you a condensed way to read and process sub-documents and sub-values from nested JSON structures.
+               This is especially helpful if you need to skip over unwinding higher-level parent objects in order to access more nested data,
+               or if you need to manipulate values in those substructures.
+            </p>
+            <p>Rather than passing in a large JSON file and using Cypher to unwind each object and access what you need, you can pass in
+               the file and provide the JSON path to the substructures you need, resulting in shorter statements for nested JSON.
+               The JSON path format follows the <a class="link" href="https://github.com/jayway/JsonPath#operators" target="_top">Java implementation by Jayway</a> of <a class="link" href="http://goessner.net/articles/JsonPath/" target="_top">Stefan G&ouml;ssner&#8217;s JSONPath</a>, providing a consistent syntax for the paths.
+            </p>
+            <p>Many of the <code class="literal">apoc.convert.<span class="strong"><strong>Json</strong></span></code> procedures and functions, as well as the <code class="literal">apoc.load.json</code> procedure, now accept a json path as last argument.
+               Note that these functions are meant to stream arrays (of values or objects) and maps, not a single value.
+               If a single item containing a single value is specified as the path, the function must try to wrap it and will not return
+               expected results.
+            </p>
+            <p>There is also the <code class="literal">apoc.json.path(json,path)</code> function that takes a JSON string (not map or list) and retrieves values from the json path provided as the second argument.
+               Note: if the JSON is not already in string format, you can use the <code class="literal">apoc.convert.toJson</code> function to convert it.
+            </p>
+            <p>More examples can be found at the links provided above, but let us look at an example of the syntax for JSON paths.
+               The syntax shown below pulls the <code class="literal">items</code> array from the StackOverflow API of Neo4j questions and retrieves the array of <code class="literal">tags</code> from the first object in the item list.
+            </p>
+            <p><code class="literal">$.items[0].tags</code></p>
+            <p>All of the operators and options for specifying JSON paths are included in the next table.</p>
+            <div class="table" id="d0e8235">
+               <table class="table" summary="Operators" border="1">
+                  <caption class="table-title">Table&nbsp;5.4.&nbsp;Operators</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">Operator</th>
+                        <th style="text-align: left; vertical-align: top; ">Description</th>
+                        <th style="text-align: left; vertical-align: top; ">Example</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>The root element to query. This starts all path expressions.</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$</code> - retrieve all data in parent object
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">@</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>The current node being processed by a filter predicate.</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[?(@.answer_count &gt; 0)]</code> - retrieve the item if it has an answer_count greater than 0
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">*</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Wildcard. Available anywhere a name or numeric are required.</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[\*]</code> - retrieve all items in array
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">..</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Deep scan. Available anywhere a name is required.</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$..tags[\*]</code> - find substructure named tags and pull all the values
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">.&lt;name&gt;</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Dot-notated child</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[0:1].owner.user_id</code> - retrieve user_id for the first item (in the owner object)
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">[&lt;number&gt; (,&lt;number&gt;)]</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Array index or indexes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[0,-1]</code> - retrieve first and last item in array
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">[start:end]</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Array slice operator</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[0:5]</code> - retrieve the first through fifth items in the array
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">[?(&lt;expression&gt;)]</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Filter expression. Expression must evaluate to a boolean value.</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">$.items[?(@.is_answered == true)]</code> - retrieve items where the is_answered field is true
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="load-json-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#load-json-examples"></a>5.2.4.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The following section contains examples showing how to import data from various JSON sources.</p>
+            <section class="section" id="load-json-examples-local">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-examples-local"></a>5.2.4.1.&nbsp;Import from local file
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p><code class="literal">person.json</code> contains a JSON document representing a person and their children.
+               </p>
+               <p><span class="formalpara-title">person.json.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="json">{
+ "name":"Michael",
+ "age": 41,
+ "children": ["Selina","Rana","Selma"]
+}</code></pre><p>
+                  
+               </p>
+               <p>We&#8217;ll place this file into the <code class="literal">import</code> directory of our Neo4j instance.
+                  Let&#8217;s now write a query using the <code class="literal">apoc.load.json</code> procedure to explore this file.
+               </p>
+               <p><span class="formalpara-title">The following query processes <code class="literal">person.json</code> and returns the content as Cypher data structures.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.json("file:///person.json")
+YIELD value
+RETURN value;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e8394">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.5.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "Michael", children: ["Selina", "Rana", "Selma"], age: 41}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We get back a map that looks almost the same as the JSON document.
+                  We can now extend that query to create a graph based on this JSON file.
+                  We&#8217;ll create a <code class="literal">Person</code> node for Michael and each of his children, and a <code class="literal">CHILD_OF</code> relationship from each child to the Michael node.
+               </p>
+               <p><span class="formalpara-title">The following creates a graph based on <code class="literal">person.json</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.json("file:///person.json")
+YIELD value
+MERGE (p:Person {name: value.name})
+SET p.age = value.age
+WITH p, value
+UNWIND value.children AS child
+MERGE (c:Person {name: child})
+MERGE (c)-[:CHILD_OF]-&gt;(p);</code></pre><p>
+                  
+               </p>
+               <p>The Neo4j Browser visualization below shows the imported graph:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc.load.json.local.file.svg" alt="apoc.load.json.local.file"></img></div>
+               </div>
+            </section>
+            <section class="section" id="load-json-examples-stackoverflow">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-examples-stackoverflow"></a>5.2.4.2.&nbsp;Import from StackOverflow API
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p><code class="literal">apoc.load.json</code> enables loading JSON data from any file or URL.
+                  If the result is a JSON object, it is returned as a singular map.
+                  If the result is an array, it is turned into a stream of maps.
+               </p>
+               <p>StackOverflow provides several APIs, including one for retrieving recent questions and answers.
+                  The URL for retrieving the last questions and answers for the <a class="link" href="http://stackoverflow.com/questions/tagged/neo4j" target="_top">neo4j tag</a> is:
+               </p><pre class="programlisting highlight"><code data-lang="text">https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf</code></pre><div class="admonitionblock note">
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td class="icon"><i class="fa icon-note" title="note"></i></td>
+                           <td class="content">
+                              <p>Since this is a rather long URL string, we can simplify the syntax by configuring aliases in <code class="literal">conf/apoc.conf</code>:
+                              </p>
+                              <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+                                 
+                              </p><pre class="programlisting highlight"><code data-lang="text">apoc.json.myJson.url=https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf</code></pre><p>
+                                 
+                              </p>
+                              <p>The third value in the <code class="literal">apoc.json.&lt;alias&gt;.url=</code> effectively defines the variable to be used in  <code class="literal">apoc.load.json('&lt;alias&gt;',&#8230;&#8203;.</code>.
+                                 With this, the massive JSON url string below can be aliased to a shorter string.
+                              </p>
+                              <p><span class="formalpara-title">Original call with full json url string.&nbsp;</span>
+                                 
+                              </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.json('https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf')</code></pre><p>
+                                 
+                              </p>
+                              <p><span class="formalpara-title">New call with aliased string with full string in apoc.conf.&nbsp;</span>
+                                 
+                              </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.json('myJson')</code></pre><p>
+                                 
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Let&#8217;s introspect the data that is returned from this end point.</p>
+               <p><span class="formalpara-title">The following finds the 5 most recent questions with the <code class="literal">neo4j</code> tag on StackOverflow.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf" AS url
+CALL apoc.load.json(url) YIELD value
+UNWIND value.items AS item
+RETURN item.title, item.owner, item.creation_date, keys(item)
+LIMIT 5;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e8500">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.6.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">item.title</th>
+                           <th style="text-align: left; vertical-align: top; ">item.owner</th>
+                           <th style="text-align: left; vertical-align: top; ">item.creation_date</th>
+                           <th style="text-align: left; vertical-align: top; ">keys(item)</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Cypher patten for getting self related nodes"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{profile_image: "https://lh3.googleusercontent.com/-1FWbhuaEBiQ/AAAAAAAAAAI/AAAAAAAAAIA/tLM_mEb-8MY/photo.jpg?sz=128", user_type:
+                                 "registered", user_id: 5730203, link: "https://stackoverflow.com/users/5730203/asif-ali", reputation: 1148, display_name:
+                                 "Asif Ali", accept_rate: 90}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1586944991</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["owner", "comment_count", "link", "last_activity_date", "creation_date", "answer_count", "title", "question_id", "tags",
+                                 "share_link", "score", "down_vote_count", "body_markdown", "favorite_count", "is_answered", "delete_vote_count", "close_vote_count",
+                                 "view_count", "up_vote_count"]
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Problem connecting .NET Client to Neo4j Desktop version 4"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{profile_image: "https://www.gravatar.com/avatar/a3fac35d600d1d462d8fc12f3926074c?s=128&amp;d=identicon&amp;r=PG&amp;f=1", user_type:
+                                 "registered", user_id: 2853912, link: "https://stackoverflow.com/users/2853912/user2853912", reputation: 21, display_name:
+                                 "user2853912"}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1586938954</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["owner", "comment_count", "link", "last_activity_date", "creation_date", "answer_count", "title", "question_id", "tags",
+                                 "share_link", "score", "down_vote_count", "body_markdown", "favorite_count", "is_answered", "delete_vote_count", "close_vote_count",
+                                 "view_count", "up_vote_count"]
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"What kind of graph algorithm does Neo4j use?"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{profile_image: "https://www.gravatar.com/avatar/736024b862a229111d4b3119875753b0?s=128&amp;d=identicon&amp;r=PG&amp;f=1", user_type:
+                                 "registered", user_id: 4402081, link: "https://stackoverflow.com/users/4402081/mariappan", reputation: 7, display_name: "Mariappan"}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1586901300</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["owner", "comment_count", "answers", "link", "last_activity_date", "creation_date", "answer_count", "title", "question_id",
+                                 "tags", "share_link", "score", "down_vote_count", "body_markdown", "favorite_count", "is_answered", "delete_vote_count", "close_vote_count",
+                                 "view_count", "up_vote_count"]
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Import json file to Neo4j"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{profile_image: "https://lh3.googleusercontent.com/-PWDC85Kp2ig/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq3nhmVZl-_0VDKESOG5MsyHvXnw_A/mo/photo.jpg?sz=128",
+                                 user_type: "registered", user_id: 9964138, link: "https://stackoverflow.com/users/9964138/jo%c3%a3o-costa", reputation: 23,
+                                 display_name: "Jo&atilde;o Costa"}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1586897574</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["owner", "comment_count", "answers", "link", "last_activity_date", "creation_date", "answer_count", "title", "question_id",
+                                 "tags", "share_link", "score", "down_vote_count", "body_markdown", "favorite_count", "is_answered", "delete_vote_count", "close_vote_count",
+                                 "view_count", "up_vote_count"]
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"Difference between Neo4j Graph Algorithms and Graph Data Science"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{profile_image: "https://i.stack.imgur.com/2rLPZ.jpg?s=128&amp;g=1", user_type: "registered", user_id: 3297954, link: "https://stackoverflow.com/users/3297954/rotten",
+                                 reputation: 1295, display_name: "rotten", accept_rate: 75}
+                              </p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1586872077</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["owner", "comment_count", "answers", "link", "last_activity_date", "creation_date", "answer_count", "title", "question_id",
+                                 "tags", "share_link", "score", "down_vote_count", "body_markdown", "favorite_count", "is_answered", "delete_vote_count", "close_vote_count",
+                                 "view_count", "up_vote_count"]
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Let&#8217;s now create a Neo4j graph based on those entities.</p>
+               <p><span class="formalpara-title">The following creates a graph based on data from the StackOverflow API.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf" AS url
+CALL apoc.load.json(url) YIELD value
+UNWIND value.items AS q
+MERGE (question:Question {id:q.question_id})
+ON CREATE SET question.title = q.title,
+              question.share_link = q.share_link,
+              question.favorite_count = q.favorite_count
+
+FOREACH (tagName IN q.tags | MERGE (tag:Tag {name:tagName}) MERGE (question)-[:TAGGED]-&gt;(tag))
+FOREACH (a IN q.answers |
+   MERGE (question)&lt;-[:ANSWERS]-(answer:Answer {id:a.answer_id})
+   MERGE (answerer:User {id:a.owner.user_id}) ON CREATE SET answerer.display_name = a.owner.display_name
+   MERGE (answer)&lt;-[:PROVIDED]-(answerer)
+)
+
+WITH * WHERE NOT q.owner.user_id IS NULL
+MERGE (owner:User {id:q.owner.user_id}) ON CREATE SET owner.display_name = q.owner.display_name
+MERGE (owner)-[:ASKED]-&gt;(question)</code></pre><p>
+                  
+               </p>
+               <p>The Neo4j Browser visualization below shows the imported graph:</p>
+               <div class="informalfigure">
+                  <div class="mediaobject"><img src="../../images/apoc-load-json-so.svg" width="1000" alt="apoc load json so"></img></div>
+               </div>
+            </section>
+            <section class="section" id="load-json-path-examples-stackoverflow">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-path-examples-stackoverflow"></a>5.2.4.3.&nbsp;Use JSON Path and Import from StackOverflow API
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can narrow down the data that we sift through and import using the JSON path syntax.
+                  This will allow us to specify substructures to import and ignore the rest of the data.
+                  For this example, we only want to import answers and the members posting those answers.
+               </p>
+               <p><span class="formalpara-title">Find StackOverflow answers using JSON path (only retrieve sample of 5).&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf" AS url
+CALL apoc.load.json(url,'$.items[?(@.answer_count&gt;0)].answers[*]') YIELD value
+RETURN value LIMIT 5;</code></pre><p>
+                  
+               </p>
+               <p>Notice that we are only looking at StackOverflow questions that have an answer count greater than 0.
+                  That means we are only passing along the question JSON objects that have answers, as the rest do not pertain to our use case.
+                  With this in mind, let us import those with this statement:
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "https://api.stackexchange.com/2.2/questions?pagesize=100&amp;order=desc&amp;sort=creation&amp;tagged=neo4j&amp;site=stackoverflow&amp;filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf" AS url
+CALL apoc.load.json(url,'$.items[?(@.answer_count&gt;0)].answers[*]') YIELD value
+MERGE (a:Answer {id: value.answer_id})
+  ON CREATE SET a.accepted = value.is_accepted,
+                a.shareLink = value.share_link,
+                a.lastActivityDate = value.last_activity_date,
+                a.creationDate = value.creation_date,
+                a.title = value.title,
+                a.score = value.score
+MERGE (q:Question {id: value.question_id})
+MERGE (a)-[rel:POSTED_TO]-&gt;(q)
+WITH a as answer, value.owner as value
+MERGE (u:User {userId: value.user_id})
+  ON CREATE SET u.displayName = value.display_name,
+                u.userType = value.user_type,
+                u.reputation = value.reputation,
+                u.userLink = value.link
+MERGE (u)-[rel2:SUBMITTED]-&gt;(answer)
+RETURN count(answer)</code></pre><p>This imports around 78 answers to our graph.
+                  We can then explore this graph to find out which users submitted the most answers, have the highest ratings, and more.
+               </p>
+            </section>
+            <section class="section" id="load-json-examples-twitter">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-examples-twitter"></a>5.2.4.4.&nbsp;Import from Twitter API (with additional parameters)
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>With <code class="literal">apoc.load.jsonParams</code> we can send additional headers or payload with our JSON GET request, e.g. for the Twitter API:
+               </p>
+               <p>Let&#8217;s first configure the Bearer and Twitter Search URL token in <code class="literal">apoc.conf</code>:
+               </p>
+               <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+                  
+               </p><pre class="screen highlight"><code>apoc.static.twitter.bearer=XXXX
+apoc.static.twitter.url=https://api.twitter.com/1.1/search/tweets.json?count=100&amp;result_type=recent&amp;lang=en&amp;q=</code></pre><p>
+                  
+               </p>
+               <p>These values can then be retrieved using the functions described in</p>
+               <p>static-values&gt;&gt;.</p>
+               <p><span class="formalpara-title">The following queries the Twitter API and returns the results.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH apoc.static.getAll("twitter") AS twitter
+CALL apoc.load.jsonParams(
+  twitter.url + "oscon+OR+neo4j+OR+%23oscon+OR+%40neo4j",
+  {Authorization:"Bearer "+twitter.bearer},
+  null // payload
+)
+YIELD value
+UNWIND value.statuses as status
+
+WITH status, status.user as u, status.entities as e
+RETURN status.id, status.text, u.screen_name,
+       [t IN e.hashtags | t.text] as tags,
+       e.symbols,
+       [m IN e.user_mentions | m.screen_name] as mentions,
+       [u IN e.urls | u.expanded_url] as urls;</code></pre><p>
+                  
+               </p>
+            </section>
+            <section class="section" id="load-json-examples-import-json">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-examples-import-json"></a>5.2.4.5.&nbsp;Import JSON file created by Export JSON procedures
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.import.json</code> procedure can be used to import JSON files created by the <code class="literal">apoc.export.json.*</code> procedures.
+                  This procedure supports the following config parameters:
+               </p>
+               <div class="table" id="d0e8666">
+                  <table class="table" summary="Config parameters" border="1">
+                     <caption class="table-title">Table&nbsp;5.7.&nbsp;Config parameters</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">name</th>
+                           <th style="text-align: left; vertical-align: top; ">default</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>unwindBatchSize</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">5000</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the batch size of the unwind</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>txBatchSize</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">5000</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the batch size of the transacttion</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>importIdName</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">neo4jImportId</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>the name of the "id" field into the used for the import it refers to the "id" field into the root object of the json.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>nodePropertyMappings</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">{}</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>The mapping label/property name/property type for Custom Neo4j types (point date). I.e. { User: { born: 'Point', dateOfBirth:
+                                 'Datetime' } }
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>relPropertyMappings</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">{}</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>The mapping rel type/property name/property type for Custom Neo4j types (point date). I.e. { KNOWS: { since: 'Datetime' }
+                                 }
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><code class="literal">nodePropertyMappings</code> and <code class="literal">relPropertyMappings</code> support the following Neo4j types:
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">Point</li>
+                     <li class="listitem">Localdate</li>
+                     <li class="listitem">Localtime</li>
+                     <li class="listitem">Localdatetime</li>
+                     <li class="listitem">Duration</li>
+                     <li class="listitem">offsettime</li>
+                     <li class="listitem">Zoneddatetime</li>
+                  </ul>
+               </div>
+               <p><code class="literal">all.json</code> contains a subset of Neo4j&#8217;s movies graph, and was generated by the <a class="link" href="../../export/json/#export-database-json" title="6.2.4.1.&nbsp;Export whole database to JSON">Export JSON procedure</a>.
+               </p>
+               <p><span class="formalpara-title">all.json.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="json">{"type":"node","id":"0","labels":["User"],"properties":{"born":"2015-07-04T19:32:24","name":"Adam","place":{"crs":"wgs-84","latitude":33.46789,"longitude":13.1,"height":null},"age":42,"male":true,"kids":["Sam","Anna","Grace"]}}
+{"type":"node","id":"1","labels":["User"],"properties":{"name":"Jim","age":42}}
+{"type":"node","id":"2","labels":["User"],"properties":{"age":12}}
+{"id":"0","type":"relationship","label":"KNOWS","properties":{"since":1993,"bffSince":"P5M1DT12H"},"start":{"id":"0","labels":["User"]},"end":{"id":"1","labels":["User"]}}</code></pre><p>
+                  
+               </p>
+               <p>We can import this file using <code class="literal">apoc.import.json</code>.
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.import.json("file:///all.json")</code></pre><div class="table" id="d0e8788">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.8.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"file:///all.json"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"file"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"json"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>105</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>4</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>-1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="load-json-examples-post-json">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#load-json-examples-post-json"></a>5.2.4.6.&nbsp;POST a query to the neo4j.com search API
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>We can perform a POST request to a JSON endpoint by setting the config parameter <code class="literal">method</code> to <code class="literal">POST</code>.
+                  We&#8217;ll also use the <code class="literal">apoc.convert.toJson</code> function to construct a JSON payload from a Cypher map.
+               </p>
+               <p><span class="formalpara-title">The following makes a POST request to neo4j&#8217;s search API.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.load.jsonParams(
+  "https://neo4j.com/docs/search/",
+  {method: "POST"},
+  apoc.convert.toJson({query: "subquery", version: "4.0"})
+)</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e8890">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;5.9.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "The CALL {} clause evaluates a subquery that returns some values.", weight: 0.6460227966308594, title: "3.16.
+                                 CALL {} (subquery) - Chapter 3. Clauses", uri: "https://neo4j.com/docs/cypher-manual/4.0/clauses/call-subquery/"}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "This section provides examples of queries and Cypher commands that can be used with Neo4j Fabric.", weight:
+                                 0.05099273845553398, title: "7.3. Queries - Chapter 7. Fabric", uri: "https://neo4j.com/docs/operations-manual/4.0/fabric/queries/"}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "WHERE adds constraints to the patterns in a MATCH or OPTIONAL MATCH clause or filters the results of a WITH
+                                 clause.", weight: 0.03291567042469978, title: "3.6. WHERE - Chapter 3. Clauses", uri: "https://neo4j.com/docs/cypher-manual/4.0/clauses/where/"}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "This appendix contains the recommended style when writing Cypher queries.", weight: 0.031550146639347076, title:
+                                 "Appendix A. Cypher styleguide - The Neo4j Cypher Manual v4.0", uri: "https://neo4j.com/docs/cypher-manual/4.0/styleguide/"}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "This section contains information on all the clauses in the Cypher query language.", weight: 0.02944066934287548,
+                                 title: "Chapter 3. Clauses - The Neo4j Cypher Manual v4.0", uri: "https://neo4j.com/docs/cypher-manual/4.0/clauses/"}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{description: "", weight: 0.01821548491716385, title: "2.3. Expressions - Chapter 2. Syntax", uri: "https://neo4j.com/docs/cypher-manual/4.0/syntax/expressions/"}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

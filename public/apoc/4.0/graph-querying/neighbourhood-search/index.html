@@ -1,0 +1,798 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>12.7.&nbsp;Neighbor Functions - Chapter&nbsp;12.&nbsp;Advanced Graph Querying</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to find the nodes in the neighborhood of a specified node."></meta>
+      <link rel="prev" href="../path-expander/" title="12.1.&nbsp;Path Expander Overview"></link>
+      <link rel="next" href="../expand-subgraph/" title="12.5.&nbsp;Expand to subgraph"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../path-expander/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Path Expander Overview</a></span><span class="nav-current">
+               <p class="nav-title hidden">12.7.&nbsp;Neighbor Functions</p></span><span class="nav-next"><a accesskey="n" href="../expand-subgraph/">Expand to subgraph<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="neighbourhood-search">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#neighbourhood-search"></a>12.7.&nbsp;Neighbor Functions
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to find the nodes in the neighborhood of a specified node.</p>
+         </div>
+         <p>The Neighborhood search procedures enable quick discovery of surrounding nodes based on a specific relationship type and number
+            of hops.
+         </p>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="link" href="#neighborhood-search-available-procedures" title="12.7.1.&nbsp;Available Procedures">Available Procedures</a></li>
+               <li class="listitem"><a class="link" href="#neighborhood-search-rel-filters" title="12.7.2.&nbsp;Relationship Filters">Relationship Filters</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="link" href="#neighborhood-search-examples" title="12.7.3.&nbsp;Examples">Examples</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="link" href="#neighborhood-search-specified-hop-count" title="12.7.3.1.&nbsp;Find neighbors at specified hop count">Find neighbors at specified hop count</a></li>
+                        <li class="listitem"><a class="link" href="#neighborhood-search-specified-hop-counts" title="12.7.3.2.&nbsp;Find neighbors at specified hop counts">Find neighbors at specified hop counts</a></li>
+                        <li class="listitem"><a class="link" href="#neighborhood-search-up-to-hop-count" title="12.7.3.3.&nbsp;Find neighbors up to specified hop count">Find neighbors up to specified hop count</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="neighborhood-search-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#neighborhood-search-available-procedures"></a>12.7.1.&nbsp;Available Procedures
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedures:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e34223">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (node :: NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 at a distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (nodes :: LIST? OF NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 at each distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (node :: NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 up to a certain distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (node :: NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.athop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 at a distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (nodes :: LIST? OF NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.byhop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 at each distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop(node :: NODE?, types =  :: STRING?, distance = 1 :: INTEGER?) :: (node :: NODE?)</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.neighbors.tohop(node, rel-direction-pattern, distance) - returns distinct nodes of the given relationships in the pattern
+                                 up to a certain distance, can use '&gt;' or '&lt;' for all outgoing or incoming relationships
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="neighborhood-search-rel-filters">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#neighborhood-search-rel-filters"></a>12.7.2.&nbsp;Relationship Filters
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The 2nd parameter in each of the neighborhood search procedures is a relationship filter.
+               A relationship filter is a <code class="literal">|</code> separated list of relationship types, using the following syntax:
+            </p>
+            <p>Syntax: <code class="literal">[&lt;]RELATIONSHIP_TYPE1[&gt;]|[&lt;]RELATIONSHIP_TYPE2[&gt;]|&#8230;&#8203;</code></p>
+            <div class="informaltable">
+               <div class="table" id="d0e34330">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">input</th>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">direction</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">LIKES&gt;</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">LIKES</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>OUTGOING</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">&lt;FOLLOWS</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">FOLLOWS</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>INCOMING</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">KNOWS</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">KNOWS</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>BOTH</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">&gt;</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">any type</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>OUTGOING</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">&lt;</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">any type</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>INCOMING</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="admonitionblock note">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-note" title="note"></i></td>
+                        <td class="content">
+                           <p>Relationship filters are white space sensitive, so check for trailing white spaces (and then remove them!) if you&#8217;re not seeing
+                              expected results.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="neighborhood-search-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#neighborhood-search-examples"></a>12.7.3.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The examples in this section are based on the following sample graph:</p><pre class="programlisting highlight"><code data-lang="cypher">MERGE (mark:Person {name: "Mark"})
+MERGE (praveena:Person {name: "Praveena"})
+MERGE (joe:Person {name: "Joe"})
+MERGE (lju:Person {name: "Lju"})
+MERGE (michael:Person {name: "Michael"})
+MERGE (emil:Person {name: "Emil"})
+MERGE (ryan:Person {name: "Ryan"})
+
+MERGE (ryan)-[:FOLLOWS]-&gt;(joe)
+MERGE (joe)-[:FOLLOWS]-&gt;(mark)
+MERGE (mark)-[:FOLLOWS]-&gt;(emil)
+MERGE (michael)-[:KNOWS]-(emil)
+MERGE (michael)-[:KNOWS]-(lju)
+MERGE (michael)-[:KNOWS]-(praveena)
+MERGE (emil)-[:FOLLOWS]-&gt;(joe)
+MERGE (praveena)-[:FOLLOWS]-&gt;(joe)</code></pre><p>The <code class="literal">KNOWS</code> relationship type is considered to be bidirectional, where if Michael knows Emil, we can imply that Emil knows Michael.
+               When using the <code class="literal">KNOWS</code> relationship we will ignore the direction.
+            </p>
+            <p>The <code class="literal">FOLLOWS</code> relationship has a direction, so we will specify a direction when we use it.
+            </p>
+            <section class="section" id="neighborhood-search-specified-hop-count">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#neighborhood-search-specified-hop-count"></a>12.7.3.1.&nbsp;Find neighbors at specified hop count
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.neighbors.athop</code> procedures compute a node&#8217;s neighborhood at a specific hop count.
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Emil <code class="literal">KNOWS</code> at 1 hop.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.athop(p, "KNOWS", 1)
+YIELD node
+RETURN node</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34446">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.44.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">node</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Michael"})</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Emil only has a direct <code class="literal">KNOWS</code> relationship to Michael, so Michael is the only node returned by this query.
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Emil <code class="literal">KNOWS</code> at 2 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.athop(p, "KNOWS", 2)
+YIELD node
+RETURN node</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34476">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.45.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">node</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Praveena"})</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Lju"})</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Michael also <code class="literal">KNOWS</code> Praveena and Lju, and since Emil doesn&#8217;t <code class="literal">KNOW</code> either of those directly, he only <code class="literal">KNOWS</code> them at a hop distance of 2.
+                  If we aren&#8217;t interested in knowing which nodes are in our neighborhood, but just want a count of the number, we can do that
+                  as well.
+               </p>
+               <p><span class="formalpara-title">The following returns the number of people that Emil <code class="literal">KNOWS</code> at 2 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.athop.count(p, "KNOWS", 2)
+YIELD value
+RETURN value</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34516">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.46.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>As expected we get a count of 2, those people being Praveena and Lju!</p>
+            </section>
+            <section class="section" id="neighborhood-search-specified-hop-counts">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#neighborhood-search-specified-hop-counts"></a>12.7.3.2.&nbsp;Find neighbors at specified hop counts
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.neighbors.byhop</code> procedures compute a node&#8217;s neighborhood at multiple hop counts.
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Emil <code class="literal">KNOWS</code> up to 2 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.byhop(p, "KNOWS", 2)
+YIELD nodes
+RETURN nodes</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34551">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.47.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[(:Person {name: "Michael"})]</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[(:Person {name: "Praveena"}), (:Person {name: "Lju"})]</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>From these results we can see that at level 1 Emil <code class="literal">KNOWS</code> Michael, and at level 2 Emil <code class="literal">KNOWS</code> Lju and Praveena.
+                  The following graph patterns describe how Emil knows the different people:
+               </p>
+               <div class="itemizedlist">
+                  <div class="itemizedlist-title">Level 1</div>
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)</code></li>
+                  </ul>
+               </div>
+               <div class="itemizedlist">
+                  <div class="itemizedlist-title">Level 2</div>
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)-[:KNOWS]-(lju)</code></li>
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)-[:KNOWS]-(praveena)</code></li>
+                  </ul>
+               </div>
+               <p>We can also use multiple relationship types when searching the neighborhood.</p>
+               <p>Let&#8217;s say that as well as finding the people that Emil knows, we also want to find the people that follow him.
+                  We can specify a direction to the relationship types, by using <code class="literal">&lt;</code> to indicate an incoming relationship, or <code class="literal">&gt;</code> to indicate an outgoing relationship.
+                  So to find people that follow Emil, we&#8217;d use <code class="literal">&lt;FOLLOWS</code>.
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Emil <code class="literal">KNOWS</code> and those that have <code class="literal">FOLLOWS</code> relationships to him, at up to 3 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.byhop(p, "KNOWS|&lt;FOLLOWS", 3)
+YIELD nodes
+RETURN nodes</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34622">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.48.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[(:Person {name: "Mark"}), (:Person {name: "Michael"})]</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[(:Person {name: "Praveena"}), (:Person {name: "Joe"}), (:Person {name: "Lju"})]</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[(:Person {name: "Ryan"})]</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We&#8217;ve got some more results this time.
+                  Mark is in Emil&#8217;s level 1 neighborhood, Joe is in his level 2 neighborhood, and Ryan is in his level 3 neighborhood.
+               </p>
+               <p>The following graph patterns describe how Emil knows the different people:</p>
+               <div class="itemizedlist">
+                  <div class="itemizedlist-title">Level 1</div>
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)</code></li>
+                     <li class="listitem"><code class="literal">(mark)-[:FOLLOWS]&#8594;(emil)</code></li>
+                  </ul>
+               </div>
+               <div class="itemizedlist">
+                  <div class="itemizedlist-title">Level 2</div>
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)-[:KNOWS]-(lju)</code></li>
+                     <li class="listitem"><code class="literal">(emil)-[:KNOWS]-(michael)-[:KNOWS]-(praveena)</code></li>
+                     <li class="listitem"><code class="literal">(joe)-[:FOLLOWS]&#8594;(mark)-[:FOLLOWS]&#8594;(emil)</code></li>
+                  </ul>
+               </div>
+               <div class="itemizedlist">
+                  <div class="itemizedlist-title">Level 3</div>
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(ryan)-[:FOLLOWS]&#8594;(joe)-[:FOLLOWS]&#8594;(mark)-[:FOLLOWS]&#8594;(emil)</code></li>
+                  </ul>
+               </div>
+               <p>And, as with the <code class="literal">apoc.neighbors.athop</code> procedure, we can also return just the neighborhood size at each hop.
+               </p>
+               <p><span class="formalpara-title">The following returns the number of people that Emil <code class="literal">KNOWS</code> and the number that have <code class="literal">FOLLOWS</code> relationships to him, at up to 3 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.byhop.count(p, "KNOWS|&lt;FOLLOWS", 3)
+YIELD value
+RETURN value</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34700">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.49.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>[2, 3, 1]</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>And as expected we have a count of 2 at level 1, 3 at level 2, and 1 at level 3.</p>
+               <p>We could even <a class="link" href="../../data-structures/map-functions/" title="9.2.&nbsp;Map Functions">turn that list of numbers into a map</a> with the key being the number of hops and the value the neighborhood size.
+                  The following query shows how to do this using the  <code class="literal">apoc.map.fromLists</code> function:
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Emil"})
+CALL apoc.neighbors.byhop.count(p, "KNOWS|&lt;FOLLOWS", 3)
+YIELD value
+RETURN apoc.map.fromLists(
+         [value in range(1, size(value)) | toString(value)],
+         value) AS value</code></pre><div class="table" id="d0e34726">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.50.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{<code class="literal">1</code>: 2, <code class="literal">2</code>: 3, <code class="literal">3</code>: 1}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="neighborhood-search-up-to-hop-count">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#neighborhood-search-up-to-hop-count"></a>12.7.3.3.&nbsp;Find neighbors up to specified hop count
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.neighbors.tohop</code> procedures compute a node&#8217;s neighborhood up to a specified hop count.
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Praveena <code class="literal">FOLLOWS</code> up to 1 hop.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Praveena"})
+CALL apoc.neighbors.tohop(p, "FOLLOWS&gt;", 1)
+YIELD node
+RETURN node</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34768">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.51.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Joe"})</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The only person that Praveena follows is Joe, so that&#8217;s the only node returned.
+                  What about if we include people at up to 2 hops?
+               </p>
+               <p><span class="formalpara-title">The following returns the people that Praveena <code class="literal">FOLLOWS</code> up to 2 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Praveena"})
+CALL apoc.neighbors.tohop(p, "FOLLOWS&gt;", 2)
+YIELD node
+RETURN node</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34795">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.52.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Mark"})</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>(:Person {name: "Joe"})</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>Now Mark is returned as well.
+                  The following graph patterns describe how Emil knows the different people:
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">(praveena)-[:FOLLOWS]-(joe)</code></li>
+                     <li class="listitem"><code class="literal">(praveena)-[:FOLLOWS]-(joe)-[:FOLLOWS]&#8594;(mark)</code></li>
+                  </ul>
+               </div>
+               <p>And if we just want a count of the number of people, we can use the count variant.</p>
+               <p><span class="formalpara-title">The following returns the number of people that Praveena <code class="literal">FOLLOWS</code> up to 2 hops.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Praveena"})
+CALL apoc.neighbors.tohop.count(p, "FOLLOWS&gt;", 2)
+YIELD value
+RETURN value</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e34837">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;12.53.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

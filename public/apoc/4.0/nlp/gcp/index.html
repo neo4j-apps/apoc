@@ -1,0 +1,972 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>16.1.&nbsp;Google Cloud Platform (GCP) - Chapter&nbsp;16.&nbsp;Natural Language Processing</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This chapter describes procedures that wrap Google Cloud Platform&#8217;s Natural Language API."></meta>
+      <link rel="prev" href="../" title="Chapter&nbsp;16.&nbsp;Natural Language Processing"></link>
+      <link rel="next" href="../aws/" title="16.2.&nbsp;Amazon Web Services (AWS)"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Natural Language Processing</a></span><span class="nav-current">
+               <p class="nav-title hidden">16.1.&nbsp;Google Cloud Platform (GCP)</p></span><span class="nav-next"><a accesskey="n" href="../aws/">Amazon Web Services (AWS)<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="nlp-gcp">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#nlp-gcp"></a>16.1.&nbsp;Google Cloud Platform (GCP)
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This chapter describes procedures that wrap Google Cloud Platform&#8217;s Natural Language API.</p>
+         </div>
+         <p>Google Cloud Platform&#8217;s <a class="link" href="https://cloud.google.com/natural-language" target="_top">Natural Language API</a> lets users derive insights from unstructured text using Google machine learning.
+            The procedures in this chapter act as a wrapper around calls to this API to extract entities, categories, or sentiment from
+            text stored as node properties.
+         </p>
+         <p>Each procedure has two modes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem">Stream - returns a map constructed from the JSON returned from the API</li>
+               <li class="listitem">Graph - creates a graph or virtual graph based on the values returned by the API</li>
+            </ul>
+         </div>
+         <p>This section includes the following:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="xref" href="#nlp-gcp-overview" title="16.1.1.&nbsp;Procedure Overview">Section&nbsp;16.1.1, &#8220;Procedure Overview&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-gcp-api-key" title="16.1.2.&nbsp;Setting up API Key">Section&nbsp;16.1.2, &#8220;Setting up API Key&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-gcp-entities" title="16.1.3.&nbsp;Entity Extraction">Section&nbsp;16.1.3, &#8220;Entity Extraction&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-gcp-classify" title="16.1.4.&nbsp;Classification">Section&nbsp;16.1.4, &#8220;Classification&#8221;</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#nlp-gcp-examples" title="16.1.5.&nbsp;Examples">Section&nbsp;16.1.5, &#8220;Examples&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#nlp-gcp-examples-entities" title="16.1.5.1.&nbsp;Entity Extraction">Section&nbsp;16.1.5.1, &#8220;Entity Extraction&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#nlp-gcp-examples-classify" title="16.1.5.2.&nbsp;Classification">Section&nbsp;16.1.5.2, &#8220;Classification&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="nlp-gcp-overview">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-gcp-overview"></a>16.1.1.&nbsp;Procedure Overview
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The procedures are described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e37631">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.graph(sourceNode :: NODE?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Creates a (virtual) entity graph for provided text</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.stream(sourceNode :: NODE?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Returns a stream of entities for provided text</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.graph(sourceNode :: NODE?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Classifies a document into categories.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.stream(sourceNode :: NODE?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Classifies a document into categories.</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="nlp-gcp-api-key">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-gcp-api-key"></a>16.1.2.&nbsp;Setting up API Key
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>We can generate an API Key that has access to the Cloud Natural Language API by going to <a class="link" href="https://console.cloud.google.com/apis/credentials" target="_top">console.cloud.google.com/apis/credentials</a>.
+               Once we&#8217;ve created a key, we can populate and execute the following command to create a parameter that contains these details.
+            </p>
+            <p><span class="formalpara-title">The following defines the <code class="literal">apiKey</code> parameter.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">:param apiKey =&gt; ("&lt;api-key-here&gt;")</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="nlp-gcp-entities">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-gcp-entities"></a>16.1.3.&nbsp;Entity Extraction
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The entity extraction procedures (<code class="literal">apoc.nlp.gcp.entities.*</code>) are wrappers around the <a class="link" href="https://cloud.google.com/natural-language/docs/reference/rest/v1/documents/analyzeEntities" target="_top"><code class="literal">documents.analyzeEntities</code></a> method of the Google Natural Language API.
+               This API method finds named entities (currently proper names and common nouns) in the text along with entity types, salience,
+               mentions for each entity, and other properties.
+            </p>
+            <p>The procedures are described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e37741">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.graph(sourceNode :: NODE?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Creates a (virtual) entity graph for provided text</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.entities.stream(sourceNode :: NODE?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Returns a stream of entities for provided text</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>The procedures support the following config parameters:</p>
+            <div class="table" id="d0e37790">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.1.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>key</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>API Key for Google Natural Language API</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>nodeProperty</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>text</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>The property on the provided node that contains the unstructured text to be analyzed</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>In addition, <code class="literal">apoc.nlp.gcp.entities.graph</code> supports the following config parameters:
+            </p>
+            <div class="table" id="d0e37840">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.2.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>write</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>persist the graph of entities</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationshipType</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>ENTITY</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationship type for relationships from source node to entity nodes</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p><span class="formalpara-title">Streaming mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.gcp.entities.stream(sourceNode:Node, {
+  key: String,
+  nodeProperty: String
+})
+YIELD value</code></pre><p>
+               
+            </p>
+            <p><span class="formalpara-title">Graph mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.gcp.entities.graph(sourceNode:Node, {
+  key: String,
+  nodeProperty: String,
+  relationshipType: String,
+  write: Boolean
+})
+YIELD graph</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="nlp-gcp-classify">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-gcp-classify"></a>16.1.4.&nbsp;Classification
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The entity extraction procedures (<code class="literal">apoc.nlp.gcp.classify.*</code>) are wrappers around the <a class="link" href="https://cloud.google.com/natural-language/docs/reference/rest/v1/documents/classifyText" target="_top"><code class="literal">documents.classifyText</code></a> method of the Google Natural Language API.
+               This API method classifies a document into categories.
+            </p>
+            <p>The procedures are described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e37915">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.graph(sourceNode :: NODE?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Classifies a document into categories.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.gcp.classify.stream(sourceNode :: NODE?, config = {} :: MAP?) :: (value :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Classifies a document into categories.</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>The procedures support the following config parameters:</p>
+            <div class="table" id="d0e37964">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.3.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>key</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>API Key for Google Natural Language API</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>nodeProperty</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>text</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>The property on the provided node that contains the unstructured text to be analyzed</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>In addition, <code class="literal">apoc.nlp.gcp.classify.graph</code> supports the following config parameters:
+            </p>
+            <div class="table" id="d0e38014">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.4.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>write</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>persist the graph of entities</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationshipType</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>CATEGORY</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationship type for relationships from source node to entity nodes</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p><span class="formalpara-title">Streaming mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.gcp.classify.stream(sourceNode:Node, {
+  key: String,
+  nodeProperty: String
+})
+YIELD value</code></pre><p>
+               
+            </p>
+            <p><span class="formalpara-title">Graph mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.gcp.classify.graph(sourceNode:Node, {
+  key: String,
+  nodeProperty: String,
+  relationshipType: String,
+  write: Boolean
+})
+YIELD graph</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="nlp-gcp-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-gcp-examples"></a>16.1.5.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The examples in this section are based on the following sample graph:</p><pre class="programlisting highlight"><code data-lang="cypher">CREATE (:Article {
+ uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/",
+ body: "These days I&#8217;m rarely more than a few feet away from my Nintendo Switch and I play board games, card games and role playing games with friends at least once or twice a week. I&#8217;ve even organised lunch-time Mario Kart 8 tournaments between the Neo4j European offices!"
+});</code></pre><section class="section" id="nlp-gcp-examples-entities">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#nlp-gcp-examples-entities"></a>16.1.5.1.&nbsp;Entity Extraction
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Let&#8217;s start by extracting the entities from the Article node.
+                  The text that we want to analyze is stored in the <code class="literal">body</code> property of the node, so we&#8217;ll need to specify that via the <code class="literal">nodeProperty</code> configuration parameter.
+               </p>
+               <p><span class="formalpara-title">The following streams the entities for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.entities.stream(a, {
+  key: $apiKey,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.entities AS entity
+RETURN entity;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38101">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.5.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">entity</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "card games", salience: 0.17967656, metadata: {}, type: "CONSUMER_GOOD", mentions: [{type: "COMMON", text: {content:
+                                 "card games", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "role playing games", salience: 0.16441391, metadata: {}, type: "OTHER", mentions: [{type: "COMMON", text: {content:
+                                 "role playing games", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "Switch", salience: 0.143287, metadata: {}, type: "OTHER", mentions: [{type: "COMMON", text: {content: "Switch", beginOffset:
+                                 -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "friends", salience: 0.13336793, metadata: {}, type: "PERSON", mentions: [{type: "COMMON", text: {content: "friends",
+                                 beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "Nintendo", salience: 0.12601112, metadata: {mid: "/g/1ymzszlpz"}, type: "ORGANIZATION", mentions: [{type: "PROPER",
+                                 text: {content: "Nintendo", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "board games", salience: 0.08861496, metadata: {}, type: "CONSUMER_GOOD", mentions: [{type: "COMMON", text: {content:
+                                 "board games", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "tournaments", salience: 0.0603245, metadata: {}, type: "EVENT", mentions: [{type: "COMMON", text: {content: "tournaments",
+                                 beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "offices", salience: 0.034420907, metadata: {}, type: "LOCATION", mentions: [{type: "COMMON", text: {content: "offices",
+                                 beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "Mario Kart 8", salience: 0.029095741, metadata: {wikipedia_url: "https://en.wikipedia.org/wiki/Mario_Kart_8", mid:
+                                 "/m/0119mf7q"}, type: "PERSON", mentions: [{type: "PROPER", text: {content: "Mario Kart 8", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "European", salience: 0.020393685, metadata: {mid: "/m/02j9z", wikipedia_url: "https://en.wikipedia.org/wiki/Europe"},
+                                 type: "LOCATION", mentions: [{type: "PROPER", text: {content: "European", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "Neo4j", salience: 0.020393685, metadata: {mid: "/m/0b76t3s", wikipedia_url: "https://en.wikipedia.org/wiki/Neo4j"},
+                                 type: "ORGANIZATION", mentions: [{type: "PROPER", text: {content: "Neo4j", beginOffset: -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "8", salience: 0, metadata: {value: "8"}, type: "NUMBER", mentions: [{type: "TYPE_UNKNOWN", text: {content: "8", beginOffset:
+                                 -1}}]}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We get back 12 different entities.
+                  We could then apply a Cypher statement that creates one node per entity and an <code class="literal">ENTITY</code> relationship from each of those nodes back to the <code class="literal">Article</code> node.
+               </p>
+               <p><span class="formalpara-title">The following streams the entities for the Pokemon article and then creates nodes for each entity.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.entities.stream(a, {
+  key: $apiKey,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.entities AS entity
+MERGE (e:Entity {name: entity.name})
+SET e.type = entity.type
+MERGE (a)-[:ENTITY]-&gt;(e)</code></pre><p>
+                  
+               </p>
+               <p>Alternatively we can use the graph mode to automatically create the entity graph.
+                  As well as having the <code class="literal">Entity</code> label, each entity node will have another label based on the value of the <code class="literal">type</code> property.
+                  By default a virtual graph is returned.
+               </p>
+               <p><span class="formalpara-title">The following returns a virtual graph of entities for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.entities.graph(a, {
+  key: $apiKey,
+  nodeProperty: "body",
+  relationshipType: "ENTITY"
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the virtual graph in <a class="xref" href="#apoc.nlp.gcp.entities.graph.svg" title="Figure&nbsp;16.1.&nbsp;Pokemon entities graph">Figure&nbsp;16.1, &#8220;Pokemon entities graph&#8221;</a>.
+               </p>
+               <div class="figure" id="apoc.nlp.gcp.entities.graph.svg">
+                  <div class="figure-title">Figure&nbsp;16.1.&nbsp;Pokemon entities graph</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.nlp.gcp.entities.graph.svg" alt="apoc.nlp.gcp.entities.graph"></img></div>
+                  </div>
+               </div>
+               <p>If we&#8217;re happy with this graph and would like to persist it in Neo4j, we can do this by specifying the <code class="literal">write: true</code> configuration.
+               </p>
+               <p><span class="formalpara-title">The following creates a <code class="literal">HAS_ENTITY</code> relationship from the article to each entity.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.entities.graph(a, {
+  key: $apiKey,
+  nodeProperty: "body",
+  relationshipType: "HAS_ENTITY",
+  write: true
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can then write a query to return the entities that have been created.</p>
+               <p><span class="formalpara-title">The following returns articles and their entities.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (article:Article)
+RETURN article.uri AS article,
+       [(article)-[:HAS_ENTITY]-&gt;(e) | e.name] AS entities;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38230">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.6.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">article</th>
+                           <th style="text-align: left; vertical-align: top; ">entities</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["tournaments", "Neo4j", "Switch", "card games", "board games", "Mario Kart 8", "Nintendo", "friends", "8", "offices", "European",
+                                 "role playing games"]
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="nlp-gcp-examples-classify">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#nlp-gcp-examples-classify"></a>16.1.5.2.&nbsp;Classification
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Now let&#8217;s extract categories from the Article node.
+                  The text that we want to analyze is stored in the <code class="literal">body</code> property of the node, so we&#8217;ll need to specify that via the <code class="literal">nodeProperty</code> configuration parameter.
+               </p>
+               <p><span class="formalpara-title">The following streams the categories for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.classify.stream(a, {
+  key: $apiKey,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.categories AS category
+RETURN category;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38269">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.7.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">category</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "/Games", confidence: 0.91}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We get back only one category
+                  We could then apply a Cypher statement that creates one node per category and a <code class="literal">CATEGORY</code> relationship from each of those nodes back to the <code class="literal">Article</code> node.
+               </p>
+               <p><span class="formalpara-title">The following streams the categories for the Pokemon article and then creates nodes for each category.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.classify.stream(a, {
+  key: $apiKey,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.categories AS category
+MERGE (c:Category {name: category.name})
+MERGE (a)-[:CATEGORY]-&gt;(c)</code></pre><p>
+                  
+               </p>
+               <p>Alternatively we can use the graph mode to automatically create the category graph.
+                  As well as having the <code class="literal">Category</code> label, each category node will have another label based on the value of the <code class="literal">type</code> property.
+                  By default a virtual graph is returned.
+               </p>
+               <p><span class="formalpara-title">The following returns a virtual graph of categories for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.classify.graph(a, {
+  key: $apiKey,
+  nodeProperty: "body",
+  relationshipType: "CATEGORY"
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the virtual graph in <a class="xref" href="#apoc.nlp.gcp.classify.graph.svg" title="Figure&nbsp;16.2.&nbsp;Pokemon categories graph">Figure&nbsp;16.2, &#8220;Pokemon categories graph&#8221;</a>.
+               </p>
+               <div class="figure" id="apoc.nlp.gcp.classify.graph.svg">
+                  <div class="figure-title">Figure&nbsp;16.2.&nbsp;Pokemon categories graph</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.nlp.gcp.classify.graph.svg" alt="apoc.nlp.gcp.classify.graph"></img></div>
+                  </div>
+               </div>
+               <p><span class="formalpara-title">The following creates a <code class="literal">HAS_CATEGORY</code> relationship from the article to each entity.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.gcp.classify.graph(a, {
+  key: $apiKey,
+  nodeProperty: "body",
+  relationshipType: "HAS_CATEGORY",
+  write: true
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can then write a query to return the entities that have been created.</p>
+               <p><span class="formalpara-title">The following returns articles and their entities.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (article:Article)
+RETURN article.uri AS article,
+       [(article)-[:HAS_CATEGORY]-&gt;(c) | c.name] AS categories;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38349">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.8.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">article</th>
+                           <th style="text-align: left; vertical-align: top; ">categories</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["/Games"]</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

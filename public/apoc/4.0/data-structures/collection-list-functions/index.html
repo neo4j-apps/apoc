@@ -1,0 +1,1567 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>9.3.&nbsp;Collection Functions - Chapter&nbsp;9.&nbsp;Data Structures</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes functions and procedures for working with collections and lists."></meta>
+      <link rel="prev" href="../map-functions/" title="9.2.&nbsp;Map Functions"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../map-functions/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Map Functions</a></span><span class="nav-current">
+               <p class="nav-title hidden">9.3.&nbsp;Collection Functions</p></span><span class="nav-next"></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="collection-list-functions">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#collection-list-functions"></a>9.3.&nbsp;Collection Functions
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes functions and procedures for working with collections and lists.</p>
+         </div>
+         <p>APOC has a wide variety of Collection and List functions.</p>
+         <div class="informaltable">
+            <div class="table" id="d0e24421">
+               <table class="informaltable" border="1">
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sum([0.5,1,2.3])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sum of all values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.avg([0.5,1,2.3])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>avg of all values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.min([0.5,1,2.3])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>minimum of all values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.max([0.5,1,2.3])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>maximum of all values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sumLongs([1,3,3])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sums all numeric values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.partition(list,batchSize)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>partitions a list into sublists of <code class="literal">batchSize</code></p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.zip([list1],[list2])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>all values in a list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.pairs([1,2,3]) YIELD value</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>[1,2],[2,3],[3,null]</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.pairsMin([1,2,3]) YIELD value</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>[1,2],[2,3]</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.toSet([list])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a unique list backed by a set</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sort(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sort on Collections</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sortNodes([nodes], 'name')</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sort nodes by property, ascending sorting by adding ^ in front of the sorting field</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sortMaps([maps], 'key')</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sort maps by map key, ascending sorting by adding ^ in front of the sorting field</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.reverse(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns the reversed list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.contains(coll, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns true if collection contains the value</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.containsAll(coll, values)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>optimized contains-all operation (using a HashSet) returns true or false</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.containsSorted(coll, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>optimized contains on a sorted list operation (Collections.binarySearch) (returns true or false)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.containsAllSorted(coll, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>optimized contains-all on a sorted list operation (Collections.binarySearch) (returns true or false)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.isEqualCollection(coll, values)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>return true if two collections contain the same elements with the same cardinality in any order (using a HashMap)</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.union(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>creates the distinct union of the 2 lists</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.unionAll(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>creates the full union with duplicates of the two lists</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.subtract(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns unique set of first list with all elements of second list removed</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.removeAll(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns first list with all elements of second list removed</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.intersection(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns the unique intersection of the two lists</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.disjunction(first, second)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns the disjunct set of the two lists</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.split(list,value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>splits collection on given values rows of lists, value itself will not be part of resulting lists</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.indexOf(coll, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>position of value in the list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.shuffle(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns the shuffled list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.randomItem(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a random item from the list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.randomItems(coll, itemCount, allowRepick: false)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a list of <code class="literal">itemCount</code> random items from the list, optionally allowing picked elements to be picked again
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.containsDuplicates(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns true if a collection contains duplicate elements</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.duplicates(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a list of duplicate items in the collection</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.duplicatesWithCount(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a list of duplicate items in the collection and their count, keyed by <code class="literal">item</code> and <code class="literal">count</code> (e.g., <code class="literal">[{item: xyz, count:2}, {item:zyx, count:5}]</code>)
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.occurrences(coll, item)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns the count of the given item in the collection</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.frequencies(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a list of frequencies of the items in the collection, keyed by <code class="literal">item</code> and <code class="literal">count</code> (e.g., <code class="literal">[{item: xyz, count:2}, {item:zyx, count:5}, {item:abc, count:1}]</code>)
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.frequenciesAsMap(coll)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>return a map of frequencies of the items in the collection, keyed by <code class="literal">item</code> and <code class="literal">count</code> (e.g., <code class="literal">{1: 2, 3: 2}</code>)
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.sortMulti</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>sort list of maps by several sort fields (ascending with ^ prefix) and optionally applies limit and skip</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.flatten</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>flattens a nested list</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.combinations(coll, minSelect, maxSelect:minSelect)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Returns collection of all combinations of list elements of selection size between minSelect and maxSelect (default:minSelect),
+                              inclusive
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">CALL apoc.coll.elements(list,limit,offset) yield _1,_2,..,_10,_1s,_2i,_3f,_4m,_5l,_6n,_7r,_8p</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>deconstruct subset of mixed list into identifiers of the correct type</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.set(coll, index, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>set index to value</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.insert(coll, index, value)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>insert value at index</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.insertAll(coll, index, values)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>insert values at index</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.remove(coll, index, [length=1])</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>remove range of values from index to length</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.different(values)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns true if value are different</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p><code class="literal">apoc.coll.fill(item, count)</code></p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>returns a list with the given count of items</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <p><span class="formalpara-title">The following computes the sum of values in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.sum([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24834">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.25.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>15.0</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following computes the average of values in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.avg([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24856">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.26.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>3.0</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following computes the minimum of values in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.min([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24878">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.27.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>1</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following computes the maximum of values in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.max([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24900">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.28.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>5</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following computes the sum of numeric values in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.sumLongs([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24922">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.29.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>15</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following partitions a list into sublists of size <code class="literal">2</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.coll.partition([1,2,3,4,5], 2)</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24947">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.30.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Value</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2]</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[3, 4]</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[5]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following combines two lists, element for element, into a list of lists:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.zip([1,2,3], ["a", "b", "c"]) as output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24977">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.31.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[[1, "a"], [2, "b"], [3, "c"]]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following creates a list of lists of adjacent elements in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.pairs([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e24999">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.32.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[[1, 2], [2, 3], [3, 4], [4, 5], [5, null]]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following creates a list of lists of adjacent elements in a list, skipping the last item:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.pairsMin([1,2,3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25021">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.33.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[[1, 2], [2, 3], [3, 4], [4, 5]]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following converts a list to a set:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.toSet([1,1,2,1,3,4,1]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25043">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.34.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following sorts a collection:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.sort([5,4,2,3,1]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25065">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.35.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4, 5]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following sorts a list of maps in reverse alphabetical order by the key <code class="literal">name</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.sortMaps([
+    {name: "Lionel Messi"},
+    {name: "Cristiano Ronaldo"},
+    {name: "Wayne Rooney"}
+], "name") AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25090">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.36.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="json">[
+    {
+      "name": "Wayne Rooney"
+    }
+    ,
+    {
+      "name": "Lionel Messi"
+    }
+    ,
+    {
+      "name": "Cristiano Ronaldo"
+    }
+]</code></pre></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following sorts a list of maps in alphabetical order by the key <code class="literal">name</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.sortMaps([
+    {name: "Lionel Messi"},
+    {name: "Cristiano Ronaldo"},
+    {name: "Wayne Rooney"}
+], "name^") AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25115">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.37.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="json">[
+    {
+      "name": "Cristiano Ronaldo"
+    }
+    ,
+    {
+      "name": "Lionel Messi"
+    }
+    ,
+    {
+      "name": "Wayne Rooney"
+    }
+]</code></pre></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following reverses a collection:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.reverse([5,4,3,2,1]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25137">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.38.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4, 5]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following checks if a collection contains a value:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.contains([1,2,3,4,5], 4) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25159">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.39.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>true</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following checks if a collection contains all the values from another collection:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.contains([1,2,3,4,5], [3,7]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25181">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.40.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>false</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following creates a distinct union of two lists:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.union([1,2,3,4,5], [3,4,5,6,7]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25203">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.41.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4, 5, 6, 7]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following creates the full union of two lists:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.unionAll([1,2,3,4,5], [3,4,5,6,7]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25225">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.42.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4, 5, 3, 4, 5, 6, 7]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns unique set of first list with all elements of second list removed:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.subtract([1,2,3,4,5,6,6], [3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25247">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.43.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 6]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns unique set of first list with all elements of second list removed:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.subtract([1,2,3,4,5,6,6], [3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25269">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.44.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns first list with all elements of second list removed:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.removeAll([1,2,3,4,5,6,6], [3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25291">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.45.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 6, 6]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns the unique intersection of the two lists:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.intersection([1,2,3,4,5], [3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25313">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.46.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[3, 4, 5]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns the unique disjunction of two lists:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.disjunction([1,2,3,4,5], [3,4,5]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25335">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.47.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following splits a collection on the value <code class="literal">.</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.coll.split(["Hello", "World", ".", "How", "are", "you", "?"], ".")</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25360">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.48.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Value</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>["Hello", "World"]</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>["How", "are", "you", "?"]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns the index of the value <code class="literal">3</code> in the list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.indexOf([1,3,5,7,9], 3) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25389">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.49.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>1</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following shuffles a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.shuffle([1,3,5,7,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25411">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.50.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[7, 5, 9, 3, 1]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns a random value from a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.randomItem([1,3,5,7,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25433">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.51.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>7</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns <code class="literal">2</code> random values from a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.randomItems([1,3,5,7,9], 2) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25458">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.52.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[5, 3]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following indicates whether a list contains duplicate values:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.containsDuplicates([1,3,5,7,9,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25480">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.53.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>true</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns a list of duplicates in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.duplicates([1,3,5,7,9,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25502">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.54.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[9]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns duplicates in a list of maps containing an item and its count:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.duplicatesWithCount([1,3,5,7,9,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25524">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.55.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="json">[
+    {
+      "count": 2,
+      "item": 9
+    }
+]</code></pre></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns the number of occurrences of the value <code class="literal">9</code> in a list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.occurrences([1,3,5,7,9,9], 9) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25549">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.56.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>2</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns a list of maps containing each item and their frequency in a collection:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.frequencies([1,3,5,7,9,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25571">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.57.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="json">[
+    {
+      "count": 1,
+      "item": 1
+    }
+    ,
+    {
+      "count": 1,
+      "item": 3
+    }
+    ,
+    {
+      "count": 1,
+      "item": 5
+    }
+    ,
+    {
+      "count": 1,
+      "item": 7
+    }
+    ,
+    {
+      "count": 2,
+      "item": 9
+    }
+]</code></pre></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns a map containing each item and their frequency in a collection:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.frequenciesAsMap([1,3,5,7,9,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25593">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.58.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; "><pre class="programlisting highlight"><code data-lang="json">{
+  "1": 1,
+  "3": 1,
+  "5": 1,
+  "7": 1,
+  "9": 2
+}</code></pre></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following flattens a collection of collections:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.flatten([1,2,3,[4,5,6]]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25615">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.59.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 2, 3, 4, 5, 6]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following returns a collection of all combinations of list elements of selection size between <code class="literal">3</code> and <code class="literal">4</code> elements:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.combinations([1,3,5,7,9], 3, 4) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25643">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.60.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[[1, 3, 5], [1, 3, 7], [1, 5, 7], [3, 5, 7], [1, 3, 9], [1, 5, 9], [3, 5, 9], [1, 7, 9], [3, 7, 9], [5, 7, 9], [1, 3, 5, 7],
+                           [1, 3, 5, 9], [1, 3, 7, 9], [1, 5, 7, 9], [3, 5, 7, 9]]
+                        </p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following replaces the item at index <code class="literal">4</code> with the value <code class="literal">11</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.set([1,3,5,7,9], 4, 11) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25671">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.61.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 3, 5, 7, 11]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following inserts the value <code class="literal">11</code> at index <code class="literal">3</code> in the list:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.insert([1,3,5,7,9], 3, 11) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25699">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.62.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 3, 5, 11, 7, 9]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following removes <code class="literal">2</code> values, starting from index <code class="literal">1</code>:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.remove([1,3,5,7,9], 1, 2) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25727">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.63.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>[1, 7, 9]</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p><span class="formalpara-title">The following indicates whether all values in a collection are different:&nbsp;</span>
+            
+         </p><pre class="programlisting highlight"><code data-lang="cypher">RETURN apoc.coll.different([1,3,5,7,9]) AS output</code></pre><p>
+            
+         </p>
+         <div class="table" id="d0e25749">
+            <table class="table" summary="Results" border="1">
+               <caption class="table-title">Table&nbsp;9.64.&nbsp;Results</caption>
+               <colgroup>
+                  <col class="col_1"></col>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="text-align: left; vertical-align: top; ">Output</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="text-align: left; vertical-align: top; ">
+                        <p>true</p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

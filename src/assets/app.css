@@ -1,0 +1,34 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+
+
+
+
+.fa {
+    @apply text-xl;
+}
+
+/* .fa.icon-warning:before {content:"\f071"}
+.fa.icon-note:before{content:"\f05a"} */
+
+.admonitionblock td.icon .icon-note:before { content: "\f05a";}
+.admonitionblock td.icon .icon-tip:before { content: "\f0eb"; }
+.admonitionblock td.icon .icon-warning:before { content: "\f071"; }
+.admonitionblock td.icon .icon-caution:before { content: "\f06d"; }
+.admonitionblock td.icon .icon-important:before { content: "\f06a"; }
+
+.admonitionblock.warning {
+    @apply bg-orange-100;
+
+    code {
+        @apply bg-orange-200 text-orange-700;
+    }
+
+    .icon {
+        @apply text-orange-600;
+    }
+}

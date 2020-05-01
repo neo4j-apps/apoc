@@ -1,0 +1,1129 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>6.1.&nbsp;Export to CSV - Chapter&nbsp;6.&nbsp;Export</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes procedures that can be used to export data in CSV format."></meta>
+      <link rel="prev" href="../cypher/" title="6.3.&nbsp;Export to Cypher Script"></link>
+      <link rel="next" href="../json/" title="6.2.&nbsp;Export to JSON"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../cypher/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Export to Cypher Script</a></span><span class="nav-current">
+               <p class="nav-title hidden">6.1.&nbsp;Export to CSV</p></span><span class="nav-next"><a accesskey="n" href="../json/">Export to JSON<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="export-csv">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#export-csv"></a>6.1.&nbsp;Export to CSV
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes procedures that can be used to export data in CSV format.</p>
+         </div>
+         <p>The export CSV procedures export data into a format more supported by Data Science libraries in the Python and R ecosystems.
+            We may also want to export data into JSON format for importing into other tool sor for general sharing of query results.
+            The procedures described in this section support exporting to a file or as a stream.
+         </p>
+         <p>For <code class="literal">apoc.export.csv.all</code>, <code class="literal">apoc.export.csv.data</code> and <code class="literal">apoc.export.csv.graph</code>, nodes and relationships properties are ordered alphabetically, using the following structure:
+         </p>
+         <p><code class="literal">_id,_labels,&lt;list_nodes_properties_naturally_sorted&gt;,_start,_end,_type,&lt;list_rel_properties_naturally_sorted&gt;</code>.
+         </p>
+         <p>For a graph containing node properties <code class="literal">age</code>, <code class="literal">city</code>, <code class="literal">kids</code>, <code class="literal">male</code>, <code class="literal">name</code>, and <code class="literal">street</code> and containing relationship propeties <code class="literal">bar</code> and <code class="literal">foo</code>, we&#8217;d have the following:
+         </p>
+         <p><code class="literal">_id,_labels,age,city,kids,male,name,street,_start,_end,_type,bar,foo</code></p>
+         <p>Labels exported are ordered alphabetically.
+            The output of <code class="literal">labels()</code> function is not sorted, use it in combination with <code class="literal">apoc.coll.sort()</code>.
+         </p>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="link" href="#export-csv-available-procedures" title="6.1.1.&nbsp;Available Procedures">Available Procedures</a></li>
+               <li class="listitem"><a class="link" href="#export-csv-file-export" title="6.1.2.&nbsp;Exporting to a file">Exporting to a file</a></li>
+               <li class="listitem"><a class="link" href="#export-csv-stream-export" title="6.1.3.&nbsp;Exporting a stream">Exporting a stream</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="link" href="#export-csv-examples" title="6.1.4.&nbsp;Examples">Examples</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="link" href="#export-database-csv" title="6.1.4.1.&nbsp;Export whole database to CSV">Export whole database</a></li>
+                        <li class="listitem"><a class="link" href="#export-nodes-relationships-csv" title="6.1.4.2.&nbsp;Export specified nodes and relationships to CSV">Export specified nodes and relationships</a></li>
+                        <li class="listitem"><a class="link" href="#export-graph-csv" title="6.1.4.3.&nbsp;Export virtual graph to CSV">Export virtual graph</a></li>
+                        <li class="listitem"><a class="link" href="#export-cypher-query-csv" title="6.1.4.4.&nbsp;Export results of Cypher query to CSV">Export results of Cypher query</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="export-csv-available-procedures">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-csv-available-procedures"></a>6.1.1.&nbsp;Available Procedures
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The table below describes the available procedures:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e12159">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.all</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.all(file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format :: STRING?, nodes :: INTEGER?,
+                                    relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches :: INTEGER?,
+                                    done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.csv.all(file,config) - exports whole database as csv to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.data</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.data(nodes :: LIST? OF NODE?, rels :: LIST? OF RELATIONSHIP?, file :: STRING?, config :: MAP?) :: (file ::
+                                    STRING?, source :: STRING?, format :: STRING?, nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time
+                                    :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.csv.data(nodes,rels,file,config) - exports given nodes and relationships as csv to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.graph(graph :: MAP?, file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format :: STRING?,
+                                    nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize :: INTEGER?,
+                                    batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.csv.graph(graph,file,config) - exports given graph object as csv to the provided file</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.query</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.export.csv.query(query :: STRING?, file :: STRING?, config :: MAP?) :: (file :: STRING?, source :: STRING?, format ::
+                                    STRING?, nodes :: INTEGER?, relationships :: INTEGER?, properties :: INTEGER?, time :: INTEGER?, rows :: INTEGER?, batchSize
+                                    :: INTEGER?, batches :: INTEGER?, done :: BOOLEAN?, data :: STRING?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.export.csv.query(query,file,{config,&#8230;&#8203;,params:{params}}) - exports results from the cypher statement as csv to the provided
+                                 file
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="export-csv-file-export">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-csv-file-export"></a>6.1.2.&nbsp;Exporting to a file
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>By default exporting to the file system is disabled.
+               We can enable it by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.export.file.enabled=true</code></pre><p>
+               
+            </p>
+            <p>If we try to use any of the export procedures without having first set this property, we&#8217;ll get the following error message:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e12254">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.lang.RuntimeException: Export to files not enabled, please set apoc.export.file.enabled=true
+                                 in your neo4j.conf
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>Export files are written to the <code class="literal">import</code> directory, which is defined by the <code class="literal">dbms.directories.import</code> property.
+               This means that any file path that we provide is relative to this directory.
+               If we try to write to an absolute path, such as <code class="literal">/tmp/filename</code>, we&#8217;ll get an error message similar to the following one:
+            </p>
+            <div class="informaltable">
+               <div class="table" id="d0e12273">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Failed to invoke procedure: Caused by: java.io.FileNotFoundException: /path/to/neo4j/import/tmp/fileName (No such file or
+                                 directory)
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>We can enable writing to anywhere on the file system by setting the following property in <code class="literal">apoc.conf</code>:
+            </p>
+            <p><span class="formalpara-title">apoc.conf.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="properties">apoc.import.file.use_neo4j_config=false</code></pre><p>
+               
+            </p>
+            <div class="admonitionblock warning">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td class="icon"><i class="fa icon-warning" title="warning"></i></td>
+                        <td class="content">
+                           <p>Neo4j will now be able to write anywhere on the file system, so be sure that this is your intention before setting this property.</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         <section class="section" id="export-csv-stream-export">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-csv-stream-export"></a>6.1.3.&nbsp;Exporting a stream
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>If we don&#8217;t want to export to a file, we can stream results back in the <code class="literal">data</code> column instead by passing a file name of <code class="literal">null</code> and providing the <code class="literal">stream:true</code> config.
+            </p>
+         </section>
+         <section class="section" id="export-csv-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#export-csv-examples"></a>6.1.4.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>This section includes examples showing how to use the export to CSV procedures.
+               These examples are based on a movies dataset, which can be imported by running the following Cypher query:
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})
+CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})
+CREATE (Carrie:Person {name:'Carrie-Anne Moss', born:1967})
+CREATE (Laurence:Person {name:'Laurence Fishburne', born:1961})
+CREATE (Hugo:Person {name:'Hugo Weaving', born:1960})
+CREATE (LillyW:Person {name:'Lilly Wachowski', born:1967})
+CREATE (LanaW:Person {name:'Lana Wachowski', born:1965})
+CREATE (JoelS:Person {name:'Joel Silver', born:1952})
+CREATE
+(Keanu)-[:ACTED_IN {roles:['Neo']}]-&gt;(TheMatrix),
+(Carrie)-[:ACTED_IN {roles:['Trinity']}]-&gt;(TheMatrix),
+(Laurence)-[:ACTED_IN {roles:['Morpheus']}]-&gt;(TheMatrix),
+(Hugo)-[:ACTED_IN {roles:['Agent Smith']}]-&gt;(TheMatrix),
+(LillyW)-[:DIRECTED]-&gt;(TheMatrix),
+(LanaW)-[:DIRECTED]-&gt;(TheMatrix),
+(JoelS)-[:PRODUCED]-&gt;(TheMatrix);</code></pre><p>The Neo4j Browser visualization below shows the imported graph:</p>
+            <div class="informalfigure">
+               <div class="mediaobject"><img src="../../images/play-movies.png" alt="play movies"></img></div>
+            </div>
+            <section class="section" id="export-database-csv">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-database-csv"></a>6.1.4.1.&nbsp;Export whole database to CSV
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.csv.all</code> procedure exports the whole database to a CSV file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports the whole database to the file <code class="literal">movies.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.csv.all("movies.csv", {})</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12345">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.1.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"database: nodes(8), rels(7)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>8</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>21</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>39</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies.csv</code> are shown below:
+               </p>
+               <p><span class="formalpara-title">movies.csv.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="csv">"_id","_labels","born","name","released","tagline","title","_start","_end","_type","roles"
+"188",":Movie","","","1999","Welcome to the Real World","The Matrix",,,,
+"189",":Person","1964","Keanu Reeves","","","",,,,
+"190",":Person","1967","Carrie-Anne Moss","","","",,,,
+"191",":Person","1961","Laurence Fishburne","","","",,,,
+"192",":Person","1960","Hugo Weaving","","","",,,,
+"193",":Person","1967","Lilly Wachowski","","","",,,,
+"194",":Person","1965","Lana Wachowski","","","",,,,
+"195",":Person","1952","Joel Silver","","","",,,,
+,,,,,,,"189","188","ACTED_IN","[""Neo""]"
+,,,,,,,"190","188","ACTED_IN","[""Trinity""]"
+,,,,,,,"191","188","ACTED_IN","[""Morpheus""]"
+,,,,,,,"192","188","ACTED_IN","[""Agent Smith""]"
+,,,,,,,"193","188","DIRECTED",""
+,,,,,,,"194","188","DIRECTED",""
+,,,,,,,"195","188","PRODUCED",""</code></pre><p>
+                  
+               </p>
+               <p><span class="formalpara-title">The following query returns a stream of the whole database in the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.csv.all(null, {stream:true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12449">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.2.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>8</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>7</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>21</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"\"_id\",\"_labels\",\"born\",\"name\",\"released\",\"tagline\",\"title\",\"_start\",\"_end\",\"_type\",\"roles\"
+                                 \"188\",\":Movie\",\"\",\"\",\"1999\",\"Welcome to the Real World\",\"The Matrix\",,,,
+                                 \"189\",\":Person\",\"1964\",\"Keanu Reeves\",\"\",\"\",\"\",,,,
+                                 \"190\",\":Person\",\"1967\",\"Carrie-Anne Moss\",\"\",\"\",\"\",,,,
+                                 \"191\",\":Person\",\"1961\",\"Laurence Fishburne\",\"\",\"\",\"\",,,,
+                                 \"192\",\":Person\",\"1960\",\"Hugo Weaving\",\"\",\"\",\"\",,,,
+                                 \"193\",\":Person\",\"1967\",\"Lilly Wachowski\",\"\",\"\",\"\",,,,
+                                 \"194\",\":Person\",\"1965\",\"Lana Wachowski\",\"\",\"\",\"\",,,,
+                                 \"195\",\":Person\",\"1952\",\"Joel Silver\",\"\",\"\",\"\",,,,
+                                 ,,,,,,,\"189\",\"188\",\"ACTED_IN\",\"[\"\"Neo\"\"]\"
+                                 ,,,,,,,\"190\",\"188\",\"ACTED_IN\",\"[\"\"Trinity\"\"]\"
+                                 ,,,,,,,\"191\",\"188\",\"ACTED_IN\",\"[\"\"Morpheus\"\"]\"
+                                 ,,,,,,,\"192\",\"188\",\"ACTED_IN\",\"[\"\"Agent Smith\"\"]\"
+                                 ,,,,,,,\"193\",\"188\",\"DIRECTED\",\"\"
+                                 ,,,,,,,\"194\",\"188\",\"DIRECTED\",\"\"
+                                 ,,,,,,,\"195\",\"188\",\"PRODUCED\",\"\"
+                                 "
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-nodes-relationships-csv">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-nodes-relationships-csv"></a>6.1.4.2.&nbsp;Export specified nodes and relationships to CSV
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.csv.data</code> procedure exports the specified nodes and relationships to a CSV file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports all nodes with the <code class="literal">:Person</code> label with a <code class="literal">name</code> property that starts with <code class="literal">L</code> to the file <code class="literal">movies-l.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (person:Person)
+WHERE person.name STARTS WITH "L"
+WITH collect(person) AS people
+CALL apoc.export.csv.data(people, [], "movies-l.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12514">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.3.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-l.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"data: nodes(3), rels(0)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>6</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies-l.csv</code> are shown below:
+               </p><pre class="programlisting highlight"><code data-lang="csv">"_id","_labels","born","name","_start","_end","_type"
+"191",":Person","1961","Laurence Fishburne",,,
+"193",":Person","1967","Lilly Wachowski",,,
+"194",":Person","1965","Lana Wachowski",,,</code></pre><p><span class="formalpara-title">The following query exports all <code class="literal">ACTED_IN</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship to the file <code class="literal">movies-actedIn.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (person:Person)-[actedIn:ACTED_IN]-&gt;(movie:Movie)
+WITH collect(DISTINCT person) AS people, collect(DISTINCT movie) AS movies, collect(actedIn) AS actedInRels
+CALL apoc.export.csv.data(people + movies, actedInRels, "movies-actedIn.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12620">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.4.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-actedIn.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"data: nodes(5), rels(4)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>4</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>9</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies-actedIn.csv</code> are shown below:
+               </p><pre class="programlisting highlight"><code data-lang="csv">"_id","_labels","born","name","released","tagline","title","_start","_end","_type","roles"
+"189",":Person","1964","Keanu Reeves","","","",,,,
+"190",":Person","1967","Carrie-Anne Moss","","","",,,,
+"191",":Person","1961","Laurence Fishburne","","","",,,,
+"192",":Person","1960","Hugo Weaving","","","",,,,
+"188",":Movie","","","1999","Welcome to the Real World","The Matrix",,,,
+,,,,,,,"189","188","ACTED_IN","[""Neo""]"
+,,,,,,,"190","188","ACTED_IN","[""Trinity""]"
+,,,,,,,"191","188","ACTED_IN","[""Morpheus""]"
+,,,,,,,"192","188","ACTED_IN","[""Agent Smith""]"</code></pre><p><span class="formalpara-title">The following query returns a stream of all <code class="literal">ACTED_IN</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship in the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (person:Person)-[actedIn:ACTED_IN]-&gt;(movie:Movie)
+WITH collect(DISTINCT person) AS people, collect(DISTINCT movie) AS movies, collect(actedIn) AS actedInRels
+CALL apoc.export.csv.data(people + movies, actedInRels, null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12727">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.5.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>4</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>15</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"\"_id\",\"_labels\",\"born\",\"name\",\"released\",\"tagline\",\"title\",\"_start\",\"_end\",\"_type\",\"roles\"
+                                 \"190\",\":Person\",\"1967\",\"Carrie-Anne Moss\",\"\",\"\",\"\",,,,
+                                 \"189\",\":Person\",\"1964\",\"Keanu Reeves\",\"\",\"\",\"\",,,,
+                                 \"191\",\":Person\",\"1961\",\"Laurence Fishburne\",\"\",\"\",\"\",,,,
+                                 \"192\",\":Person\",\"1960\",\"Hugo Weaving\",\"\",\"\",\"\",,,,
+                                 \"188\",\":Movie\",\"\",\"\",\"1999\",\"Welcome to the Real World\",\"The Matrix\",,,,
+                                 ,,,,,,,\"189\",\"188\",\"ACTED_IN\",\"[\"\"Neo\"\"]\"
+                                 ,,,,,,,\"190\",\"188\",\"ACTED_IN\",\"[\"\"Trinity\"\"]\"
+                                 ,,,,,,,\"191\",\"188\",\"ACTED_IN\",\"[\"\"Morpheus\"\"]\"
+                                 ,,,,,,,\"192\",\"188\",\"ACTED_IN\",\"[\"\"Agent Smith\"\"]\"
+                                 "
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-graph-csv">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-graph-csv"></a>6.1.4.3.&nbsp;Export virtual graph to CSV
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.csv.graph</code> procedure exports a <a class="link" href="../../virtual/virtual-graph/" title="15.3.&nbsp;Virtual Graph">virtual graph</a> to a CSV file or as a stream.
+               </p>
+               <p>The examples in this section are based on a virtual graph that contains all <code class="literal">PRODUCED</code> relationships and the nodes either side of that relationship.
+                  The query below creates a virtual graph and stores it in memory with the name <code class="literal">producers.cached</code> using <a class="link" href="../../misc/static-values/" title="20.3.&nbsp;Static Value Storage">Static Value Storage</a>.
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH path = (:Person)-[produced:PRODUCED]-&gt;(:Movie)
+WITH collect(path) AS paths
+CALL apoc.graph.fromPaths(paths, "producers", {})
+YIELD graph AS g
+CALL apoc.static.set("producers.cached", g)
+YIELD value
+RETURN value, g</code></pre><div class="table" id="d0e12789">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.6.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">value</th>
+                           <th style="text-align: left; vertical-align: top; ">g</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{name: "producers", relationships: <span id=":PRODUCED"></span>, nodes: [(:Person {name: "Joel Silver", born: 1952}), (:Movie {tagline: "Welcome to the Real World", title: "The Matrix",
+                                 released: 1999})], properties: {}}
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p><span class="formalpara-title">The following query exports the virtual graph from static value storage to the file <code class="literal">movies-producers.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.csv.graph(apoc.static.get("producers.cached"), "movies-producers.csv", {})</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12821">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.7.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-producers.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"graph: nodes(2), rels(1)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies-producers.csv</code> are shown below:
+               </p><pre class="programlisting highlight"><code data-lang="csv">"_id","_labels","born","name","released","tagline","title","_start","_end","_type"
+"195",":Person","1952","Joel Silver","","","",,,
+"188",":Movie","","","1999","Welcome to the Real World","The Matrix",,,
+,,,,,,,"195","188","PRODUCED"</code></pre><p><span class="formalpara-title">The following query returns a streams of the virtual graph from static value storage to the <code class="literal">data</code> column.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.export.csv.graph(apoc.static.get("producers.cached"), null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12919">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.8.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>5</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"\"_id\",\"_labels\",\"born\",\"name\",\"released\",\"tagline\",\"title\",\"_start\",\"_end\",\"_type\"
+                                 \"195\",\":Person\",\"1952\",\"Joel Silver\",\"\",\"\",\"\",,,
+                                 \"188\",\":Movie\",\"\",\"\",\"1999\",\"Welcome to the Real World\",\"The Matrix\",,,
+                                 ,,,,,,,\"195\",\"188\",\"PRODUCED\"
+                                 "
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <section class="section" id="export-cypher-query-csv">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#export-cypher-query-csv"></a>6.1.4.4.&nbsp;Export results of Cypher query to CSV
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The <code class="literal">apoc.export.csv.query</code> procedure exports the results of a Cypher query to a CSV file or as a stream.
+               </p>
+               <p><span class="formalpara-title">The following query exports all <code class="literal">DIRECTED</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship to the file <code class="literal">movies-directed.csv</code>.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "MATCH path = (person:Person)-[:DIRECTED]-&gt;(movie)
+      RETURN person.name AS name, person.born AS born,
+             movie.title AS title, movie.tagline AS tagline, movie.released AS released" AS query
+CALL apoc.export.csv.query(query, "movies-directed.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e12984">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.9.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                        <col class="col_6"></col>
+                        <col class="col_7"></col>
+                        <col class="col_8"></col>
+                        <col class="col_9"></col>
+                        <col class="col_10"></col>
+                        <col class="col_11"></col>
+                        <col class="col_12"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">source</th>
+                           <th style="text-align: left; vertical-align: top; ">format</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">time</th>
+                           <th style="text-align: left; vertical-align: top; ">rows</th>
+                           <th style="text-align: left; vertical-align: top; ">batchSize</th>
+                           <th style="text-align: left; vertical-align: top; ">batches</th>
+                           <th style="text-align: left; vertical-align: top; ">done</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"movies-directed.csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"statement: cols(5)"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"csv"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>10</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>3</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>2</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>20000</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>1</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>TRUE</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>The contents of <code class="literal">movies-directed.csv</code> are shown below:
+               </p><pre class="programlisting highlight"><code data-lang="csv">"name","born","role","title","tagline","released"
+"Lilly Wachowski","1967","","The Matrix","Welcome to the Real World","1999"
+"Lana Wachowski","1965","","The Matrix","Welcome to the Real World","1999"</code></pre><p><span class="formalpara-title">The following query returns a stream of all <code class="literal">DIRECTED</code> relationships and the nodes with <code class="literal">Person</code> and <code class="literal">Movie</code> labels on either side of that relationship.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">WITH "MATCH path = (person:Person)-[:DIRECTED]-&gt;(movie)
+      RETURN person.name AS name, person.born AS born,
+             movie.title AS title, movie.tagline AS tagline, movie.released AS released" AS query
+CALL apoc.export.csv.query(query, null, {stream: true})
+YIELD file, nodes, relationships, properties, data
+RETURN file, nodes, relationships, properties, data;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e13088">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;6.10.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                        <col class="col_5"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">file</th>
+                           <th style="text-align: left; vertical-align: top; ">nodes</th>
+                           <th style="text-align: left; vertical-align: top; ">relationships</th>
+                           <th style="text-align: left; vertical-align: top; ">properties</th>
+                           <th style="text-align: left; vertical-align: top; ">data</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>NULL</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>0</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>10</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"\"name\",\"born\",\"title\",\"tagline\",\"released\"
+                                   \"Lilly Wachowski\",\"1967\",\"The Matrix\",\"Welcome to the Real World\",\"1999\"
+                                   \"Lana Wachowski\",\"1965\",\"The Matrix\",\"Welcome to the Real World\",\"1999\"
+                                   "
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

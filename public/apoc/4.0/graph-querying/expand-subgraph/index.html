@@ -1,0 +1,997 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>12.5.&nbsp;Expand to subgraph - Chapter&nbsp;12.&nbsp;Advanced Graph Querying</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This section describes a procedure that expands a subgraph from a set of start nodes, and returns all nodes and relationships within the subgraph."></meta>
+      <link rel="prev" href="../neighbourhood-search/" title="12.7.&nbsp;Neighbor Functions"></link>
+      <link rel="next" href="../expand-subgraph-nodes/" title="12.4.&nbsp;Expand to nodes in a subgraph"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../neighbourhood-search/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Neighbor Functions</a></span><span class="nav-current">
+               <p class="nav-title hidden">12.5.&nbsp;Expand to subgraph</p></span><span class="nav-next"><a accesskey="n" href="../expand-subgraph-nodes/">Expand to nodes in a subgraph<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="expand-subgraph">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#expand-subgraph"></a>12.5.&nbsp;Expand to subgraph
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This section describes a procedure that expands a subgraph from a set of start nodes, and returns all nodes and relationships
+               within the subgraph.
+            </p>
+         </div>
+         <p>The expand to subgraph procedure expands to subgraph nodes reachable from the start node following relationships to max-level
+            adhering to the label filters.
+            Returns the collection of nodes in the subgraph, and the collection of relationships between all subgraph nodes.
+            It allows fine grained control over the traversals that expand these subgraphs.
+         </p>
+         <p>This section includes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="xref" href="#expand-subgraph-overview" title="12.5.1.&nbsp;Procedure Overview">Section&nbsp;12.5.1, &#8220;Procedure Overview&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#expand-subgraph-config" title="12.5.2.&nbsp;Configuration parameters">Section&nbsp;12.5.2, &#8220;Configuration parameters&#8221;</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#expand-subgraph-examples" title="12.5.3.&nbsp;Examples">Section&nbsp;12.5.3, &#8220;Examples&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#expand-subgraph-examples-label-relationship-filters" title="12.5.3.1.&nbsp;Relationship Type and Node Label filters">Section&nbsp;12.5.3.1, &#8220;Relationship Type and Node Label filters&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#expand-subgraph-examples-end-nodes-terminator-nodes" title="12.5.3.2.&nbsp;Terminator Nodes and End Nodes">Section&nbsp;12.5.3.2, &#8220;Terminator Nodes and End Nodes&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#expand-subgraph-examples-whitelist-blacklist" title="12.5.3.3.&nbsp;Whitelist Nodes and Blacklist Nodes">Section&nbsp;12.5.3.3, &#8220;Whitelist Nodes and Blacklist Nodes&#8221;</a></li>
+                        <li class="listitem"><a class="xref" href="#expand-subgraph-examples-sequence-rel-types" title="12.5.3.4.&nbsp;Sequences of relationship types">Section&nbsp;12.5.3.4, &#8220;Sequences of relationship types&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="expand-subgraph-overview">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#expand-subgraph-overview"></a>12.5.1.&nbsp;Procedure Overview
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The procedure is described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e32218">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.path.subgraphAll</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.path.subgraphAll(start :: ANY?, config :: MAP?) :: (nodes :: LIST? OF NODE?, relationships :: LIST? OF RELATIONSHIP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>apoc.path.subgraphAll(startNode &lt;id&gt;|Node|list, {maxLevel,relationshipFilter,labelFilter,bfs:true, filterStartNode:false,
+                                 limit:-1, endNodes:[], terminatorNodes:[], sequence, beginSequenceAtStart:true}) yield nodes, relationships - expand the subgraph
+                                 reachable from start node following relationships to max-level adhering to the label filters, and also return all relationships
+                                 within the subgraph
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="expand-subgraph-config">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#expand-subgraph-config"></a>12.5.2.&nbsp;Configuration parameters
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The procedures support the following config parameters:</p>
+            <div class="table" id="d0e32255">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;12.40.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>minLevel</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Long</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>-1</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the minimum number of hops in the traversal. Must be 0 or 1 if specified</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>maxLevel</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Long</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>-1</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the maximum number of hops in the traversal</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationshipFilter</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the relationship types and directions to traverse.</p>
+                           <p>See <a class="xref" href="#expand-subgraph-relationship-filters" title="12.5.2.1.&nbsp;Relationship Filters">Section&nbsp;12.5.2.1, &#8220;Relationship Filters&#8221;</a>.
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>labelFilter</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the node labels to traverse.</p>
+                           <p>See <a class="xref" href="#expand-subgraph-label-filters" title="12.5.2.2.&nbsp;Label Filters">Section&nbsp;12.5.2.2, &#8220;Label Filters&#8221;</a>.
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>beginSequenceAtStart</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>true</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>starts matching sequences of node labels and/or relationship types (defined in <code class="literal">relationshipFilter</code>, <code class="literal">labelFilter</code>, or <code class="literal">sequences</code>) one node away from the start node.
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>bfs</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>true</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>use Breadth First Search when traversing. Uses Depth First Search if set to <code class="literal">false</code></p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>filterStartNode</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>whether the <code class="literal">labelFilter</code> and <code class="literal">sequence</code> apply to the start node of the expansion.
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>limit</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Long</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>-1</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>limit the number of paths returned. When using <code class="literal">bfs:true</code>, this has the effect of returning paths to the <code class="literal">n</code> nearest nodes with labels in the termination or end node filter, where <code class="literal">n</code> is the limit given.
+                              If set to <code class="literal">true</code>, a <code class="literal">null</code> value is yielded whenever the expansion would normally eliminate rows due to no results.
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>endNodes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>List&lt;Node&gt;</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>only these nodes can end returned paths, and expansion will continue past these nodes, if possible.</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>terminatorNodes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>List&lt;Node&gt;</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Only these nodes can end returned paths, and expansion won&#8217;t continue past these nodes.</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>whiteListNodes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>List&lt;Node&gt;</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Only these nodes are allowed in the expansion (though endNodes and terminatorNodes will also be allowed, if present).</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>blackListNodes</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>List&lt;Node&gt;</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>None of the paths returned will include these nodes.</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>It also has the following fixed parameter:</p>
+            <div class="table" id="d0e32472">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;12.41.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>uniqueness</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>NODE_GLOBAL</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>the strategy to use when expanding relationships in a traversal.
+                              <code class="literal">NODE_GLOBAL</code> means that a node cannot be traversed more than once.
+                              This is what the legacy traversal framework does.
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <section class="section" id="expand-subgraph-relationship-filters">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-relationship-filters"></a>12.5.2.1.&nbsp;Relationship Filters
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The syntax for relationship filters is described below:</p>
+               <p>Syntax: <code class="literal">[&lt;]RELATIONSHIP_TYPE1[&gt;]|[&lt;]RELATIONSHIP_TYPE2[&gt;]|&#8230;&#8203;</code></p>
+               <div class="informaltable">
+                  <div class="table" id="d0e32516">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                           <col class="col_3"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">input</th>
+                              <th style="text-align: left; vertical-align: top; ">type</th>
+                              <th style="text-align: left; vertical-align: top; ">direction</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">LIKES&gt;</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">LIKES</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>OUTGOING</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">&lt;FOLLOWS</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">FOLLOWS</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>INCOMING</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">KNOWS</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">KNOWS</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>BOTH</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">&gt;</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">any type</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>OUTGOING</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">&lt;</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">any type</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>INCOMING</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </section>
+            <section class="section" id="expand-subgraph-label-filters">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-label-filters"></a>12.5.2.2.&nbsp;Label Filters
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>The syntax for label filters is described below:</p>
+               <p>Syntax: <code class="literal">[+-/&gt;]LABEL1|LABEL2|*|&#8230;&#8203;</code></p>
+               <div class="informaltable">
+                  <div class="table" id="d0e32599">
+                     <table class="informaltable" border="1">
+                        <colgroup>
+                           <col class="col_1"></col>
+                           <col class="col_2"></col>
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="text-align: left; vertical-align: top; ">input</th>
+                              <th style="text-align: left; vertical-align: top; ">result</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">-Foe</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>blacklist filter - No node in the path will have a label in the blacklist.</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">+Friend</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>whitelist filter - All nodes in the path must have a label in the whitelist (exempting termination and end nodes, if using
+                                    those filters).
+                                    If no whitelist operator is present, all labels are considered whitelisted.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">/Friend</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>termination filter - Only return paths up to a node of the given labels, and stop further expansion beyond it.
+                                    Termination nodes do not have to respect the whitelist. Termination filtering takes precedence over end node filtering.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p><code class="literal">&gt;Friend</code></p>
+                              </td>
+                              <td style="text-align: left; vertical-align: top; ">
+                                 <p>end node filter - Only return paths up to a node of the given labels, but continue expansion to match on end nodes beyond
+                                    it.
+                                    End nodes do not have to respect the whitelist to be returned, but expansion beyond them is only allowed if the node has a
+                                    label in the whitelist.
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p><span class="strong"><strong>Label filter operator precedence and behavior</strong></span></p>
+               <p>Multiple label filter operators are allowed at the same time.
+                  Take the following example:
+               </p>
+               <p><code class="literal">labelFilter:'+Person|Movie|-SciFi|&gt;Western|/Romance'</code></p>
+               <p>If we work through this label filter, we can see that:</p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem"><code class="literal">:Person</code> and <code class="literal">:Movie</code> labels are whitelisted
+                     </li>
+                     <li class="listitem"><code class="literal">:SciFi</code> is blacklisted
+                     </li>
+                     <li class="listitem"><code class="literal">:Western</code> is an end node label
+                     </li>
+                     <li class="listitem"><code class="literal">:Romance</code> is as a termination label.
+                     </li>
+                  </ul>
+               </div>
+               <p>The precedence of operator evaluation isn&#8217;t dependent upon their location in the labelFilter but is fixed:</p>
+               <p>Blacklist filter <code class="literal">-</code>, termination filter <code class="literal">/</code>, end node filter <code class="literal">&gt;</code>, whitelist filter <code class="literal">+</code>.
+               </p>
+               <p>This means:</p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">No blacklisted label <code class="literal">-</code> will ever be present in the nodes of paths returned, even if the same label (or another label of a node with a blacklisted
+                        label) is included in another filter list.
+                     </li>
+                     <li class="listitem">If the termination filter <code class="literal">/</code> or end node filter <code class="literal">&gt;</code> is used, then only paths up to nodes with those labels will be returned as results. These end nodes are exempt from the whitelist
+                        filter.
+                     </li>
+                     <li class="listitem">If a node is a termination node <code class="literal">/</code>, no further expansion beyond the node will occur.
+                     </li>
+                     <li class="listitem">The whitelist only applies to nodes up to but not including end nodes from the termination or end node filters. If no end
+                        node or termination node operators are present, then the whitelist applies to all nodes of the path.
+                     </li>
+                     <li class="listitem">If no whitelist operators are present in the labelFilter, this is treated as if all labels are whitelisted.</li>
+                  </ul>
+               </div>
+            </section>
+         </section>
+         <section class="section" id="expand-subgraph-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#expand-subgraph-examples"></a>12.5.3.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The examples in this section are based on the following sample graph:</p><pre class="programlisting highlight"><code data-lang="cypher">MERGE (mark:Person:DevRel {name: "Mark"})
+MERGE (lju:Person:DevRel {name: "Lju"})
+MERGE (praveena:Person:Engineering {name: "Praveena"})
+MERGE (zhen:Person:Engineering {name: "Zhen"})
+MERGE (martin:Person:Engineering {name: "Martin"})
+MERGE (joe:Person:Field {name: "Joe"})
+MERGE (stefan:Person:Field {name: "Stefan"})
+MERGE (alicia:Person:Product {name: "Alicia"})
+MERGE (jake:Person:Product {name: "Jake"})
+MERGE (john:Person:Product {name: "John"})
+MERGE (jonny:Person:Sales {name: "Jonny"})
+MERGE (anthony:Person:Sales {name: "Anthony"})
+MERGE (rik:Person:Sales {name: "Rik"})
+
+MERGE (zhen)-[:KNOWS]-(stefan)
+MERGE (zhen)-[:KNOWS]-(lju)
+MERGE (zhen)-[:KNOWS]-(praveena)
+MERGE (zhen)-[:KNOWS]-(martin)
+MERGE (mark)-[:KNOWS]-(jake)
+MERGE (alicia)-[:KNOWS]-(jake)
+MERGE (jonny)-[:KNOWS]-(anthony)
+MERGE (john)-[:KNOWS]-(rik)
+
+MERGE (alicia)-[:FOLLOWS]-&gt;(joe)
+MERGE (joe)-[:FOLLOWS]-&gt;(mark)
+MERGE (joe)-[:FOLLOWS]-&gt;(praveena)
+MERGE (joe)-[:FOLLOWS]-&gt;(zhen)
+MERGE (mark)-[:FOLLOWS]-&gt;(stefan)
+MERGE (stefan)-[:FOLLOWS]-&gt;(joe)
+MERGE (praveena)-[:FOLLOWS]-&gt;(joe)
+MERGE (lju)-[:FOLLOWS]-&gt;(jake)
+MERGE (alicia)-[:FOLLOWS]-&gt;(jonny)
+MERGE (zhen)-[:FOLLOWS]-&gt;(john)
+MERGE (anthony)-[:FOLLOWS]-&gt;(joe)</code></pre><p>The Neo4j Browser visualization below shows the sample graph:</p>
+            <div class="figure" id="d0e32731">
+               <div class="figure-title">Figure&nbsp;12.8.&nbsp;Sample Graph</div>
+               <div class="figure-contents">
+                  <div class="mediaobject"><img src="../../images/apoc.path.expandConfig.svg" alt="apoc.path.expandConfig"></img></div>
+               </div>
+            </div>
+            <p>The <code class="literal">KNOWS</code> relationship type is considered to be bidirectional, where if Zhen knows Stefan, we can imply that Stefan knows Zhen.
+               When using the <code class="literal">KNOWS</code> relationship we will ignore the direction.
+            </p>
+            <p>The <code class="literal">FOLLOWS</code> relationship has a direction, so we will specify a direction when we use it.
+            </p>
+            <section class="section" id="expand-subgraph-examples-label-relationship-filters">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-examples-label-relationship-filters"></a>12.5.3.1.&nbsp;Relationship Type and Node Label filters
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Let&#8217;s start by expanding paths from the Praveena node.
+                  We only want to consider the <code class="literal">KNOWS</code> relationship type, so we&#8217;ll specify that as the <code class="literal">relationshipFilter</code> parameter.
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph reachable by the <code class="literal">KNOWS</code> relationship at 1 to 2 hops from Praveena.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Praveena"})
+CALL apoc.path.subgraphAll(p, {
+	relationshipFilter: "KNOWS",
+    minLevel: 1,
+    maxLevel: 2
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-praveena" title="Figure&nbsp;12.9.&nbsp;Subgraph from Praveena">Figure&nbsp;12.9, &#8220;Subgraph from Praveena&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-praveena">
+                  <div class="figure-title">Figure&nbsp;12.9.&nbsp;Subgraph from Praveena</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.praveena.svg" alt="apoc.path.subgraphAll.praveena"></img></div>
+                  </div>
+               </div>
+               <p>We can also provide a node label filter to restrict the nodes that are returned.
+                  If we want to only return paths where every node has the <code class="literal">Engineering</code> label, we&#8217;ll provide the value <code class="literal">+Engineering</code> to the <code class="literal">labelFilter</code> parameter.
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph o <code class="literal">Engineering</code> people reachable by the <code class="literal">KNOWS</code> relationship at 1 to 2 hops from Praveena.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Praveena"})
+CALL apoc.path.subgraphAll(p, {
+	relationshipFilter: "KNOWS",
+	labelFilter: "+Engineering",
+    minLevel: 1,
+    maxLevel: 2
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-praveena-engineering" title="Figure&nbsp;12.10.&nbsp;Subgraph of Engineering nodes from Praveena">Figure&nbsp;12.10, &#8220;Subgraph of <code class="literal">Engineering</code> nodes from Praveena&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-praveena-engineering">
+                  <div class="figure-title">Figure&nbsp;12.10.&nbsp;Subgraph of <code class="literal">Engineering</code> nodes from Praveena
+                  </div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.praveena-engineering.svg" alt="apoc.path.subgraphAll.praveena engineering"></img></div>
+                  </div>
+               </div>
+               <p>We lose Lju and Stefan because those nodes don&#8217;t have the <code class="literal">Engineering</code> label.
+               </p>
+               <p>We can specify multiple relationship types.
+                  The following query starts from the Alicia node, and then expands the <code class="literal">FOLLOWS</code> and <code class="literal">KNOWS</code> relationships:
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph of people reachable by the <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> relationships at 1 to 3 hops from Alicia.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    minLevel: 1,
+    maxLevel: 3
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia" title="Figure&nbsp;12.11.&nbsp;Subgraph from Alicia">Figure&nbsp;12.11, &#8220;Subgraph from Alicia&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia">
+                  <div class="figure-title">Figure&nbsp;12.11.&nbsp;Subgraph from Alicia</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia.svg" alt="apoc.path.subgraphAll.alicia"></img></div>
+                  </div>
+               </div>
+               <p>This subgraph includes all but one of the people in our graph, which means that Alicia is very well connected.</p>
+               <p>We can also specify traversal termination criteria using label filters.
+                  If we wanted to terminate a traversal as soon as the traversal encounters a node containing the <code class="literal">Engineering</code> label, we can use the <code class="literal">/Engineering</code> node filter.
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph reachable by the <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> relationships at 1 to 3 hops from Alicia, terminating as soon as a node with the <code class="literal">Engineering</code> label is reached.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    labelFilter: "/Engineering",
+    minLevel: 1,
+    maxLevel: 3
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-engineering" title="Figure&nbsp;12.12.&nbsp;Subgraph from Alicia terminating at Engineering nodes">Figure&nbsp;12.12, &#8220;Subgraph from Alicia terminating at <code class="literal">Engineering</code> nodes&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-engineering">
+                  <div class="figure-title">Figure&nbsp;12.12.&nbsp;Subgraph from Alicia terminating at <code class="literal">Engineering</code> nodes
+                  </div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-engineering.svg" alt="apoc.path.subgraphAll.alicia engineering"></img></div>
+                  </div>
+               </div>
+               <p>We&#8217;re now down to only 2 people - Zhen and Praveena.
+                  But this query doesn&#8217;t capture all of the paths from Alicia that end in a node with the <code class="literal">Engineering</code> label.
+                  We can use the <code class="literal">&gt;Engineering</code> node filter to define a traversal that:
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                     <li class="listitem">only returns paths that terminate at nodes with the <code class="literal">Engineering</code> label
+                     </li>
+                     <li class="listitem">continues expansion to end nodes after that, looking for more paths that end with the <code class="literal">Engineering</code> label
+                     </li>
+                  </ul>
+               </div>
+               <p><span class="formalpara-title">The following returns the subgraph of <code class="literal">Engineering</code> people reachable by the <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> relationships at 1 to 3 hops from Alicia.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    labelFilter: "&gt;Engineering",
+    minLevel: 1,
+    maxLevel: 3
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-engineering-end" title="Figure&nbsp;12.13.&nbsp;Subgraph from Alicia ending at Engineering nodes">Figure&nbsp;12.13, &#8220;Subgraph from Alicia ending at <code class="literal">Engineering</code> nodes&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-engineering-end">
+                  <div class="figure-title">Figure&nbsp;12.13.&nbsp;Subgraph from Alicia ending at <code class="literal">Engineering</code> nodes
+                  </div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-engineering-end.svg" alt="apoc.path.subgraphAll.alicia engineering end"></img></div>
+                  </div>
+               </div>
+               <p>Our subgraph now also includes Martin, who is reached via a relationship from Zhen.</p>
+            </section>
+            <section class="section" id="expand-subgraph-examples-end-nodes-terminator-nodes">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-examples-end-nodes-terminator-nodes"></a>12.5.3.2.&nbsp;Terminator Nodes and End Nodes
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>As well as specifying terminator and end labels for traversals, we can also specify terminator and end nodes.</p>
+               <p>Let&#8217;s build on the previous query that found people that Alicia <code class="literal">KNOWS</code> or <code class="literal">FOLLOWS</code>.
+                  We want the returned subgraph to stop as soon as the Mark, Joe, Zhen, or Praveena nodes are reached.
+                  We can do that by passing those nodes to the <code class="literal">terminatorNodes</code> parameter.
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph of people that Alicia <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> from 1 to 3 hops, terminating as soon as Mark, Joe, Zhen, or Rik nodes are reached.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+MATCH (terminator:Person)
+WHERE terminator.name IN ["Mark", "Joe", "Zhen", "Rik"]
+WITH p, collect(terminator) AS terminatorNodes
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    minLevel: 1,
+    maxLevel: 3,
+    terminatorNodes: terminatorNodes
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-terminator" title="Figure&nbsp;12.14.&nbsp;Subgraph from Alicia terminating at Mark, Joe, Zhen, or Rik">Figure&nbsp;12.14, &#8220;Subgraph from Alicia terminating at Mark, Joe, Zhen, or Rik&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-terminator">
+                  <div class="figure-title">Figure&nbsp;12.14.&nbsp;Subgraph from Alicia terminating at Mark, Joe, Zhen, or Rik</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-terminator.svg" alt="apoc.path.subgraphAll.alicia terminator"></img></div>
+                  </div>
+               </div>
+               <p>We have paths to Mark and Joe, but Zhen and Rik can&#8217;t be reached
+                  This could be because there is no path to Zhen and Rik that doesn&#8217;t go through Mark and Joe, or it could mean that there&#8217;s
+                  no path based on the other traversal criteria.
+               </p>
+               <p>We can find out whether Mark, Joe, Zhen, or Rik are reachable by passing these nodes to the <code class="literal">endNodes</code> parameter.
+               </p>
+               <p><span class="formalpara-title">The following returns the subgraph of people that Alicia <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> from 1 to 3 hops, ending as soon as Mark, Joe, Zhen, or Rik nodes are reached.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+MATCH (end:Person)
+WHERE end.name IN ["Mark", "Joe", "Zhen", "Rik"]
+WITH p, collect(end) AS endNodes
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    minLevel: 1,
+    maxLevel: 3,
+    endNodes: endNodes
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-end" title="Figure&nbsp;12.15.&nbsp;Subgraph from Alicia ending at Mark, Joe, Zhen, or Rik">Figure&nbsp;12.15, &#8220;Subgraph from Alicia ending at Mark, Joe, Zhen, or Rik&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-end">
+                  <div class="figure-title">Figure&nbsp;12.15.&nbsp;Subgraph from Alicia ending at Mark, Joe, Zhen, or Rik</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-end.svg" alt="apoc.path.subgraphAll.alicia end"></img></div>
+                  </div>
+               </div>
+               <p>We can now reach Joe, Mark, and Zhen, but Rik is still unreachable.</p>
+            </section>
+            <section class="section" id="expand-subgraph-examples-whitelist-blacklist">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-examples-whitelist-blacklist"></a>12.5.3.3.&nbsp;Whitelist Nodes and Blacklist Nodes
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Whitelist and blacklist nodes can also be specified.</p>
+               <p>Let&#8217;s build on the previous query that found people that Alicia <code class="literal">KNOWS</code> or <code class="literal">FOLLOWS</code>.
+                  We want any returned paths to only include the nodes Mark, Joe, Zhen, and Praveena, which we can do by passing these nodes
+                  to the parameter <code class="literal">whitelistNodes</code>.
+               </p>
+               <p><span class="formalpara-title">The following returns nodes reachable by the <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> relationship types at 1 to 3 hops from Alicia, where the paths to those nodes must only include Mark, Jonny, or Zhen.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+MATCH (whitelist:Person)
+WHERE whitelist.name IN ["Jonny", "Mark", "Zhen"]
+WITH p, collect(whitelist) AS whitelistNodes
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    minLevel: 1,
+    maxLevel: 3,
+    whitelistNodes: whitelistNodes
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-whitelist" title="Figure&nbsp;12.16.&nbsp;Subgraph from Alicia where paths to nodes include Mark, Jonny, or Zhen">Figure&nbsp;12.16, &#8220;Subgraph from Alicia where paths to nodes include Mark, Jonny, or Zhen&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-whitelist">
+                  <div class="figure-title">Figure&nbsp;12.16.&nbsp;Subgraph from Alicia where paths to nodes include Mark, Jonny, or Zhen</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-whitelist.svg" alt="apoc.path.subgraphAll.alicia whitelist"></img></div>
+                  </div>
+               </div>
+               <p>Only Jonny can be reached.
+                  We can therefore infer that Mark and Zhen are only reachable via another node that wasn&#8217;t include in the whitelist.
+               </p>
+               <p>A blacklist is used to exclude nodes from the paths that lead to reachable nodes.
+                  If we want to return nodes that are reachable without going through Joe, we can do this by passing the Joe node to the <code class="literal">blacklistNodes</code> parameter.
+               </p>
+               <p><span class="formalpara-title">The following returns nodes reachable by the <code class="literal">FOLLOWS</code> or <code class="literal">KNOWS</code> relationship types at 1 to 3 hops from Alicia, where the paths to those nodes do not go through Joe.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Alicia"})
+MATCH (joe:Person {name: "Joe"})
+CALL apoc.path.subgraphAll(p, {
+    relationshipFilter: "FOLLOWS&gt;|KNOWS",
+    minLevel: 1,
+    maxLevel: 3,
+    blacklistNodes: [joe]
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-alicia-blacklist-joe" title="Figure&nbsp;12.17.&nbsp;Subgraph from Alicia where paths to nodes can&#8217;t go via Joe">Figure&nbsp;12.17, &#8220;Subgraph from Alicia where paths to nodes can&#8217;t go via Joe&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-alicia-blacklist-joe">
+                  <div class="figure-title">Figure&nbsp;12.17.&nbsp;Subgraph from Alicia where paths to nodes can&#8217;t go via Joe</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.alicia-blacklist-joe.svg" alt="apoc.path.subgraphAll.alicia blacklist joe"></img></div>
+                  </div>
+               </div>
+            </section>
+            <section class="section" id="expand-subgraph-examples-sequence-rel-types">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#expand-subgraph-examples-sequence-rel-types"></a>12.5.3.4.&nbsp;Sequences of relationship types
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Sequences of relationship types can be specified by comma separating the values passed to <code class="literal">relationshipFilter</code>.
+               </p>
+               <p>For example, if we want to start from the Joe node and traverse a sequence of the <code class="literal">FOLLOWS</code> relationship in the outgoing direction and the <code class="literal">KNOWS</code> relationship in either direction, we can specify the relationship filter <code class="literal">FOLLOWS&gt;,KNOWS</code>.
+               </p>
+               <p><span class="formalpara-title">The following returns the reachable nodes by following the <code class="literal">FOLLOWS</code> and <code class="literal">KNOWS</code> relationship types alternately from Joe.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (p:Person {name: "Joe"})
+CALL apoc.path.subgraphAll(p, {
+	relationshipFilter: "FOLLOWS&gt;,KNOWS",
+	beginSequenceAtStart: true,
+	minLevel: 1,
+	maxLevel: 4
+})
+YIELD nodes, relationships
+RETURN nodes, relationships;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the returned subgraph in <a class="xref" href="#viz-apoc-path-subgraphAll-joe-rel-sequence" title="Figure&nbsp;12.18.&nbsp;Subgraph from Joe via alternate FOLLOWS and KNOWS relationship types">Figure&nbsp;12.18, &#8220;Subgraph from Joe via alternate <code class="literal">FOLLOWS</code> and <code class="literal">KNOWS</code> relationship types&#8221;</a>.
+               </p>
+               <div class="figure" id="viz-apoc-path-subgraphAll-joe-rel-sequence">
+                  <div class="figure-title">Figure&nbsp;12.18.&nbsp;Subgraph from Joe via alternate <code class="literal">FOLLOWS</code> and <code class="literal">KNOWS</code> relationship types
+                  </div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.path.subgraphAll.joe-sequence.svg" alt="apoc.path.subgraphAll.joe sequence"></img></div>
+                  </div>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

@@ -1,0 +1,17 @@
+{
+    "name": "APOC Documentation",
+    "shortName": "APOC",
+    "icons": [
+        {
+            "src": "./apoc-icon.png",
+            "type": "png"
+        }
+    ],
+    "neo4jDesktop": {
+        "apiVersion": "^1.4.0"
+    },
+    "homepage": "https://neo4j.com/docs/labs/apoc/",
+    "pluginDependencies": [
+        "org.neo4j.procedure/apoc",
+    ]
+}

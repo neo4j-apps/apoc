@@ -1,0 +1,656 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>16.2.&nbsp;Amazon Web Services (AWS) - Chapter&nbsp;16.&nbsp;Natural Language Processing</title>
+      <link rel="stylesheet" type="text/css" href="../../docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="../../css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="../../javascript/datatable.js" type="text/javascript"></script><script src="../../javascript/colorize.js" type="text/javascript"></script><script src="../../javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="../../javascript/mp-nav.js" type="text/javascript"></script><script src="../../javascript/versionswitcher.js" type="text/javascript"></script><script src="../../javascript/version.js" type="text/javascript"></script><script src="../../javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This chapter describes procedures that wrap Amazon Web Services Comprehend Natural Language API."></meta>
+      <link rel="prev" href="../gcp/" title="16.1.&nbsp;Google Cloud Platform (GCP)"></link>
+      <link rel="next" href="../../operational/" title="Chapter&nbsp;19.&nbsp;Operational"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "../../";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"><a accesskey="p" href="../gcp/"><span class="fa fa-long-arrow-left" aria-hidden="true"></span>Google Cloud Platform (GCP)</a></span><span class="nav-current">
+               <p class="nav-title hidden">16.2.&nbsp;Amazon Web Services (AWS)</p></span><span class="nav-next"><a accesskey="n" href="../../operational/">Operational<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <section class="section" id="nlp-aws">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a class="anchor" href="#nlp-aws"></a>16.2.&nbsp;Amazon Web Services (AWS)
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="abstract">
+            <p>This chapter describes procedures that wrap Amazon Web Services Comprehend Natural Language API.</p>
+         </div>
+         <p>Amazon Web Services (AWS) <a class="link" href="https://docs.aws.amazon.com/comprehend/index.html" target="_top">Comprehend Natural Language API</a> uses machine learning to find insights and relationships in text.
+            The procedures in this chapter act as a wrapper around calls to this API to extract entities from text stored as node properties.
+         </p>
+         <p>Each procedure has two modes:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem">Stream - returns a map constructed from the JSON returned from the API</li>
+               <li class="listitem">Graph - creates a graph or virtual graph based on the values returned by the API</li>
+            </ul>
+         </div>
+         <p>This section includes the following:</p>
+         <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+               <li class="listitem"><a class="xref" href="#nlp-aws-overview" title="16.2.1.&nbsp;Procedure Overview">Section&nbsp;16.2.1, &#8220;Procedure Overview&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-aws-java-sdk" title="16.2.2.&nbsp;Install AWS Java SDK For Amazon Comprehend">Section&nbsp;16.2.2, &#8220;Install AWS Java SDK For Amazon Comprehend&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-aws-api-key" title="16.2.3.&nbsp;Setting up API Key and Secret">Section&nbsp;16.2.3, &#8220;Setting up API Key and Secret&#8221;</a></li>
+               <li class="listitem"><a class="xref" href="#nlp-aws-entities" title="16.2.4.&nbsp;Entity Extraction">Section&nbsp;16.2.4, &#8220;Entity Extraction&#8221;</a></li>
+               <li class="listitem">
+                  <p class="simpara"><a class="xref" href="#nlp-aws-examples" title="16.2.5.&nbsp;Examples">Section&nbsp;16.2.5, &#8220;Examples&#8221;</a></p>
+                  <div class="itemizedlist">
+                     <ul class="itemizedlist" style="list-style-type: circle; ">
+                        <li class="listitem"><a class="xref" href="#nlp-aws-examples-entities" title="16.2.5.1.&nbsp;Entity Extraction">Section&nbsp;16.2.5.1, &#8220;Entity Extraction&#8221;</a></li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <section class="section" id="nlp-aws-overview">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-aws-overview"></a>16.2.1.&nbsp;Procedure Overview
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The procedures are described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e38416">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.graph(source :: ANY?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Creates a (virtual) entity graph for provided text</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.stream(source :: ANY?, config = {} :: MAP?) :: (node :: NODE?, value :: MAP?, error :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Returns a stream of entities for provided text</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+         <section class="section" id="nlp-aws-java-sdk">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-aws-java-sdk"></a>16.2.2.&nbsp;Install AWS Java SDK For Amazon Comprehend
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The AWS NLP procedures are compiled against version <span class="emphasis"><em>1.11.163</em></span> of the <a class="link" href="https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-comprehend" target="_top">AWS Java SDK For Amazon Comprehend</a> library, which is not included in the APOC Library.
+               To use the library we&#8217;ll need to download the following jar files and place them in the <code class="literal">plugins</code> directory:
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem"><a class="link" href="https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-comprehend/1.11.683/aws-java-sdk-comprehend-1.11.683.jar" target="_top">aws-java-sdk-comprehend-1.11.683.jar</a></li>
+                  <li class="listitem"><a class="link" href="https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-core/1.11.683/aws-java-sdk-core-1.11.683.jar" target="_top">aws-java-sdk-core-1.11.683.jar</a></li>
+                  <li class="listitem"><a class="link" href="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar" target="_top">httpclient-4.5.9.jar</a></li>
+                  <li class="listitem"><a class="link" href="https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11.jar" target="_top">httpcore-4.4.11.jar</a></li>
+                  <li class="listitem"><a class="link" href="https://repo1.maven.org/maven2/joda-time/joda-time/2.8.1/joda-time-2.8.1.jar" target="_top">joda-time-2.8.1.jar</a></li>
+               </ul>
+            </div>
+            <p>Once we&#8217;ve done this we&#8217;ll need to restart the Neo4j server.</p>
+         </section>
+         <section class="section" id="nlp-aws-api-key">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-aws-api-key"></a>16.2.3.&nbsp;Setting up API Key and Secret
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>We can generate an Access Key and Secret by following the instructions at <a class="link" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html" target="_top">docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html</a>.
+               Once we&#8217;ve done that, we can populate and execute the following commands to create parameters that contains these details.
+            </p>
+            <p><span class="formalpara-title">The following define the <code class="literal">apiKey</code> and <code class="literal">apiSecret</code> parameters.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">:param apiKey =&gt; ("&lt;api-key-here&gt;");
+:param apiSecret =&gt; ("&lt;api-secret-here&gt;");</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="nlp-aws-entities">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-aws-entities"></a>16.2.4.&nbsp;Entity Extraction
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The entity extraction procedures (<code class="literal">apoc.nlp.aws.entities.*</code>) are wrappers around the <a class="link" href="https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html" target="_top">Detect Entities</a> operations of the AWS Comprehend Natural Language API.
+               This API method finds entities in the text, which are defined as a textual reference to the unique name of a real-world object
+               such as people, places, and commercial items, and to precise references to measures such as dates and quantities.
+            </p>
+            <p>The procedures are described below:</p>
+            <div class="informaltable">
+               <div class="table" id="d0e38535">
+                  <table class="informaltable" border="1">
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                        <col class="col_3"></col>
+                        <col class="col_4"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">type</th>
+                           <th style="text-align: left; vertical-align: top; ">qualified name</th>
+                           <th style="text-align: left; vertical-align: top; ">signature</th>
+                           <th style="text-align: left; vertical-align: top; ">description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.graph</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.graph(source :: ANY?, config = {} :: MAP?) :: (graph :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Creates a (virtual) entity graph for provided text</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>procedure</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.stream</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p><code class="literal">apoc.nlp.aws.entities.stream(source :: ANY?, config = {} :: MAP?) :: (node :: NODE?, value :: MAP?, error :: MAP?)</code></p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>Returns a stream of entities for provided text</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p>The procedures support the following config parameters:</p>
+            <div class="table" id="d0e38584">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.9.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>key</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>AWS Access Control Key</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>secret</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>null</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>AWS Access Control Secret</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>nodeProperty</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>text</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>The property on the provided node that contains the unstructured text to be analyzed</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>In addition, <code class="literal">apoc.nlp.aws.entities.graph</code> supports the following config parameters:
+            </p>
+            <div class="table" id="d0e38647">
+               <table class="table" summary="Config parameters" border="1">
+                  <caption class="table-title">Table&nbsp;16.10.&nbsp;Config parameters</caption>
+                  <colgroup>
+                     <col class="col_1"></col>
+                     <col class="col_2"></col>
+                     <col class="col_3"></col>
+                     <col class="col_4"></col>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="text-align: left; vertical-align: top; ">name</th>
+                        <th style="text-align: left; vertical-align: top; ">type</th>
+                        <th style="text-align: left; vertical-align: top; ">default</th>
+                        <th style="text-align: left; vertical-align: top; ">description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>write</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>Boolean</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>false</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>persist the graph of entities</p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationshipType</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>String</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>ENTITY</p>
+                        </td>
+                        <td style="text-align: left; vertical-align: top; ">
+                           <p>relationship type for relationships from source node to entity nodes</p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p><span class="formalpara-title">Streaming mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.aws.entities.stream(source:Node or List&lt;Node&gt;, {
+  key: String,
+  secret: String,
+  nodeProperty: String
+})
+YIELD value</code></pre><p>
+               
+            </p>
+            <p><span class="formalpara-title">Graph mode.&nbsp;</span>
+               
+            </p><pre class="programlisting highlight"><code data-lang="cypher">CALL apoc.nlp.aws.entities.graph(source:Node or List&lt;Node&gt;, {
+  key: String,
+  secret: String,
+  nodeProperty: String,
+  relationshipType: String,
+  write: Boolean
+})
+YIELD graph</code></pre><p>
+               
+            </p>
+         </section>
+         <section class="section" id="nlp-aws-examples">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a class="anchor" href="#nlp-aws-examples"></a>16.2.5.&nbsp;Examples
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The examples in this section are based on the following sample graph:</p><pre class="programlisting highlight"><code data-lang="cypher">CREATE (:Article {
+ uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/",
+ body: "These days I&#8217;m rarely more than a few feet away from my Nintendo Switch and I play board games, card games and role playing games with friends at least once or twice a week. I&#8217;ve even organised lunch-time Mario Kart 8 tournaments between the Neo4j European offices!"
+});
+
+CREATE (:Article {
+ uri: "https://en.wikipedia.org/wiki/Nintendo_Switch",
+ body: "The Nintendo Switch is a video game console developed by Nintendo, released worldwide in most regions on March 3, 2017. It is a hybrid console that can be used as a home console and portable device. The Nintendo Switch was unveiled on October 20, 2016. Nintendo offers a Joy-Con Wheel, a small steering wheel-like unit that a Joy-Con can slot into, allowing it to be used for racing games such as Mario Kart 8."
+});</code></pre><section class="section" id="nlp-aws-examples-entities">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a class="anchor" href="#nlp-aws-examples-entities"></a>16.2.5.1.&nbsp;Entity Extraction
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Let&#8217;s start by extracting the entities from the Article node.
+                  The text that we want to analyze is stored in the <code class="literal">body</code> property of the node, so we&#8217;ll need to specify that via the <code class="literal">nodeProperty</code> configuration parameter.
+               </p>
+               <p><span class="formalpara-title">The following streams the entities for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.aws.entities.stream(a, {
+  key: $apiKey,
+  secret: $apiSecret,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.entities AS entity
+RETURN entity;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38734">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.11.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">entity</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.780032217502594, endOffset: 71, text: "Nintendo Switch", type: "COMMERCIAL_ITEM", beginOffset: 56}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.8155304193496704, endOffset: 151, text: "at least", type: "QUANTITY", beginOffset: 143}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.7507548332214355, endOffset: 156, text: "once", type: "QUANTITY", beginOffset: 152}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.8760746717453003, endOffset: 172, text: "twice a week", type: "QUANTITY", beginOffset: 160}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.9944096803665161, endOffset: 217, text: "Mario Kart 8", type: "TITLE", beginOffset: 205}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.9946564435958862, endOffset: 247, text: "Neo4j", type: "ORGANIZATION", beginOffset: 242}</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>{score: 0.6274040937423706, endOffset: 256, text: "European", type: "LOCATION", beginOffset: 248}</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>We get back 7 different entities.
+                  We could then apply a Cypher statement that creates one node per entity and an <code class="literal">ENTITY</code> relationship from each of those nodes back to the <code class="literal">Article</code> node.
+               </p>
+               <p><span class="formalpara-title">The following streams the entities for the Pokemon article and then creates nodes for each entity.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.aws.entities.stream(a, {
+  key: $apiKey,
+  secret: $apiSecret,
+  nodeProperty: "body"
+})
+YIELD value
+UNWIND value.entities AS entity
+MERGE (e:Entity {name: entity.text})
+SET e.type = entity.type
+MERGE (a)-[:ENTITY]-&gt;(e)</code></pre><p>
+                  
+               </p>
+               <p>Alternatively we can use the graph mode to automatically create the entity graph.
+                  As well as having the <code class="literal">Entity</code> label, each entity node will have another label based on the value of the <code class="literal">type</code> property.
+                  By default a virtual graph is returned.
+               </p>
+               <p><span class="formalpara-title">The following returns a virtual graph of entities for the Pokemon article.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article {uri: "https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"})
+CALL apoc.nlp.aws.entities.graph(a, {
+  key: $apiKey,
+  secret: $apiSecret,
+  nodeProperty: "body",
+  relationshipType: "ENTITY"
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the virtual graph in <a class="xref" href="#apoc.nlp.aws.entities.graph.svg" title="Figure&nbsp;16.3.&nbsp;Pokemon entities graph">Figure&nbsp;16.3, &#8220;Pokemon entities graph&#8221;</a>.
+               </p>
+               <div class="figure" id="apoc.nlp.aws.entities.graph.svg">
+                  <div class="figure-title">Figure&nbsp;16.3.&nbsp;Pokemon entities graph</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.nlp.aws.entities.graph.svg" alt="apoc.nlp.aws.entities.graph"></img></div>
+                  </div>
+               </div>
+               <p>We can compute the entities for multiple nodes by passing a list of nodes to the procedure.</p>
+               <p><span class="formalpara-title">The following returns a virtual graph of entities for the Pokemon and Nintendo Switch articles.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article)
+WITH collect(a) AS articles
+CALL apoc.nlp.aws.entities.graph(articles, {
+  key: $apiKey,
+  secret: $apiSecret,
+  nodeProperty: "body",
+  relationshipType: "ENTITY"
+})
+YIELD graph AS g
+RETURN g</code></pre><p>
+                  
+               </p>
+               <p>We can see a Neo4j Browser visualization of the virtual graph in <a class="xref" href="#apoc.nlp.aws.entities-multiple.graph.svg" title="Figure&nbsp;16.4.&nbsp;Pokemon and Nintendo Switch entities graph">Figure&nbsp;16.4, &#8220;Pokemon and Nintendo Switch entities graph&#8221;</a>.
+               </p>
+               <div class="figure" id="apoc.nlp.aws.entities-multiple.graph.svg">
+                  <div class="figure-title">Figure&nbsp;16.4.&nbsp;Pokemon and Nintendo Switch entities graph</div>
+                  <div class="figure-contents">
+                     <div class="mediaobject"><img src="../../images/apoc.nlp.aws.entities-multiple.graph.svg" alt="apoc.nlp.aws.entities multiple.graph"></img></div>
+                  </div>
+               </div>
+               <p>If we&#8217;re happy with this graph and would like to persist it in Neo4j, we can do this by specifying the <code class="literal">write: true</code> configuration.
+               </p>
+               <p><span class="formalpara-title">The following creates a <code class="literal">HAS_ENTITY</code> relationship from the article to each entity.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (a:Article)
+WITH collect(a) AS articles
+CALL apoc.nlp.aws.entities.graph(articles, {
+  key: $apiKey,
+  secret: $apiSecret,
+  nodeProperty: "body",
+  relationshipType: "HAS_ENTITY",
+  write: true
+})
+YIELD graph AS g
+RETURN g;</code></pre><p>
+                  
+               </p>
+               <p>We can then write a query to return the entities that have been created.</p>
+               <p><span class="formalpara-title">The following returns articles and their entities.&nbsp;</span>
+                  
+               </p><pre class="programlisting highlight"><code data-lang="cypher">MATCH (article:Article)
+RETURN article.uri AS article,
+       [(article)-[:HAS_ENTITY]-&gt;(e) | e.text] AS entities;</code></pre><p>
+                  
+               </p>
+               <div class="table" id="d0e38866">
+                  <table class="table" summary="Results" border="1">
+                     <caption class="table-title">Table&nbsp;16.12.&nbsp;Results</caption>
+                     <colgroup>
+                        <col class="col_1"></col>
+                        <col class="col_2"></col>
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="text-align: left; vertical-align: top; ">article</th>
+                           <th style="text-align: left; vertical-align: top; ">entities</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"https://en.wikipedia.org/wiki/Nintendo_Switch"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["October 20, 2016", "Mario Kart 8", "March 3, 2017", "Nintendo Switch", "Nintendo"]</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>"https://neo4j.com/blog/pokegraph-gotta-graph-em-all/"</p>
+                           </td>
+                           <td style="text-align: left; vertical-align: top; ">
+                              <p>["Mario Kart 8", "European", "once", "Neo4j", "Nintendo Switch", "at least", "twice a week"]</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </section>
+      </section>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

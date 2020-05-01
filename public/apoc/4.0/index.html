@@ -1,0 +1,165 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <meta class="swiftype" name="neo4j-site" data-type="enum" content="Reference Docs"></meta>
+      <meta class="swiftype" name="main-search-priority" data-type="integer" content="3"></meta>
+      <title>APOC User Guide 4.0</title>
+      <link rel="stylesheet" type="text/css" href="docbook.css"></link>
+      <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,300italic"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/theme/neo.min.css"></link>
+      <link rel="stylesheet" type="text/css" href="css/chunked-base.css"></link>
+      <link rel="stylesheet" type="text/css" href="css/extra.css"></link><script src="//code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script><script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script><script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/addon/runmode/runmode.min.js" type="text/javascript"></script><script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/cypher/cypher.min.js" type="text/javascript"></script><script src="javascript/datatable.js" type="text/javascript"></script><script src="javascript/colorize.js" type="text/javascript"></script><script src="javascript/tabs-for-chunked.js" type="text/javascript"></script><script src="javascript/mp-nav.js" type="text/javascript"></script><script src="javascript/versionswitcher.js" type="text/javascript"></script><script src="javascript/version.js" type="text/javascript"></script><script src="javascript/feedback.js" type="text/javascript"></script><script src="//s3-eu-west-1.amazonaws.com/alpha.neohq.net/docs/new-manual/assets/search.js" type="text/javascript"></script><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta>
+      <meta name="description" content="This is the user guide for Neo4j APOC 4.0, authored by the Neo4j Labs Team."></meta>
+      <link rel="next" href="introduction/" title="Chapter&nbsp;1.&nbsp;Introduction"></link>
+      <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"></link><script>var frontpage_relpath = "";
+        $(document).ready(function() {
+          CodeMirror.colorize();
+          tabTheSource($('body'));
+          var $header = $('header').first();
+          $header.prepend(
+            $('<a href="https://neo4j.com/docs/labs/" id="logo"><img src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20190802073913/labs-logo6.png" alt="Neo4j Labs Logo"/></a>')
+          );
+          var sidebar = $('<div id="sidebar-wrapper"/>');
+          $.get('toc.html', function (d){
+            $(d).appendTo(sidebar);
+            highlightToc();
+            highlightLibraryHeader();
+          });
+          sidebar.insertAfter($('header').first());
+          
+        });
+
+        </script></head>
+   <body>
+      <header>
+         <div class="searchbox">
+            <form id="search-form" class="search" name="search-form" role="search"><input id="search-form-input" name="q" title="search" type="search" lang="en" placeholder="Search Neo4j docs..." aria-label="Search Neo4j documentation" max-length="128" required="required"></input><input id="search-form-button" type="submit" value="Search"></input></form>
+         </div>
+         <ul class="documentation-library">
+            <li><a href="https://neo4j.com/docs/labs/apoc/4.0/">APOC</a></li>
+            <li><a href="https://neo4j.com/docs/labs/neo4j-streams/current/">Neo4j Streams</a></li>
+            <li><a href="https://neo4j.com/docs/labs/nsmntx/current/">Neo Semantics</a></li>
+            <li><a href="https://neo4j.com/docs/graph-algorithms/current/">Graph Algorithms</a></li>
+            <li><a href="https://neo4j.com/docs/developer-manual/current/">Developer Manual</a></li>
+         </ul>
+         <nav id="header-nav"><span class="nav-previous"></span><span class="nav-current">
+               <p class="nav-title hidden">APOC User Guide 4.0</p></span><span class="nav-next"><a accesskey="n" href="introduction/">Introduction<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a></span></nav>
+      </header>
+      <div id="search-results" class="hidden"></div>
+      <div xml:lang="en" class="book" id="apoc">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h1 class="title">APOC User Guide 4.0</h1>
+               </div>
+            </div>
+            <hr></hr>
+         </div>
+         <section class="preface" id="d0e9">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h1 class="title">APOC User Guide 4.0</h1>
+                  </div>
+               </div>
+            </div>
+            <div class="abstract">
+               <p>This is the user guide for Neo4j APOC 4.0, authored by the Neo4j Labs Team.</p>
+            </div>
+            <p>The guide covers the following areas:</p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem"><a class="xref" href="introduction/" title="Chapter&nbsp;1.&nbsp;Introduction">Chapter&nbsp;1, <em>Introduction</em></a>&#8201;&#8212;&#8201;An Introduction to the APOC library.
+                  </li>
+                  <li class="listitem"><a class="xref" href="help/" title="Chapter&nbsp;2.&nbsp;Built in Help">Chapter&nbsp;2, <em>Built in Help</em></a>&#8201;&#8212;&#8201;In-built help in the library.
+                  </li>
+                  <li class="listitem"><a class="xref" href="overview/" title="Chapter&nbsp;3.&nbsp;Procedures &amp; Functions">Chapter&nbsp;3, <em>Procedures &amp; Functions</em></a>&#8201;&#8212;&#8201;A list of all APOC procedures and functions.
+                  </li>
+                  <li class="listitem"><a class="xref" href="config/" title="Chapter&nbsp;4.&nbsp;Configuration Options">Chapter&nbsp;4, <em>Configuration Options</em></a>&#8201;&#8212;&#8201;Configuration options used by the library.
+                  </li>
+                  <li class="listitem"><a class="xref" href="import/" title="Chapter&nbsp;5.&nbsp;Import">Chapter&nbsp;5, <em>Import</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to import data from different formats including JSON, CSV, and XLS.
+                  </li>
+                  <li class="listitem"><a class="xref" href="export/" title="Chapter&nbsp;6.&nbsp;Export">Chapter&nbsp;6, <em>Export</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to export data to different formats including JSON, CSV, GraphML, and Gephi.
+                  </li>
+                  <li class="listitem"><a class="xref" href="database-integration/" title="Chapter&nbsp;7.&nbsp;Database Integration">Chapter&nbsp;7, <em>Database Integration</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to integrate with other databases including relational databases, MongoDB,
+                     Couchbase, and ElasticSearch.
+                  </li>
+                  <li class="listitem"><a class="xref" href="graph-updates/" title="Chapter&nbsp;8.&nbsp;Graph Updates">Chapter&nbsp;8, <em>Graph Updates</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to apply graph updates.
+                  </li>
+                  <li class="listitem"><a class="xref" href="data-structures/" title="Chapter&nbsp;9.&nbsp;Data Structures">Chapter&nbsp;9, <em>Data Structures</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures and functions, that can be used to work with data structures.
+                  </li>
+                  <li class="listitem"><a class="xref" href="temporal/" title="Chapter&nbsp;10.&nbsp;Temporal (Date Time)">Chapter&nbsp;10, <em>Temporal (Date Time)</em></a>-- A detailed guide to procedures that can be used to format temporal types.
+                  </li>
+                  <li class="listitem"><a class="xref" href="mathematical/" title="Chapter&nbsp;11.&nbsp;Mathematical">Chapter&nbsp;11, <em>Mathematical</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures and functions that can be used for mathematical operations.
+                  </li>
+                  <li class="listitem"><a class="xref" href="graph-querying/" title="Chapter&nbsp;12.&nbsp;Advanced Graph Querying">Chapter&nbsp;12, <em>Advanced Graph Querying</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used for advanced graph querying.
+                  </li>
+                  <li class="listitem"><a class="xref" href="comparing-graphs/" title="Chapter&nbsp;13.&nbsp;Comparing Graphs">Chapter&nbsp;13, <em>Comparing Graphs</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to compare graphs.
+                  </li>
+                  <li class="listitem"><a class="xref" href="cypher-execution/" title="Chapter&nbsp;14.&nbsp;Cypher Execution">Chapter&nbsp;14, <em>Cypher Execution</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used for Cypher scripting.
+                  </li>
+                  <li class="listitem"><a class="xref" href="virtual/" title="Chapter&nbsp;15.&nbsp;Virtual Nodes &amp; Relationships (Graph Projections)">Chapter&nbsp;15, <em>Virtual Nodes &amp; Relationships (Graph Projections)</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to create virtual nodes and relationships.
+                  </li>
+                  <li class="listitem"><a class="xref" href="nlp/" title="Chapter&nbsp;16.&nbsp;Natural Language Processing">Chapter&nbsp;16, <em>Natural Language Processing</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to add Natural Language Processing functionality to graph applications.
+                  </li>
+                  <li class="listitem"><a class="xref" href="background-operations/" title="Chapter&nbsp;17.&nbsp;Background Operations">Chapter&nbsp;17, <em>Background Operations</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used for background job management.
+                  </li>
+                  <li class="listitem"><a class="xref" href="database-introspection/" title="Chapter&nbsp;18.&nbsp;Database Introspection">Chapter&nbsp;18, <em>Database Introspection</em></a>&#8201;&#8212;&#8201;A detailed guide to procedures that can be used to introspect the database.
+                  </li>
+                  <li class="listitem"><a class="xref" href="operational/" title="Chapter&nbsp;19.&nbsp;Operational">Chapter&nbsp;19, <em>Operational</em></a>&#8201;&#8212;&#8201;A detailed guide to operational procedures.
+                  </li>
+                  <li class="listitem"><a class="xref" href="misc/" title="Chapter&nbsp;20.&nbsp;Miscellaneous">Chapter&nbsp;20, <em>Miscellaneous</em></a>&#8201;&#8212;&#8201;A detailed guide to miscellaneous procedures and functions, including map and collection functions, text functions, and
+                     spatial functionality.
+                  </li>
+                  <li class="listitem"><a class="xref" href="indexes/" title="Chapter&nbsp;21.&nbsp;Text and Lookup Indexes">Chapter&nbsp;21, <em>Text and Lookup Indexes</em></a>&#8201;&#8212;&#8201;A detailed guide to indexing procedures.
+                  </li>
+                  <li class="listitem"><a class="xref" href="algorithms/" title="Chapter&nbsp;22.&nbsp;Graph Algorithms">Chapter&nbsp;22, <em>Graph Algorithms</em></a>&#8201;&#8212;&#8201;A detailed guide to Graph Algorithms.
+                  </li>
+               </ul>
+            </div>
+         </section>
+      </div>
+      <footer><script type="text/javascript">
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          //Allow Linker
+          ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+          ga('send', 'pageview');
+          // Load the plugin.
+          ga('require', 'linker');
+          // Define which domains to autoLink.
+          ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+        </script><script type="text/javascript">
+          (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('710-RRC-335');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        </script></footer>
+   </body>
+</html>

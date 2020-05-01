@@ -1,0 +1,13 @@
+node_modules
+public
+src
+.gitignore
+babel.config.js
+package-lock.json
+vue.config.js
+*.tgz
+*.sh
+package
+*.config.js
+cypress.json
+cypress
